@@ -1,0 +1,311 @@
+{
+  "ref": "v4",
+  "publications": [
+    {
+      "id": "barnes_1962",
+      "path": "publications/a_e/barnes_1962.yaml"
+    },
+    {
+      "id": "barrett_1978",
+      "path": "publications/a_e/barrett_1978.yaml"
+    },
+    {
+      "id": "barrett_2006",
+      "path": "publications/a_e/barrett_2006.yaml"
+    },
+    {
+      "id": "bell_1981",
+      "path": "publications/a_e/bell_1981.yaml"
+    },
+    {
+      "id": "bluhm_2007",
+      "path": "publications/a_e/bluhm_2007.yaml"
+    },
+    {
+      "id": "brackett_1977",
+      "path": "publications/a_e/brackett_1977.yaml"
+    },
+    {
+      "id": "brickell_1966",
+      "path": "publications/a_e/brickell_1966.yaml"
+    },
+    {
+      "id": "bruce_1974",
+      "path": "publications/a_e/bruce_1974.yaml"
+    },
+    {
+      "id": "cairns_2003",
+      "path": "publications/a_e/cairns_2003.yaml"
+    },
+    {
+      "id": "castaneda_2005",
+      "path": "publications/a_e/castaneda_2005.yaml"
+    },
+    {
+      "id": "chittester_1984",
+      "path": "publications/a_e/chittester_1984.yaml"
+    },
+    {
+      "id": "chojnacky_1985",
+      "path": "publications/a_e/chojnacky_1985.yaml"
+    },
+    {
+      "id": "chojnacky_1988",
+      "path": "publications/a_e/chojnacky_1988.yaml"
+    },
+    {
+      "id": "chojnacky_1994",
+      "path": "publications/a_e/chojnacky_1994.yaml"
+    },
+    {
+      "id": "cochran_1979a",
+      "path": "publications/a_e/cochran_1979a.yaml"
+    },
+    {
+      "id": "cochran_1979b",
+      "path": "publications/a_e/cochran_1979b.yaml"
+    },
+    {
+      "id": "cochran_1985",
+      "path": "publications/a_e/cochran_1985.yaml"
+    },
+    {
+      "id": "curtis_1974",
+      "path": "publications/a_e/curtis_1974.yaml"
+    },
+    {
+      "id": "curtis_1990",
+      "path": "publications/a_e/curtis_1990.yaml"
+    },
+    {
+      "id": "dahms_1964",
+      "path": "publications/a_e/dahms_1964.yaml"
+    },
+    {
+      "id": "delcourt_2022",
+      "path": "publications/a_e/delcourt_2022.yaml"
+    },
+    {
+      "id": "dolph_1991",
+      "path": "publications/a_e/dolph_1991.yaml"
+    },
+    {
+      "id": "edminster_1980",
+      "path": "publications/a_e/edminster_1980.yaml"
+    },
+    {
+      "id": "eng_2012",
+      "path": "publications/a_e/eng_2012.yaml"
+    },
+    {
+      "id": "farr_1984",
+      "path": "publications/f_j/farr_1984.yaml"
+    },
+    {
+      "id": "feldpausch_2012",
+      "path": "publications/f_j/feldpausch_2012.yaml"
+    },
+    {
+      "id": "forrester_2017",
+      "path": "publications/f_j/forrester_2017.yaml"
+    },
+    {
+      "id": "fvs_2008",
+      "path": "publications/f_j/fvs_2008.yaml"
+    },
+    {
+      "id": "hahn_1984",
+      "path": "publications/f_j/hahn_1984.yaml"
+    },
+    {
+      "id": "hahn_1991",
+      "path": "publications/f_j/hahn_1991.yaml"
+    },
+    {
+      "id": "hann_1978",
+      "path": "publications/f_j/hann_1978.yaml"
+    },
+    {
+      "id": "hann_1987",
+      "path": "publications/f_j/hann_1987.yaml"
+    },
+    {
+      "id": "hann_1997",
+      "path": "publications/f_j/hann_1997.yaml"
+    },
+    {
+      "id": "hann_2011",
+      "path": "publications/f_j/hann_2011.yaml"
+    },
+    {
+      "id": "hanson_2002",
+      "path": "publications/a_e/hanson_2002.yaml"
+    },
+    {
+      "id": "harrington_1986",
+      "path": "publications/f_j/harrington_1986.yaml"
+    },
+    {
+      "id": "herman_1978",
+      "path": "publications/f_j/herman_1978.yaml"
+    },
+    {
+      "id": "hibbs_2011",
+      "path": "publications/f_j/hibbs_2011.yaml"
+    },
+    {
+      "id": "hoyer_1989",
+      "path": "publications/f_j/hoyer_1989.yaml"
+    },
+    {
+      "id": "hughes_1999",
+      "path": "publications/f_j/hughes_1999.yaml"
+    },
+    {
+      "id": "huy_2019",
+      "path": "publications/f_j/huy_2019.yaml"
+    },
+    {
+      "id": "huynh_2022",
+      "path": "publications/f_j/huynh_2022.yaml"
+    },
+    {
+      "id": "iffsc_2022",
+      "path": "publications/f_j/iffsc_2022.yaml"
+    },
+    {
+      "id": "king_1966",
+      "path": "publications/k_o/king_1966.yaml"
+    },
+    {
+      "id": "kozak_1988",
+      "path": "publications/k_o/kozak_1988.yaml"
+    },
+    {
+      "id": "krisnawati_2016",
+      "path": "publications/k_o/krisnawati_2016.yaml"
+    },
+    {
+      "id": "krumland_2005",
+      "path": "publications/k_o/krumland_2005.yaml"
+    },
+    {
+      "id": "lambert_2005",
+      "path": "publications/k_o/lambert_2005.yaml"
+    },
+    {
+      "id": "larsen_1985",
+      "path": "publications/k_o/larsen_1985.yaml"
+    },
+    {
+      "id": "mcardle_1961",
+      "path": "publications/k_o/mcardle_1961.yaml"
+    },
+    {
+      "id": "means_1989",
+      "path": "publications/k_o/means_1989.yaml"
+    },
+    {
+      "id": "montero_2005",
+      "path": "publications/k_o/montero_2005.yaml"
+    },
+    {
+      "id": "montero_2020",
+      "path": "publications/k_o/montero_2020.yaml"
+    },
+    {
+      "id": "moore_1996",
+      "path": "publications/k_o/moore_1996.yaml"
+    },
+    {
+      "id": "myers_1964a",
+      "path": "publications/k_o/myers_1964a.yaml"
+    },
+    {
+      "id": "myers_1972",
+      "path": "publications/k_o/myers_1972.yaml"
+    },
+    {
+      "id": "nunes_2022",
+      "path": "publications/k_o/nunes_2022.yaml"
+    },
+    {
+      "id": "paine_1982",
+      "path": "publications/p_t/paine_1982.yaml"
+    },
+    {
+      "id": "poudel_2018",
+      "path": "publications/p_t/poudel_2018.yaml"
+    },
+    {
+      "id": "poudel_2019",
+      "path": "publications/p_t/poudel_2019.yaml"
+    },
+    {
+      "id": "ritche_1987",
+      "path": "publications/p_t/ritche_1987.yaml"
+    },
+    {
+      "id": "rolim_2019a",
+      "path": "publications/p_t/rolim_2019a.yaml"
+    },
+    {
+      "id": "rolim_2019b",
+      "path": "publications/p_t/rolim_2019b.yaml"
+    },
+    {
+      "id": "rustagi_1991",
+      "path": "publications/p_t/rustagi_1991.yaml"
+    },
+    {
+      "id": "scott_1981",
+      "path": "publications/p_t/scott_1981.yaml"
+    },
+    {
+      "id": "sharma_2015",
+      "path": "publications/p_t/sharma_2015.yaml"
+    },
+    {
+      "id": "temesgen_2007",
+      "path": "publications/p_t/temesgen_2007.yaml"
+    },
+    {
+      "id": "temesgen_2008",
+      "path": "publications/p_t/temesgen_2008.yaml"
+    },
+    {
+      "id": "turner_2000",
+      "path": "publications/p_t/turner_2000.yaml"
+    },
+    {
+      "id": "uller_2019",
+      "path": "publications/u_z/uller_2019.yaml"
+    },
+    {
+      "id": "ung_2008",
+      "path": "publications/u_z/ung_2008.yaml"
+    },
+    {
+      "id": "vibrans_2015",
+      "path": "publications/u_z/vibrans_2015.yaml"
+    },
+    {
+      "id": "wiley_1978",
+      "path": "publications/u_z/wiley_1978.yaml"
+    },
+    {
+      "id": "winck_2015",
+      "path": "publications/u_z/winck_2015.yaml"
+    },
+    {
+      "id": "zeide_2002",
+      "path": "publications/u_z/zeide_2002.yaml"
+    }
+  ],
+  "families": [
+    {
+      "id": "hanson_2002",
+      "path": "families/hanson_2002.yaml"
+    }
+  ]
+}

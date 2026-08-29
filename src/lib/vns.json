@@ -1,0 +1,372 @@
+{
+  "variables": {
+    "atb": {
+      "description": "age of the tree at breast height",
+      "measure": "age",
+      "component": "tree"
+    },
+    "att": {
+      "description": "age of the tree",
+      "measure": "age",
+      "component": "tree"
+    },
+    "ah": {
+      "description": "age of the shrub",
+      "measure": "age",
+      "component": "shrub"
+    },
+    "ati": {
+      "description": "index age for a base-age invariant site index function",
+      "measure": "age",
+      "component": "tree"
+    },
+    "bs": {
+      "description": "stem biomass",
+      "measure": "biomass",
+      "component": "stem"
+    },
+    "bb": {
+      "description": "branch biomass",
+      "measure": "biomass",
+      "component": "branch"
+    },
+    "bbl": {
+      "description": " live branch biomass",
+      "measure": "biomass",
+      "component": "branch"
+    },
+    "bbd": {
+      "description": " dead branch biomass",
+      "measure": "biomass",
+      "component": "branch"
+    },
+    "bf": {
+      "description": "foliage biomass",
+      "measure": "biomass",
+      "component": "foliage"
+    },
+    "bk": {
+      "description": "bark biomass",
+      "measure": "biomass",
+      "component": "bark"
+    },
+    "bt": {
+      "description": "tree biomass",
+      "measure": "biomass",
+      "component": "tree"
+    },
+    "br": {
+      "description": "root biomass",
+      "measure": "biomass",
+      "component": "root"
+    },
+    "bsi": {
+      "description": "stem biomass without bark",
+      "measure": "biomass",
+      "component": "stem"
+    },
+    "bh": {
+      "description": "shrub biomass",
+      "measure": "biomass",
+      "component": "shrub"
+    },
+    "bsr": {
+      "description": "stem + branch biomass",
+      "measure": "biomass",
+      "component": "stem"
+    },
+    "dsob": {
+      "description": "diameter of the stem, outside bark at breast height",
+      "measure": "diameter",
+      "component": "stem"
+    },
+    "dsoh": {
+      "description": "diameter of the stem, outside bark at a specified height",
+      "measure": "diameter",
+      "component": "stem"
+    },
+    "dsih": {
+      "description": "diameter of the stem, inside bark at a specified height",
+      "measure": "diameter",
+      "component": "stem"
+    },
+    "dsib": {
+      "description": "diameter of the stem, inside bark at breast height",
+      "measure": "diameter",
+      "component": "stem"
+    },
+    "dui1": {
+      "description": "diameter of the stump, inside bark at one unit",
+      "measure": "diameter",
+      "component": "stump"
+    },
+    "dsoc": {
+      "description": "diameter outside bark above the root collar",
+      "measure": "diameter",
+      "component": "stem"
+    },
+    "dc": {
+      "description": "crown diameter",
+      "measure": "diameter",
+      "component": "crown"
+    },
+    "dcm": {
+      "description": "maximum crown diameter",
+      "measure": "diameter",
+      "component": "crown"
+    },
+    "dcl": {
+      "description": "largest crown diameter",
+      "measure": "diameter",
+      "component": "crown"
+    },
+    "dh": {
+      "description": "shrub diameter",
+      "measure": "diameter",
+      "component": "shrub"
+    },
+    "es": {
+      "description": "stem density",
+      "measure": "density",
+      "component": "stem"
+    },
+    "gs": {
+      "description": "basal area",
+      "measure": "basal area",
+      "component": "stem"
+    },
+    "hst": {
+      "description": "total height of the stem",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsm": {
+      "description": "merchantable height of the stem",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hnd": {
+      "description": "average height of dominant trees in stand",
+      "measure": "height",
+      "component": "n"
+    },
+    "hso": {
+      "description": "height of the stem above breast height",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsb": {
+      "description": "height of the stem to crown base",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsv": {
+      "description": "height of the stem to crown base above breast height",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsd": {
+      "description": "height to a specified diameter (taper)",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsdip75": {
+      "description": "height to a diameter that is 0.75 times the diameter inside bark at breast height",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsdop67": {
+      "description": "height to a diameter that is 0.67 times the diameter outside bark at breast height",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hstixi": {
+      "description": "site index (base age invariant function)",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hstix20": {
+      "description": "site index at 20 year base age",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hstix50": {
+      "description": "site index at 50 year base age",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hstix100": {
+      "description": "site index at 100 year base age",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hsl": {
+      "description": "distance from tip of stem to merchantibility limit",
+      "measure": "height",
+      "component": "stem"
+    },
+    "hht": {
+      "description": "total height of the shrub",
+      "measure": "height",
+      "component": "shrub"
+    },
+    "hcl": {
+      "description": "height of live crown",
+      "measure": "height",
+      "component": "crown"
+    },
+    "hlp": {
+      "description": "mean annual precipitation",
+      "measure": "height",
+      "component": "climatic"
+    },
+    "nol": {
+      "description": "latitude",
+      "measure": "angle",
+      "component": "topographic"
+    },
+    "noo": {
+      "description": "longitude",
+      "measure": "angle",
+      "component": "topographic"
+    },
+    "nos": {
+      "description": "slope",
+      "measure": "angle",
+      "component": "topographic"
+    },
+    "noa": {
+      "description": "aspect",
+      "measure": "angle",
+      "component": "topographic"
+    },
+    "rc": {
+      "description": "crown ratio",
+      "measure": "ratio",
+      "component": "crown"
+    },
+    "rsdodi": {
+      "description": "diameter of the stem inside bark at a height along the stem divided by diameter outside bark at breast height",
+      "measure": "ratio",
+      "component": "stem"
+    },
+    "rfbt": {
+      "description": "ratio of foliage biomass to biomass of entire tree",
+      "measure": "ratio",
+      "component": "foliage"
+    },
+    "rsbt": {
+      "description": "ratio of stem biomass to biomass of entire tree",
+      "measure": "ratio",
+      "component": "stem"
+    },
+    "rkbt": {
+      "description": "ratio of bark biomass to biomass of entire tree",
+      "measure": "ratio",
+      "component": "bark"
+    },
+    "rbbt": {
+      "description": "ratio of branch biomass to biomass of entire tree",
+      "measure": "ratio",
+      "component": "branch"
+    },
+    "rwd": {
+      "description": "wood density",
+      "measure": "ratio",
+      "component": "wood"
+    },
+    "rws": {
+      "description": "wood specific gravity",
+      "measure": "ratio",
+      "component": "wood"
+    },
+    "rsvg": {
+      "description": "volume to basal area ratio",
+      "measure": "ratio",
+      "component": "stem"
+    },
+    "rsk": {
+      "description": "bark correction factor",
+      "measure": "ratio",
+      "component": "stem"
+    },
+    "rv": {
+      "description": "ratio of forest cover",
+      "measure": "ratio",
+      "component": "cover"
+    },
+    "rfa": {
+      "description": "leaf area",
+      "measure": "ratio",
+      "component": "foliage"
+    },
+    "tlt": {
+      "description": "mean annual temperature",
+      "measure": "temperature",
+      "component": "climatic"
+    },
+    "vsia": {
+      "description": "volume of the entire stem inside bark, including top and stump",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsoa": {
+      "description": "volume of the entire stem outside bark, including top and stump",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsim": {
+      "description": "volume of the merchantable portion of the stem inside bark",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsom": {
+      "description": "volume of the merchantable portion of the stem outside bark",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsib": {
+      "description": "volume of the stem below breast height inside bark",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsio": {
+      "description": "volume of the stem above breast height inside bark",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vsoo": {
+      "description": "volume of the stem above breast height outside bark",
+      "measure": "volume",
+      "component": "stem"
+    },
+    "vui": {
+      "description": "volume of the stump inside bark",
+      "measure": "volume",
+      "component": "stump"
+    },
+    "vt": {
+      "description": "volume of the top",
+      "measure": "volume",
+      "component": "tree"
+    },
+    "vc": {
+      "description": "volume of the crown",
+      "measure": "volume",
+      "component": "crown"
+    }
+  },
+  "model_types": {
+    "taper": [
+      "dsoh",
+      "dsih",
+      "rsd"
+    ],
+    "site index": [
+      "hstix"
+    ],
+    "VBAR": [
+      "rsvg"
+    ]
+  }
+}

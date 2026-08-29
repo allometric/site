@@ -1,0 +1,58 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { REPO, REF, listFamilies, enrichWithTitles } from '../../lib/repo';
+
+// Static listing of every family in allometric/models, enumerated at build
+// time (one GitHub trees API call per build — never at request time).
+// Titles are read from each family's YAML (raw CDN, no rate limit).
+const families = await enrichWithTitles(await listFamilies(), (data) => (data as any)?.family?.title);
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Families',
+		description: `All ${families.length} model families in ${REPO}.`,
+	}}
+>
+	<p class="count">
+		{families.length} families from <code>{REPO}@{REF}</code>, enumerated at build
+		time.
+	</p>
+
+	{families.length === 0 ? (
+		<p class="empty">No families published yet.</p>
+	) : (
+		<ul class="list">
+			{families.map((family) => (
+				<li>
+					<a href={`/families/${family.id}/`}>{family.id}</a>
+					{family.title ? <span class="title">{family.title}</span> : null}
+				</li>
+			))}
+		</ul>
+	)}
+</StarlightPage>
+
+<style>
+	.count {
+		color: var(--sl-color-gray-4);
+		font-size: var(--sl-text-sm);
+		margin-block-end: 1.5rem;
+	}
+	.empty {
+		color: var(--sl-color-gray-4);
+	}
+	.list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.list li {
+		padding: 0.25rem 0;
+		font-size: var(--sl-text-sm);
+	}
+	.title {
+		color: var(--sl-color-gray-3);
+		margin-inline-start: 0.5rem;
+	}
+</style>

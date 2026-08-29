@@ -1,0 +1,206 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { REPO, REF, listFamilies } from '../../lib/repo';
+
+// Generic family page: one static shell per family in the allometric/models
+// repository. Content is fetched and rendered client-side at request time.
+export async function getStaticPaths() {
+	return (await listFamilies()).map(({ id, path }) => ({
+		params: { family_id: id },
+		props: { familyPath: path },
+	}));
+}
+
+const { familyPath } = Astro.props as { familyPath: string };
+const familyId = Astro.params.family_id;
+const rawUrl = `https://raw.githubusercontent.com/${REPO}/${REF}/${familyPath}`;
+const githubUrl = `https://github.com/${REPO}/blob/${REF}/${familyPath}`;
+---
+
+<StarlightPage
+	frontmatter={{
+		title: familyId,
+		description: `Family record rendered live from ${REPO}.`,
+	}}
+>
+	<div id="family" class="family" data-raw-url={rawUrl}>
+		<p id="status" class="status" role="status">Loading family record…</p>
+	</div>
+
+	<p class="source-note">
+		Rendered live from{' '}
+		<a href={githubUrl} target="_blank" rel="noopener noreferrer">
+			{REPO}@{REF}/{familyPath}
+		</a>
+	</p>
+</StarlightPage>
+<style is:global>
+	/* Family ids are machine identifiers: monospace keeps underscores solid and connected. */
+	[data-slot='doc-title-header'] h1 {
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+		letter-spacing: normal;
+	}
+	.source-note a {
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+	}
+</style>
+
+<style>
+	.status {
+		color: var(--sl-color-gray-4);
+	}
+	.status.error {
+		color: var(--sl-color-red);
+	}
+	.source-note {
+		color: var(--sl-color-gray-4);
+		font-size: var(--sl-text-sm);
+		margin-block-start: 1rem;
+	}
+
+	.family-title {
+		font-size: var(--sl-text-3xl);
+		margin-block: 0 0.5rem;
+	}
+	.family-meta {
+		color: var(--sl-color-gray-3);
+		margin-block-end: 1.5rem;
+	}
+
+	.maintainer {
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+		padding: 0.75rem 1rem;
+		margin-block-end: 0.75rem;
+	}
+	.maintainer-name {
+		font-weight: var(--sl-font-weight-semibold);
+	}
+	.maintainer-detail {
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-sm);
+		margin-block: 0.125rem;
+	}
+	.badge {
+		display: inline-block;
+		margin-inline-start: 0.5rem;
+		padding: 0.125rem 0.5rem;
+		border-radius: 999px;
+		border: 1px solid var(--sl-color-gray-5);
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-xs);
+		vertical-align: middle;
+	}
+
+	.kv {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.25rem 1rem;
+		font-size: var(--sl-text-sm);
+	}
+	.kv-key {
+		color: var(--sl-color-gray-3);
+		font-weight: var(--sl-font-weight-semibold);
+	}
+</style>
+
+<script>
+	import { parse } from 'yaml';
+
+	const root = document.getElementById('family');
+	const status = document.getElementById('status');
+	const yamlUrl = root.dataset.rawUrl;
+
+	function el(tag, className, text) {
+		const node = document.createElement(tag);
+		if (className) node.className = className;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	function renderMaintainer(person) {
+		const box = el('section', 'maintainer');
+		const head = el('div');
+		if (person.name) head.append(el('span', 'maintainer-name', person.name));
+		if (Array.isArray(person.role)) {
+			for (const role of person.role) head.append(el('span', 'badge', role));
+		} else if (typeof person.role === 'string' && person.role) {
+			head.append(el('span', 'badge', person.role));
+		}
+		box.append(head);
+		if (person.institution) box.append(el('p', 'maintainer-detail', person.institution));
+		if (person.email) box.append(el('p', 'maintainer-detail', person.email));
+		return box;
+	}
+
+	function renderFamily(family) {
+		const content = el('div');
+		const header = el('header');
+		header.append(el('h2', 'family-title', family.title || family.id || 'Untitled'));
+		const meta = el('p', 'family-meta');
+		if (family.id) meta.append(document.createTextNode(family.id));
+		header.append(meta);
+		content.append(header);
+
+		if (Array.isArray(family.maintainers) && family.maintainers.length > 0) {
+			content.append(el('h3', undefined, 'Maintainers'));
+			for (const person of family.maintainers) content.append(renderMaintainer(person));
+		}
+		return content;
+	}
+
+	/** Generic fallback for fields we don't render explicitly. */
+	function renderUnknown(key, value) {
+		const section = el('section');
+		section.append(el('h3', undefined, key));
+		const dl = el('dl', 'kv');
+		appendKV(dl, value);
+		section.append(dl);
+		return section;
+	}
+
+	function appendKV(dl, value) {
+		if (value && typeof value === 'object' && !Array.isArray(value)) {
+			for (const [key, item] of Object.entries(value)) {
+				dl.append(el('dt', 'kv-key', key));
+				const dd = el('dd');
+				if (item && typeof item === 'object') {
+					appendKV(dl, item);
+				} else {
+					dd.textContent = Array.isArray(item) ? item.join(', ') : String(item ?? '');
+					dl.append(dd);
+				}
+			}
+		} else {
+			const dd = el('dd');
+			dd.textContent = Array.isArray(value) ? value.join(', ') : String(value ?? '');
+			dl.append(dd);
+		}
+	}
+
+	function render(data) {
+		const family = data.family ?? {};
+		root.replaceChildren(renderFamily(family));
+		if (family.title) document.title = `${family.title} · Allometric`;
+
+		for (const [key, value] of Object.entries(data)) {
+			if (key === 'family') continue;
+			root.append(renderUnknown(key, value));
+		}
+	}
+
+	async function load() {
+		try {
+			status.textContent = 'Loading family record…';
+			const res = await fetch(yamlUrl);
+			if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+			const text = await res.text();
+			render(parse(text));
+		} catch (err) {
+			status.textContent = `Failed to load YAML: ${err instanceof Error ? err.message : String(err)}`;
+			status.className = 'status error';
+		}
+	}
+
+	load();
+</script>

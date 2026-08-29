@@ -1,0 +1,42 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Structured Allometric Models for Trees',
+		description:
+			'Access allometric models used in forest resource analysis, such as volume equations, taper equations, biomass models, among many others.',
+		template: 'splash',
+		hero: {
+			layout: 'centered',
+			title: 'Allometric',
+			tagline:
+				'A structured, open-source archive of allometric models for predicting tree attributes, maintained in the allometric/models repository.',
+			actions: [
+				{ text: 'Browse publications', link: '/publications/', variant: 'default' },
+				{ text: 'Model families', link: '/families/', variant: 'secondary' },
+				{ text: 'Read the docs', link: '/guides/example/', variant: 'ghost' },
+			],
+		},
+	}}
+>
+	<CardGrid>
+		<LinkCard
+			title="Publications"
+			href="/publications/"
+			description="Every publication archived in the models repository, each with a live-rendered page."
+		/>
+		<LinkCard
+			title="Model families"
+			href="/families/"
+			description="Named groups of related models with shared structure."
+		/>
+		<LinkCard
+			title="Documentation"
+			href="/guides/example/"
+			description="Guides and reference for working with Allometric."
+		/>
+	</CardGrid>
+</StarlightPage>

@@ -1,0 +1,753 @@
+---
+import { REPO, REF, listPublications } from '../../lib/repo';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+// Generic publication page: one static shell per publication in the
+// allometric/models repository. Content is fetched and rendered client-side
+// at request time, so each page always shows the latest upstream YAML
+// without a rebuild. Adding a new publication to the repo only requires
+// rebuilding (getStaticPaths re-enumerates the tree).
+
+export async function getStaticPaths() {
+	return (await listPublications()).map(({ id, path }) => ({
+		params: { pub_id: id },
+		props: { pubPath: path },
+	}));
+}
+
+const { pubPath } = Astro.props as { pubPath: string };
+const pubId = Astro.params.pub_id;
+const rawUrl = `https://raw.githubusercontent.com/${REPO}/${REF}/${pubPath}`;
+const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
+---
+
+	<StarlightPage
+		frontmatter={{
+			title: pubId,
+		}}
+	>
+	<div id="publication" class="publication" data-raw-url={rawUrl} data-pub-id={pubId}>
+		<p id="status" class="status" role="status">Loading publication record…</p>
+	</div>
+
+	<p class="source-note">
+		Rendered live from{' '}
+		<a href={githubUrl} target="_blank" rel="noopener noreferrer">
+			{REPO}@{REF}/{pubPath}
+		</a>
+	</p>
+</StarlightPage>
+
+	<style is:global>
+		.status {
+		color: var(--sl-color-gray-4);
+	}
+	/* Pub ids are machine identifiers: monospace keeps underscores solid and connected. */
+	[data-slot='doc-title-header'] h1 {
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+		letter-spacing: normal;
+	}
+	.source-note a {
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+	}
+
+	.status.error {
+		color: var(--sl-color-red);
+	}
+	.source-note {
+		color: var(--sl-color-gray-4);
+		font-size: var(--sl-text-sm);
+		margin-block-start: 1rem;
+	}
+
+	.pub-title {
+		font-size: var(--sl-text-3xl);
+		margin-block: 0 0.5rem;
+	}
+	#publication .pub-meta {
+		color: var(--sl-color-gray-3);
+		margin-block: 0 0.25rem;
+	}
+	.pub-meta a {
+		color: var(--sl-color-accent);
+	}
+	.pub-line {
+		color: var(--sl-color-gray-3);
+		margin-block: 0.125rem;
+		font-size: var(--sl-text-sm);
+	}
+	.pub-line .label {
+		color: var(--sl-color-gray-2);
+		font-weight: var(--sl-font-weight-semibold);
+	}
+	.expand {
+		background: none;
+		border: none;
+		padding: 0 0.1rem;
+		font: inherit;
+		line-height: inherit;
+		color: var(--sl-color-accent);
+		cursor: pointer;
+	}
+	.badge {
+		display: inline-block;
+		margin-inline-start: 0.75rem;
+		padding: 0.125rem 0.5rem;
+		border-radius: 999px;
+		border: 1px solid var(--sl-color-gray-5);
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		vertical-align: middle;
+	}
+
+	.model {
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+		padding: 1rem 1.25rem;
+		margin-block-end: 1.5rem;
+	}
+	.model-head {
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+	.model-head .badge {
+		margin-inline-start: auto;
+	}
+	.model-name {
+		margin-block: 0 0.25rem;
+	}
+	.model-taxa,
+	.model-vars {
+		color: var(--sl-color-gray-3);
+		margin-block: 0.25rem;
+		font-size: var(--sl-text-sm);
+	}
+	.var-tip {
+		border-block-end: 1px dotted var(--sl-color-gray-4);
+		cursor: help;
+		position: relative;
+	}
+	.var-tip.has-desc::after {
+		content: attr(data-desc);
+		position: absolute;
+		left: 0;
+		bottom: 135%;
+		z-index: 20;
+		width: max-content;
+		max-width: 280px;
+		background: var(--sl-color-bg, #fff);
+		color: var(--sl-color-text);
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		padding: 0.4rem 0.6rem;
+		font-size: var(--sl-text-xs);
+		font-weight: normal;
+		line-height: 1.4;
+		box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity 0.12s ease;
+	}
+	.var-tip.has-desc:hover::after,
+	.var-tip.has-desc:focus-visible::after {
+		opacity: 1;
+		visibility: visible;
+	}
+	.type-badge {
+		position: relative;
+		text-transform: none;
+		letter-spacing: normal;
+		cursor: help;
+		color: color-mix(in oklab, var(--tint) 58%, var(--sl-color-text));
+		background: color-mix(in oklab, var(--tint) 16%, transparent);
+		border-color: color-mix(in oklab, var(--tint) 40%, transparent);
+	}
+	.type-badge.model-type {
+		--tint: var(--sl-color-accent);
+	}
+	.type-badge.set-type {
+		--tint: #2fae88;
+	}
+	.type-badge.has-desc::after {
+		content: attr(data-desc);
+		position: absolute;
+		left: 0;
+		bottom: 135%;
+		z-index: 20;
+		width: max-content;
+		max-width: 280px;
+		background: var(--sl-color-bg, #fff);
+		color: var(--sl-color-text);
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		padding: 0.4rem 0.6rem;
+		font-size: var(--sl-text-xs);
+		font-weight: normal;
+		line-height: 1.4;
+		box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity 0.12s ease;
+	}
+	.type-badge.has-desc:hover::after,
+	.type-badge.has-desc:focus-visible::after {
+		opacity: 1;
+		visibility: visible;
+	}
+	.code-tabs {
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.375rem;
+		overflow: hidden;
+	}
+	.code-tab-bar {
+		display: flex;
+		gap: 0.25rem;
+		padding: 0.375rem 0.5rem;
+		background: var(--sl-color-gray-7);
+		border-block-end: 1px solid var(--sl-color-gray-6);
+	}
+	.code-tab {
+		background: transparent;
+		border: none;
+		border-radius: 0.25rem;
+		padding: 0.2rem 0.6rem;
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		line-height: 1.4;
+		font-weight: var(--sl-font-weight-semibold);
+		color: var(--sl-color-gray-3);
+		cursor: pointer;
+	}
+	.code-tab:hover {
+		color: var(--sl-color-text);
+		background: var(--sl-color-gray-8);
+	}
+	.code-tab.active {
+		color: var(--sl-color-accent-high);
+		background: var(--sl-color-gray-8);
+	}
+	.code-tab-panel {
+		display: none;
+	}
+	.code-tab-panel.active {
+		display: block;
+	}
+	.code-tab-panel .code {
+		margin: 0;
+		background: var(--sl-color-gray-8);
+		border: none;
+		border-radius: 0;
+	}
+	.block-title {
+		margin-block: 1rem 0.5rem;
+		font-size: var(--sl-text-lg);
+	}
+	.params {
+		border-collapse: collapse;
+		font-size: var(--sl-text-sm);
+		font-variant-numeric: tabular-nums;
+	}
+	.params th,
+	.params td {
+		text-align: start;
+		padding: 0.3rem 0.75rem;
+		border-block-end: 1px solid var(--sl-color-gray-6);
+	}
+	.params th {
+		color: var(--sl-color-gray-3);
+		font-weight: var(--sl-font-weight-semibold);
+	}
+	.code-block .hljs-number,
+	.code .hljs-number {
+		color: #d19a66;
+	}
+	.code-block .hljs-operator,
+	.code .hljs-operator {
+		color: #56b6c2;
+	}
+	.code-block .hljs-built_in,
+	.code .hljs-built_in {
+		color: #e5c07b;
+	}
+	.code-block .hljs-keyword,
+	.code .hljs-keyword {
+		color: #c678dd;
+	}
+	.code-block .hljs-string,
+	.code .hljs-string {
+		color: #98c379;
+	}
+	.code-block .hljs-comment,
+	.code .hljs-comment {
+		color: #7f848e;
+	}
+	.code-block .hljs-punctuation,
+	.code .hljs-punctuation {
+		color: inherit;
+	}
+	html[data-theme='light'] .code-block .hljs-number,
+	html[data-theme='light'] .code .hljs-number {
+		color: #986801;
+	}
+	html[data-theme='light'] .code-block .hljs-operator,
+	html[data-theme='light'] .code .hljs-operator {
+		color: #0184bc;
+	}
+	html[data-theme='light'] .code-block .hljs-built_in,
+	html[data-theme='light'] .code .hljs-built_in {
+		color: #c18401;
+	}
+	html[data-theme='light'] .code-block .hljs-keyword,
+	html[data-theme='light'] .code .hljs-keyword {
+		color: #a626a4;
+	}
+	html[data-theme='light'] .code-block .hljs-string,
+	html[data-theme='light'] .code .hljs-string {
+		color: #50a14f;
+	}
+	html[data-theme='light'] .code-block .hljs-comment,
+	html[data-theme='light'] .code .hljs-comment {
+		color: #a0a1a7;
+	}
+	.specs {
+		max-height: 18rem;
+		overflow-y: auto;
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.375rem;
+	}
+	.specs .params {
+		margin: 0;
+		width: 100%;
+		border: none;
+	}
+	.specs thead th {
+		position: sticky;
+		top: 0;
+		background: var(--sl-color-gray-8);
+		z-index: 1;
+	}
+	.code {
+		background: var(--sl-color-gray-7);
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.375rem;
+		padding: 0.75rem 1rem;
+		overflow-x: auto;
+	}
+
+	.kv {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.25rem 1rem;
+		font-size: var(--sl-text-sm);
+	}
+	.kv-key {
+		color: var(--sl-color-gray-3);
+		font-weight: var(--sl-font-weight-semibold);
+	}
+</style>
+
+<script>
+	import { parse } from 'yaml';
+	import vns from '../../lib/vns.json';
+	import hljs from 'highlight.js/lib/core';
+	import rLang from 'highlight.js/lib/languages/r';
+	hljs.registerLanguage('r', rLang);
+
+	const root = document.getElementById('publication');
+	const status = document.getElementById('status');
+	const yamlUrl = root.dataset.rawUrl;
+	const pubId = root.dataset.pubId;
+
+	function el(tag, className, text) {
+		const node = document.createElement(tag);
+		if (className) node.className = className;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	/** Initials from a given-name string: "George H" -> "GH", "T.M." -> "TM", "Chhun-Huor" -> "CH". */
+	function initialsOf(given) {
+		return given
+			.split(/[\s.-]+/)
+			.filter((word) => /[A-Za-z]/.test(word))
+			.map((word) => word[0].toUpperCase())
+			.join('');
+	}
+
+	/** Format a single "Last, Given Given" (or "Given Given Last") author as "Last, INITIALS". */
+	function formatAuthor(raw) {
+		const clean = raw.trim();
+		const comma = clean.indexOf(',');
+		if (comma !== -1) {
+			const last = clean.slice(0, comma).trim();
+			const initials = initialsOf(clean.slice(comma + 1));
+			return initials ? `${last}, ${initials}` : last;
+		}
+		const words = clean.split(/\s+/);
+		if (words.length <= 1) return clean;
+		const last = words.pop();
+		return `${last}, ${initialsOf(words.join(' '))}`;
+	}
+
+	/** Format an author string ("Last, Given and Last, Given") as "Last, INITIALS; Last, INITIALS". */
+	function formatAuthors(author) {
+		return String(author)
+			.split(/\s+and\s+/i)
+			.map((entry) => entry.trim())
+			.filter(Boolean)
+			.map(formatAuthor)
+			.join('; ');
+	}
+
+	/** Normalize a scalar-or-array YAML value into a string array. */
+	function asList(value) {
+		if (Array.isArray(value)) return value.map((v) => String(v));
+		if (value === undefined || value === null) return [];
+		return [String(value)];
+	}
+
+	const MAX_VISIBLE = 5;
+
+	/** Render "Label: a, b, ..." with a clickable ellipsis that reveals the rest. */
+	function renderLine(label, items) {
+		const p = el('p', 'pub-line');
+		p.append(el('strong', 'label', `${label}: `));
+		const list = asList(items);
+		if (list.length === 0) {
+			p.append(document.createTextNode('—'));
+			return p;
+		}
+		if (list.length <= MAX_VISIBLE) {
+			p.append(document.createTextNode(list.join(', ')));
+			return p;
+		}
+		p.append(document.createTextNode(list.slice(0, MAX_VISIBLE).join(', ')));
+		const btn = el('button', 'expand', '…');
+		btn.type = 'button';
+		btn.setAttribute('aria-expanded', 'false');
+		btn.addEventListener('click', () => {
+			const hidden = list.slice(MAX_VISIBLE);
+			btn.replaceWith(document.createTextNode(hidden.join(', ')));
+		});
+		p.append(document.createTextNode(', '));
+		p.append(btn);
+		return p;
+	}
+
+	function renderPublication(pub) {
+		const header = el('header');
+		header.append(el('h2', 'pub-title', pub.title ?? 'Untitled'));
+
+		const meta = el('p', 'pub-meta');
+		const nodes = [];
+		const authors = formatAuthors(pub.author);
+		if (authors) nodes.push(document.createTextNode(authors));
+		if (pub.year) nodes.push(document.createTextNode(String(pub.year)));
+		if (pub.doi) {
+			const link = document.createElement('a');
+			link.href = pub.doi;
+			link.target = '_blank';
+			link.rel = 'noopener noreferrer';
+			const match = pub.doi.match(/doi\.org\/(.+)$/);
+			link.textContent = match ? match[1] : pub.doi;
+			nodes.push(link);
+		}
+		for (let i = 0; i < nodes.length; i++) {
+			if (i > 0) meta.append(document.createTextNode('. '));
+			meta.append(nodes[i]);
+		}
+		if (nodes.length > 0) meta.append(document.createTextNode('.'));
+		header.append(meta);
+
+		const descriptors = pub.descriptors ?? {};
+		header.append(renderLine('Applicable Countries', descriptors.country));
+		header.append(renderLine('Applicable Regions', descriptors.region));
+		return header;
+	}
+
+	function renderModel(model) {
+		const section = el('section', 'model');
+		const head = el('div', 'model-head');
+		head.append(el('h3', 'model-name', model.name ?? 'Model'));
+		head.append(typeBadge('Model', 'model-type', 'A solitary prediction function with one set of parameters.'));
+		section.append(head);
+
+		if (Array.isArray(model.taxa) && model.taxa.length > 0) {
+			const taxa = model.taxa
+				.map((t) => [t.family, t.genus, t.species].filter(Boolean).join(' · '))
+				.join('; ');
+			if (taxa) section.append(el('p', 'model-taxa', taxa));
+		}
+		if (model.response && typeof model.response === 'object') {
+			const p = el('p', 'model-vars');
+			p.append(el('strong', undefined, 'Response: '));
+			appendVars(p, model.response);
+			section.append(p);
+		}
+		if (model.covariates && typeof model.covariates === 'object') {
+			const p = el('p', 'model-vars');
+			p.append(el('strong', undefined, 'Covariates: '));
+			appendVars(p, model.covariates);
+			section.append(p);
+		}
+		if (model.prediction_function !== undefined && model.prediction_function !== null) {
+			const covariates =
+				model.covariates && typeof model.covariates === 'object'
+					? Object.keys(model.covariates)
+					: [];
+			const fnName = `${pubId}_${model.name ?? 'model'}`;
+			const code = `${fnName} <- function(${covariates.join(', ')}) {\n  ${String(model.prediction_function)}\n}`;
+			section.append(el('h4', 'block-title', 'Prediction Function'));
+			const pre = el('pre', 'code');
+			const codeEl = el('code');
+			codeEl.innerHTML = highlightR(code);
+			pre.append(codeEl);
+			section.append(pre);
+		}
+		return section;
+	}
+
+	/** Render a `model_sets` entry: shared form plus an R prediction-function block. */
+	function renderModelSet(set) {
+		const section = el('section', 'model');
+		const head = el('div', 'model-head');
+		head.append(el('h3', 'model-name', setTitle(set)));
+		head.append(typeBadge('Model Set', 'set-type', 'A collection of models sharing the same functional form; parameter values vary per specification (e.g. one set per species).'));
+		section.append(head);
+
+		if (set.response && typeof set.response === 'object') {
+			const p = el('p', 'model-vars');
+			p.append(el('strong', undefined, 'Response: '));
+			appendVars(p, set.response);
+			section.append(p);
+		}
+		if (set.covariates && typeof set.covariates === 'object') {
+			const p = el('p', 'model-vars');
+			p.append(el('strong', undefined, 'Covariates: '));
+			appendVars(p, set.covariates);
+			section.append(p);
+		}
+		if (Array.isArray(set.specifications)) {
+			const count = set.specifications.length;
+			const p = el('p', 'model-vars');
+			p.append(el('strong', undefined, 'Set size: '));
+			p.append(document.createTextNode(`${count} model${count === 1 ? '' : 's'}`));
+			section.append(p);
+		}
+		if (set.prediction_function !== undefined && set.prediction_function !== null) {
+			const covariates =
+				set.covariates && typeof set.covariates === 'object'
+					? Object.keys(set.covariates)
+					: [];
+			const fnName = `${pubId}_${set.name ?? 'model'}`;
+			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n  ${String(set.prediction_function)}\n}`;
+			const loadCode = `set <- load_set("${pubId}", "${set.name ?? ''}")`;
+			section.append(
+				codeTabs([
+					{ label: 'Prediction Function', code: fnCode },
+					{ label: 'Load set', code: loadCode },
+				]),
+			);
+		}
+		if (Array.isArray(set.specifications) && set.specifications.length > 0) {
+			section.append(el('h4', 'block-title', 'Specifications'));
+			section.append(renderSpecifications(set.specifications));
+		}
+		return section;
+	}
+
+	/** Syntax-highlight an R snippet, returning HTML-safe markup. */
+	function highlightR(code) {
+		return hljs.highlight(code, { language: 'r' }).value;
+	}
+
+	/** Round a parameter to two significant figures; use scientific notation for very small/large values. */
+	function formatParam(value) {
+		const num = Number(value);
+		if (!Number.isFinite(num)) return value === null || value === undefined ? '' : String(value);
+		if (num === 0) return '0';
+		const abs = Math.abs(num);
+		if (abs >= 0.01 && abs < 100000) {
+			return Number(num.toPrecision(2)).toString();
+		}
+		return num.toExponential(1);
+	}
+
+	/** Render the per-taxon specifications as a self-scrolling table. */
+	function renderSpecifications(specs) {
+		const container = el('div', 'specs');
+		const table = el('table', 'params');
+		const thead = el('thead');
+		const headRow = el('tr');
+		headRow.append(el('th', undefined, 'Taxa'));
+		const paramNames = [];
+		for (const spec of specs) {
+			if (spec.parameters && typeof spec.parameters === 'object') {
+				for (const name of Object.keys(spec.parameters)) {
+					if (!paramNames.includes(name)) paramNames.push(name);
+				}
+			}
+		}
+		for (const name of paramNames) headRow.append(el('th', undefined, name));
+		thead.append(headRow);
+		const tbody = el('tbody');
+		for (const spec of specs) {
+			const tr = el('tr');
+			const taxa = (spec.taxa ?? [])
+				.map((t) => [t.genus, t.species].filter(Boolean).join(' '))
+				.join(', ');
+			tr.append(el('td', 'param-name', taxa || '—'));
+			for (const name of paramNames) {
+				const value = spec.parameters?.[name];
+				tr.append(el('td', 'param-value', value === undefined ? '' : formatParam(value)));
+			}
+			tbody.append(tr);
+		}
+		table.append(thead, tbody);
+		container.append(table);
+		return container;
+	}
+
+	/** Generic fallback for fields we don't render explicitly. */
+	function renderUnknown(key, value) {
+		const section = el('section', 'model');
+		section.append(el('h3', 'model-name', key));
+		const dl = el('dl', 'kv');
+		appendKV(dl, value);
+		section.append(dl);
+		return section;
+	}
+
+	function appendKV(dl, value) {
+		if (value && typeof value === 'object' && !Array.isArray(value)) {
+			for (const [key, item] of Object.entries(value)) {
+				dl.append(el('dt', 'kv-key', key));
+				const dd = el('dd');
+				if (item && typeof item === 'object') {
+					appendKV(dl, item);
+				} else {
+					dd.textContent = Array.isArray(item) ? item.join(', ') : String(item ?? '');
+					dl.append(dd);
+				}
+			}
+		} else {
+			const dd = el('dd');
+			dd.textContent = Array.isArray(value) ? value.join(', ') : String(value ?? '');
+			dl.append(dd);
+		}
+	}
+
+	/** A hoverable variable-name span with a vns description tooltip. */
+	function varTip(name) {
+		const span = el('span', 'var-tip', name);
+		const desc = vns.variables[name]?.description;
+		if (desc) {
+			span.dataset.desc = desc;
+			span.classList.add('has-desc');
+		}
+		return span;
+	}
+
+	/** A categorical "Model"/"Model Set" badge with an explanatory tooltip. */
+	function typeBadge(label, cls, desc) {
+		const span = el('span', `badge type-badge ${cls}`, label);
+		span.dataset.desc = desc;
+		span.classList.add('has-desc');
+		return span;
+	}
+
+	/** A tabbed code block. Each item: { label, code } (R, syntax-highlighted). */
+	function codeTabs(items) {
+		const container = el('div', 'code-tabs');
+		const bar = el('div', 'code-tab-bar');
+		const buttons = [];
+		const panels = [];
+		const activate = (i) => {
+			buttons.forEach((btn, j) => btn.classList.toggle('active', j === i));
+			panels.forEach((panel, j) => panel.classList.toggle('active', j === i));
+		};
+		items.forEach((item, i) => {
+			const btn = el('button', 'code-tab' + (i === 0 ? ' active' : ''), item.label);
+			btn.type = 'button';
+			btn.addEventListener('click', () => activate(i));
+			buttons.push(btn);
+			bar.append(btn);
+			const panel = el('div', 'code-tab-panel' + (i === 0 ? ' active' : ''));
+			const pre = el('pre', 'code');
+			const codeEl = el('code');
+			codeEl.innerHTML = highlightR(item.code);
+			pre.append(codeEl);
+			panel.append(pre);
+			panels.push(panel);
+			container.append(panel);
+		});
+		container.prepend(bar);
+		return container;
+	}
+
+	/** vns-derived model-set title: model_type when it matches, else "Measure - Component". */
+	function setTitle(set) {
+		const response =
+			set.response && typeof set.response === 'object' ? Object.keys(set.response)[0] : null;
+		if (response) {
+			for (const [type, prefixes] of Object.entries(vns.model_types)) {
+				if (prefixes.some((prefix) => response.startsWith(prefix))) return type;
+			}
+			const info = vns.variables[response];
+			if (info) {
+				const parts = [info.measure.charAt(0).toUpperCase() + info.measure.slice(1)].filter(Boolean);
+				if (info.component) parts.push(info.component);
+				if (parts.length > 0) return parts.join(' - ');
+			}
+		}
+		return set.type ?? set.name ?? 'Model set';
+	}
+
+	/** Append `{variable (unit), variable (unit)}` with tooltips for each variable. */
+	function appendVars(container, vars) {
+		const entries = Object.entries(vars);
+		for (let i = 0; i < entries.length; i++) {
+			if (i > 0) container.append(document.createTextNode(', '));
+			const [name, unit] = entries[i];
+			container.append(varTip(name));
+			if (typeof unit === 'string') container.append(document.createTextNode(` (${unit})`));
+		}
+	}
+
+	function render(data) {
+		const pub = data.publication ?? {};
+		root.replaceChildren(renderPublication(pub));
+		if (pub.title) document.title = `${pub.title} · Allometric`;
+
+		if (Array.isArray(data.models)) {
+			for (const model of data.models) root.append(renderModel(model));
+		}
+		if (Array.isArray(data.model_sets)) {
+			for (const set of data.model_sets) root.append(renderModelSet(set));
+		}
+		for (const [key, value] of Object.entries(data)) {
+			if (key === 'publication' || key === 'models' || key === 'model_sets') continue;
+			root.append(renderUnknown(key, value));
+		}
+	}
+
+	async function load() {
+		try {
+			status.textContent = 'Loading publication record…';
+			const res = await fetch(yamlUrl);
+			if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+			const text = await res.text();
+			render(parse(text));
+		} catch (err) {
+			status.textContent = `Failed to load YAML: ${err instanceof Error ? err.message : String(err)}`;
+			status.className = 'status error';
+		}
+	}
+
+	load();
+</script>
