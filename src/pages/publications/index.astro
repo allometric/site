@@ -1,88 +1,216 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-import { REPO, listPublications, enrichWithTitles } from '../../lib/repo';
-
-// Static listing of every publication in allometric/models, enumerated at
-// build time (one GitHub trees API call per build — never at request time).
-// Titles are read from each publication's YAML (raw CDN, no rate limit).
-const pubs = await enrichWithTitles(await listPublications(), (data) => (data as any)?.publication?.title);
-
-const byLetter = new Map<string, typeof pubs>();
-for (const pub of pubs) {
-	const letter = (pub.id[0] ?? '?').toUpperCase();
-	if (!byLetter.has(letter)) byLetter.set(letter, []);
-	byLetter.get(letter)!.push(pub);
-}
-const letters = [...byLetter.keys()].sort();
 ---
 
 <StarlightPage
 	frontmatter={{
 		title: 'Publications',
-		tableOfContents: false,
+		description: 'Browse all publications in allometric/models by id, model type, measure, region, or year.',
 	}}
 >
-	<p class="count">
-		{pubs.length} publications from{' '}
-		<a href={`https://github.com/${REPO}`} target="_blank" rel="noopener noreferrer">
-			{REPO}
-		</a>
-	</p>
-
-	{
-		letters.map((letter) => (
-			<section class="letter-group">
-				<h2>{letter}</h2>
-				<ul>
-					{byLetter.get(letter)!.map((pub) => (
-						<li>
-							<a href={`/publications/${pub.id}/`}>{pub.id}</a>
-							{pub.title ? <>{' '}<span class="title">{pub.title}</span></> : null}
-						</li>
-					))}
-				</ul>
-			</section>
-		))
-	}
+	<div class="pub-controls">
+		<input id="pub-search" type="search" placeholder="Search by id, title, or author…" aria-label="Search publications" />
+		<div class="view-switch" role="tablist" aria-label="Group publications by">
+			<button data-mode="id" class="active" role="tab">ID</button>
+			<button data-mode="type" role="tab">Type</button>
+			<button data-mode="measure" role="tab">Measure</button>
+			<button data-mode="region" role="tab">Region</button>
+			<button data-mode="year" role="tab">Year</button>
+		</div>
+	</div>
+	<div id="pub-groups" class="pub-groups">
+		<p class="status">Loading publications…</p>
+	</div>
 </StarlightPage>
 
-<style>
-	.count {
-		color: var(--sl-color-gray-4);
+<style is:global>
+	.pub-controls {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-block-end: 1.25rem;
+	}
+	#pub-search {
+		flex: 1 1 14rem;
+		min-width: 10rem;
+		padding: 0.4rem 0.75rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-7);
+		color: var(--sl-color-text);
+		font-family: inherit;
 		font-size: var(--sl-text-sm);
-		margin-block-end: 1.5rem;
 	}
-	.letter-group {
-		margin-block-end: 1.5rem;
+	#pub-search:focus {
+		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
+		outline-offset: 1px;
 	}
-	.letter-group h2 {
-		font-size: var(--sl-text-xl);
+	.view-switch {
+		display: inline-flex;
+		gap: 0.25rem;
+		padding: 0.25rem;
+		background: var(--sl-color-gray-7);
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+	}
+	.view-switch button {
+		display: inline-flex;
+		align-items: center;
+		margin: 0;
+		padding: 0.25rem 0.7rem;
+		border: none;
+		border-radius: 0.35rem;
+		background: transparent;
+		color: var(--sl-color-gray-3);
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+		line-height: 1.4;
+		cursor: pointer;
+		white-space: nowrap;
+	}
+	.view-switch button:hover {
+		color: var(--sl-color-text);
+		background: color-mix(in oklab, var(--sl-color-gray-6) 40%, transparent);
+	}
+	.view-switch button.active {
+		color: var(--sl-color-accent-high);
+		background: color-mix(in oklab, var(--sl-color-accent) 18%, transparent);
+	}
+	.pub-groups {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+	.group h2 {
+		font-size: var(--sl-text-lg);
 		border-block-end: 1px solid var(--sl-color-gray-6);
 		padding-block-end: 0.25rem;
 	}
-	.letter-group ul {
+	.group-list {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		columns: 2;
 		gap: 0 2.5rem;
 	}
-	.letter-group li {
-		padding: 0.25rem 0;
+	.group-list li {
+		padding: 0.2rem 0;
 		font-size: var(--sl-text-sm);
 		break-inside: avoid;
 	}
-	.title {
+	.group-list .title {
 		color: var(--sl-color-gray-3);
 		margin-inline-start: 0.5rem;
 	}
-</style>
-
-<style is:global>
-	/* Without a right-side TOC, lucode drops the constrained content column and the
-	   listing stretches edge-to-edge. Restore the comfortable 40rem-centered column. */
-	main main:has(.letter-group) {
-		max-width: var(--content-max-width);
-		margin-inline: auto;
+	.status,
+	.empty {
+		color: var(--sl-color-gray-4);
 	}
 </style>
+
+<script>
+	import pubs from '../../lib/publications.index.json';
+
+	const groupsEl = document.getElementById('pub-groups');
+	const searchEl = document.getElementById('pub-search');
+	const viewBtns = [...document.querySelectorAll('.view-switch button')];
+
+	function el(tag, className, text) {
+		const node = document.createElement(tag);
+		if (className) node.className = className;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	let mode = 'id';
+	let query = '';
+
+	function matches(pub) {
+		if (!query) return true;
+		return (
+			(pub.id ?? '').toLowerCase().includes(query) ||
+			(pub.title ?? '').toLowerCase().includes(query) ||
+			(pub.authors ?? '').toLowerCase().includes(query)
+		);
+	}
+
+	function groupBy() {
+		const map = new Map();
+		const add = (label, pub) => {
+			if (!map.has(label)) map.set(label, []);
+			map.get(label).push(pub);
+		};
+		for (const pub of pubs) {
+			if (!matches(pub)) continue;
+			switch (mode) {
+				case 'id':
+					add((pub.id[0] ?? '?').toUpperCase(), pub);
+					break;
+				case 'type': {
+					const types = pub.model_types.length ? pub.model_types : ['Unclassified'];
+					for (const t of types) add(t, pub);
+					break;
+				}
+				case 'measure': {
+					const m = pub.measures.length ? pub.measures : ['Unclassified'];
+					for (const x of m) add(x, pub);
+					break;
+				}
+				case 'region': {
+					const r = pub.regions.length ? pub.regions : ['Unclassified'];
+					for (const x of r) add(x, pub);
+					break;
+				}
+				case 'year': {
+					const y = pub.year;
+					add(y != null ? `${Math.floor(y / 10) * 10}s` : 'Unknown', pub);
+					break;
+				}
+			}
+		}
+		return map;
+	}
+
+	function render() {
+		const map = groupBy();
+		const sorted = [...map.entries()].sort((a, b) =>
+			a[0].localeCompare(b[0], undefined, { numeric: true }),
+		);
+		groupsEl.replaceChildren();
+		if (sorted.length === 0) {
+			groupsEl.append(el('p', 'empty', 'No publications match your search.'));
+			return;
+		}
+		for (const [label, items] of sorted) {
+			const section = el('section', 'group');
+			section.append(el('h2', undefined, `${label} (${items.length})`));
+			const ul = el('ul', 'group-list');
+			for (const pub of items) {
+				const li = el('li');
+				const a = document.createElement('a');
+				a.href = `/publications/${pub.id}/`;
+				a.textContent = pub.id;
+				li.append(a);
+				if (pub.title) li.append(el('span', 'title', pub.title));
+				ul.append(li);
+			}
+			section.append(ul);
+			groupsEl.append(section);
+		}
+	}
+
+	viewBtns.forEach((btn) =>
+		btn.addEventListener('click', () => {
+			mode = btn.dataset.mode;
+			viewBtns.forEach((b) => b.classList.toggle('active', b === btn));
+			render();
+		}),
+	);
+	searchEl.addEventListener('input', () => {
+		query = searchEl.value.trim().toLowerCase();
+		render();
+	});
+	render();
+</script>

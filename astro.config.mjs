@@ -9,7 +9,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'allometric',
-			description: 'Documentation for Allometric.',
+			description: 'allometric models and documentation',
 			plugins: [
 				lucode({
 					navLinks: [
@@ -20,6 +20,10 @@ export default defineConfig({
 				}),
 			],
 			sidebar: [
+        {
+          label: 'Introduction',
+          link: '/guides/example/'
+        },
 				{
 					label: 'Guides',
 					items: [

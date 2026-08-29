@@ -1,0 +1,3348 @@
+[
+  {
+    "id": "barnes_1962",
+    "title": "Yield of even-aged stands of western hemlock",
+    "year": 1962,
+    "authors": "Barnes, George H",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Tsuga"
+    ],
+    "species": [
+      "heterophylla"
+    ]
+  },
+  {
+    "id": "barrett_1978",
+    "title": "Height growth and site index curves for managed, even-aged stands of ponderosa pine in the Pacific Northwest",
+    "year": 1978,
+    "authors": "Barrett, James Willis",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WA",
+      "US-OR"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pinus"
+    ],
+    "species": [
+      "ponderosa"
+    ]
+  },
+  {
+    "id": "barrett_2006",
+    "title": "Optimizing efficiency of height modeling for extensive forest inventories",
+    "year": 2006,
+    "authors": "Barrett, T.M.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WA",
+      "US-OR",
+      "US-CA"
+    ],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pincaeae",
+      "Aceraceae",
+      "Betulaceae",
+      "Ericaceae",
+      "Cupressaceae",
+      "Fagaceae",
+      "Salicaceae",
+      "Lauraceae"
+    ],
+    "genera": [
+      "Abies",
+      "Acer",
+      "Alnus",
+      "Arbutus",
+      "Calocedrus",
+      "Chamaecyparis",
+      "Juniperus",
+      "Larix",
+      "Notholithocarpus",
+      "Picea",
+      "Pinus",
+      "Populus",
+      "Pseudotsuga",
+      "Quercus",
+      "Sequoia",
+      "Thuja",
+      "Tsuga",
+      "Umbellularia"
+    ],
+    "species": [
+      "amabilis",
+      "concolor",
+      "grandis",
+      "lasiocarpa",
+      "magnifica",
+      "procera",
+      "macrophyllum",
+      "rubra",
+      "menziesii",
+      "decurrens",
+      "lawsoniana",
+      "nookatensis",
+      "occidentalis",
+      "densiflorus",
+      "engelmannii",
+      "sitchensis",
+      "albicaulis",
+      "contorta",
+      "jeffreyi",
+      "lambertiana",
+      "monophylla",
+      "monticola",
+      "ponderosa",
+      "sahiniana",
+      "balsamifera",
+      "agrifolia",
+      "chrysolepis",
+      "douglasii",
+      "garryana",
+      "kelloggii",
+      "wisilenzi",
+      "sempervirens",
+      "plicata",
+      "heterophylla",
+      "mertensiana",
+      "californica"
+    ]
+  },
+  {
+    "id": "bell_1981",
+    "title": "Tarif tables for mountain hemlock developed from an equation of total stem cubic-foot volume",
+    "year": 1981,
+    "authors": "Bell, John F and Marshall, David D and Johnson, Gregory P",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Tsuga"
+    ],
+    "species": [
+      "mertensiana"
+    ]
+  },
+  {
+    "id": "bluhm_2007",
+    "title": "Taper equation and volume tables for plantation-grown red alder",
+    "year": 2007,
+    "authors": "Bluhm, Andrew A and Garber, Sean M and Hibbs, David E",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "CA-BC"
+    ],
+    "model_types": [
+      "taper"
+    ],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Betulaceae"
+    ],
+    "genera": [
+      "Alnus"
+    ],
+    "species": [
+      "rubra"
+    ]
+  },
+  {
+    "id": "brackett_1977",
+    "title": "Notes on tarif tree volume computation",
+    "year": 1977,
+    "authors": "Brackett, Michael",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WA"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Betulaceae",
+      "Aceraceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Tsuga",
+      "Thuja",
+      "Abies",
+      "Picea",
+      "Pinus",
+      "Larix",
+      "Cupressus",
+      "Alnus",
+      "Acer",
+      "Populus",
+      "Betula"
+    ],
+    "species": [
+      "menziesii",
+      "heterophylla",
+      "plicata",
+      "balsamea",
+      "stichensis",
+      "ponderosa",
+      "contorta",
+      "monticola",
+      "occidentalis",
+      "nootkatensis",
+      "rubra",
+      "tremuloides"
+    ]
+  },
+  {
+    "id": "brickell_1966",
+    "title": "Site index curves for Engelmann spruce in northern and central Rocky Mountains",
+    "year": 1966,
+    "authors": "Brickell, James Earl",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-ID",
+      "US-MT",
+      "US-WY",
+      "US-CO",
+      "US-UT"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Picea"
+    ],
+    "species": [
+      "engelmannii"
+    ]
+  },
+  {
+    "id": "bruce_1974",
+    "title": "Volume equations for second-growth Douglas-fir",
+    "year": 1974,
+    "authors": "Bruce, David and DeMars, Donald J",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "CA-BC"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "cairns_2003",
+    "title": "Composition and aboveground tree biomass of a dry semi-evergreen forest on Mexico’s Yucatan Peninsula",
+    "year": 2003,
+    "authors": "Cairns, Michael A and Olmsted, Ingrid and Granados, Juli'an and Argaez, Jorge",
+    "countries": [
+      "MX"
+    ],
+    "regions": [
+      "MX-YUC",
+      "MX-CAM",
+      "MX-ROO"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Manzanillo",
+      "Moraceae",
+      "Sapotaceae",
+      "Meliaceae",
+      "Piperaceae",
+      "Sapindaceae",
+      "Euphorbiaceae",
+      "Myrtaceae"
+    ],
+    "genera": [
+      "Alseis",
+      "Brosimum",
+      "Manilkara",
+      "Pouteria",
+      "Trichilia",
+      "Piper",
+      "Talisia",
+      "Croton",
+      "Eugenia"
+    ],
+    "species": [
+      "yucatenensis",
+      "alicastrum",
+      "zapota",
+      "campechiana",
+      "unilocularis",
+      "minutiflora",
+      "olivaeformis",
+      "arboreus",
+      "lundellii"
+    ]
+  },
+  {
+    "id": "castaneda_2005",
+    "title": "Carbon Accumulation in the Aboveground Biomass of a Bambusa oldhamii Plantation",
+    "year": 2005,
+    "authors": "Casta~neda-Mendoza, Arturo and Vargas-Hern'andez, Jes'us and G'omez-Guerrero, Armando and Valdez-Hern'andez, Juan I and Vaquera-Huerta, Humberto",
+    "countries": [
+      "MX"
+    ],
+    "regions": [
+      "MX-VER"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "chittester_1984",
+    "title": "Cubic-foot tree volume equations and tables for western juniper",
+    "year": 1984,
+    "authors": "Chittester, Judith M and MacLean, Colin D",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-CA"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Juniperus"
+    ],
+    "species": [
+      "occidentalis"
+    ]
+  },
+  {
+    "id": "chojnacky_1985",
+    "title": "Pinyon-juniper volume equations for the central Rocky Mountain States",
+    "year": 1985,
+    "authors": "Chojnacky, David C",
+    "countries": [
+      "US"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Fagaceae",
+      "Pinaceae",
+      "Rosaceae"
+    ],
+    "genera": [
+      "Juniperus",
+      "Quercus",
+      "Pinus",
+      "Cercocarpus"
+    ],
+    "species": [
+      "scopulorum",
+      "gambelii",
+      "macrocarpa",
+      "monosperma",
+      "osteosperma",
+      "edulis",
+      "ledifolius",
+      "occidentalis",
+      "monophylla"
+    ]
+  },
+  {
+    "id": "chojnacky_1988",
+    "title": "Juniper, pinyon, oak, and mesquite volume equations for Arizona",
+    "year": 1988,
+    "authors": "Chojnacky, David C",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-AZ"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Pinaceae",
+      "Fabaceae",
+      "Fagaceae"
+    ],
+    "genera": [
+      "Juniperus",
+      "Pinus",
+      "Prosopis",
+      "Senegalia",
+      "Olneya",
+      "Quercus"
+    ],
+    "species": [
+      "osteosperma",
+      "monosperma",
+      "edulis",
+      "cembroides",
+      "velutina",
+      "gregii",
+      "tesota",
+      "emoryi",
+      "arizonica",
+      "oblongifolia",
+      "gambelii",
+      "turbinella",
+      "chysolepis"
+    ]
+  },
+  {
+    "id": "chojnacky_1994",
+    "title": "Volume equations for New Mexico's pinyon-juniper dryland forests. Forest Service research paper",
+    "year": 1994,
+    "authors": "Chojnacky, DC",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-NM"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Pinaceae"
+    ],
+    "genera": [
+      "Juniperus",
+      "Pinus"
+    ],
+    "species": [
+      "deppeana",
+      "scopulorum",
+      "monosperma",
+      "osteosperma",
+      "edulis"
+    ]
+  },
+  {
+    "id": "cochran_1979a",
+    "title": "Site index and height growth curves for managed, even-aged stands of white or grand fir east of the Cascades in Oregon and Washington",
+    "year": 1979,
+    "authors": "Cochran, PH",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "cochran_1979b",
+    "title": "Site index and height growth curves for managed, even-aged stands of Douglas-fir east of the Cascades in Oregon and Washington",
+    "year": 1979,
+    "authors": "Cochran, PH",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "cochran_1985",
+    "title": "Site index, height growth, normal yields, and stocking levels for larch in Oregon and Washington",
+    "year": 1985,
+    "authors": "Cochran, PH",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Larix"
+    ],
+    "species": [
+      "occidentalis"
+    ]
+  },
+  {
+    "id": "curtis_1974",
+    "title": "Height growth and site index for Douglas-fir in high-elevation forests of the Oregon-Washington Cascades",
+    "year": 1974,
+    "authors": "Curtis, Robert O and Herman, Francis R and DeMars, Donald J",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "curtis_1990",
+    "title": "Height growth and site index curves for western white pine in the Cascade Range of Washington and Oregon",
+    "year": 1990,
+    "authors": "Curtis, Robert O and Diaz, Nancy M and Clendenen, Gary W",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pinus"
+    ],
+    "species": [
+      "monticola"
+    ]
+  },
+  {
+    "id": "dahms_1964",
+    "title": "Gross and net yield tables for lodgepole pine",
+    "year": 1964,
+    "authors": "Dahms, Walter G",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pinus"
+    ],
+    "species": [
+      "contorta"
+    ]
+  },
+  {
+    "id": "delcourt_2022",
+    "title": "Allometric equations and wood density parameters for estimating aboveground and woody debris biomass in Cajander larch (Larix cajanderi) forests of northeast Siberia",
+    "year": 2022,
+    "authors": "Delcourt, Clement Jean Fr'ed'eric and Veraverbeke, Sander",
+    "countries": [
+      "RU"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "dolph_1991",
+    "title": "Polymorphic site index curves for red fir in California and southern Oregon",
+    "year": 1991,
+    "authors": "Dolph, K Leroy",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-CA",
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Abies"
+    ],
+    "species": [
+      "magnifica"
+    ]
+  },
+  {
+    "id": "edminster_1980",
+    "title": "Volume tables and point-sampling factors for ponderosa pine in the Front Range of Colorado",
+    "year": 1980,
+    "authors": "Edminster, Carleton B and Beeson, Robert T and Metcalf, Gary E",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-CO"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pinus"
+    ],
+    "species": [
+      "ponderosa"
+    ]
+  },
+  {
+    "id": "eng_2012",
+    "title": "Tree height estimation in redwood/Douglas-fir stands in Mendocino County",
+    "year": 2012,
+    "authors": "Eng, Helge",
+    "countries": [
+      "US"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Pinaceae",
+      "Fagaceae",
+      "Ericaceae"
+    ],
+    "genera": [
+      "Sequoia",
+      "Pseudotsuga",
+      "Abies",
+      "Notholithocarpus",
+      "Tsuga",
+      "Arbutus"
+    ],
+    "species": [
+      "sempervirens",
+      "meniziesii",
+      "grandis",
+      "densiflorus",
+      "heterophylla"
+    ]
+  },
+  {
+    "id": "farr_1984",
+    "title": "Site index and height growth curves for unmanaged even-aged stands of western hemlock and Sitka spruce in southeast Alaska.",
+    "year": 1984,
+    "authors": "Farr, Wilbur",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-AK"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Picea",
+      "Tsuga"
+    ],
+    "species": [
+      "sitchensis",
+      "heterophylla"
+    ]
+  },
+  {
+    "id": "feldpausch_2012",
+    "title": "Tree height integrated into pantropical forest biomass estimates",
+    "year": 2012,
+    "authors": "Feldpausch, Ted R and Lloyd, Jon and Lewis, Simon L and Brienen, Roel JW and Gloor, Manuel and Monteagudo Mendoza, Abel and Lopez-Gonzalez, Gabriela and Banin, Lindsay and Abu Salim, Kamariah and Affum-Baffoe, Kofi and others, ",
+    "countries": [
+      "CM",
+      "GA",
+      "TZ",
+      "GH",
+      "LB",
+      "BO",
+      "BR",
+      "CO",
+      "EC",
+      "PE",
+      "BN",
+      "MY",
+      "AU"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass",
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "forrester_2017",
+    "title": "Generalized biomass and leaf area allometric equations for European tree species incorporating stand structure, tree age and climate",
+    "year": 2017,
+    "authors": "Forrester, David I and Tachauer, I Heloise H and Annighoefer, Peter and Barbeito, Ignacio and Pretzsch, Hans and Ruiz-Peinado, Ricardo and Stark, Hendrik and Vacchiano, Giorgio and Zlatanov, Tzvetan and Chakraborty, Tamalika and others, ",
+    "countries": [
+      "AT",
+      "BE",
+      "BG",
+      "HR",
+      "CY",
+      "CZ",
+      "DK",
+      "EE",
+      "FI",
+      "FR",
+      "DE",
+      "GR",
+      "HU",
+      "IT",
+      "LV",
+      "LT",
+      "LU",
+      "MT",
+      "NL",
+      "PL",
+      "PT",
+      "RO",
+      "SK",
+      "SI",
+      "ES"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Betulaceae",
+      "Pinaceae",
+      "Sapindaceae",
+      "Fagaceae",
+      "Oleaceae",
+      "Salicaceae",
+      "Fabaceae",
+      "Rosaceae"
+    ],
+    "genera": [
+      "Alnus",
+      "Pinus",
+      "Pseudotuga",
+      "Acer",
+      "Quercus",
+      "Picea",
+      "Fraxinus",
+      "Larix",
+      "Fagus",
+      "Abies",
+      "Betula",
+      "Castania",
+      "Populus",
+      "Robinia",
+      "Carpinus",
+      "Prunus"
+    ],
+    "species": [
+      "glutinosa",
+      "pinaster",
+      "sylvestris",
+      "menziesii",
+      "pseudoplatanus",
+      "ilex",
+      "abies",
+      "excelsior",
+      "decidua",
+      "sylvatica",
+      "alba",
+      "incana",
+      "pendula",
+      "pubescens",
+      "sativa",
+      "cembra",
+      "nigra",
+      "petraea",
+      "robur",
+      "pseudoacacia",
+      "betulus",
+      "serotina",
+      "avium"
+    ]
+  },
+  {
+    "id": "fvs_2008",
+    "title": "Pacific Northwest Coast (PN) Variant Overview - Forest Vegetation Simulator",
+    "year": 2008,
+    "authors": "Staff, FVS",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [],
+    "measures": [
+      "height",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Salicaceae",
+      "Aceraceae",
+      "Cornaceae",
+      "Fagaceae",
+      "Rosaceae",
+      "Cupressaceae",
+      "NA",
+      "Betulaceae",
+      "Taxaceae"
+    ],
+    "genera": [
+      "Abies",
+      "Populus",
+      "Acer",
+      "Prunus",
+      "Pseudotsuga",
+      "Cornus",
+      "Picea",
+      "Chrysolepis",
+      "Crataegus",
+      "Calocedrus",
+      "Pinus",
+      "Larix",
+      "Tsuga",
+      "NA",
+      "Betula",
+      "Taxus",
+      "Alnus",
+      "Thuja",
+      "Sequoia",
+      "Salix",
+      "Juniperus",
+      "Quercus",
+      "Callitropsis"
+    ],
+    "species": [
+      "lasiocarpa",
+      "tremuloides",
+      "macrophyllum",
+      "emarginata",
+      "trichocarpa",
+      "menziesii",
+      "nuttallii",
+      "engelmannii",
+      "chrysophylla",
+      "grandis",
+      "NA",
+      "decurrens",
+      "jeffreyi",
+      "attenuata",
+      "lyallii",
+      "contorta",
+      "mertensiana",
+      "procera",
+      "papyrifera",
+      "ponderosa",
+      "brevifolia",
+      "rubra",
+      "plicata",
+      "magnifica",
+      "sempervirens",
+      "amabilis",
+      "lambertiana",
+      "sitchensis",
+      "rhombifolia",
+      "albicaulis",
+      "concolor",
+      "heterophylla",
+      "Salix",
+      "occidentalis",
+      "garryana",
+      "monticola",
+      "nootkatensis"
+    ]
+  },
+  {
+    "id": "hahn_1984",
+    "title": "Tree Volume and Biomass Equations for the Lake States",
+    "year": 1984,
+    "authors": "Hahn, Jerold T",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WI",
+      "US-MI",
+      "US-MN"
+    ],
+    "model_types": [],
+    "measures": [
+      "height",
+      "volume",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Malvaceae",
+      "Platanaceae",
+      "Juglandaceae",
+      "Magnoliaceae",
+      "Fagaceae",
+      "Betulaceae",
+      "Oleaceae",
+      "Salicaceae",
+      "Altingiaceae",
+      "Nyssaceae",
+      "Rosaceae",
+      "Sapindaceae",
+      "Accipitridae",
+      "Ulmaceae",
+      "Cannabaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Larix",
+      "Picea",
+      "Pseudotsuga",
+      "Abies",
+      "Tsuga",
+      "Juniperus",
+      "Thuja",
+      "Tilia",
+      "Platanus",
+      "Juglans",
+      "Liriodendron",
+      "Fagus",
+      "Betula",
+      "Fraxinus",
+      "Populus",
+      "Salix",
+      "Liquidambar",
+      "Nyssa",
+      "Prunus",
+      "Crataegus",
+      "Acer",
+      "Carpinus",
+      "Ostrya",
+      "Circus",
+      "Sorbus",
+      "Quercus",
+      "Carya",
+      "Ulmus",
+      "Celtis"
+    ],
+    "species": [
+      "banksiana",
+      "sylvestris",
+      "nigra",
+      "decidua",
+      "abies",
+      "menziesii",
+      "resinosa",
+      "ponderosa",
+      "strobus",
+      "glauca",
+      "mariana",
+      "balsamea",
+      "canadensis",
+      "laricina",
+      "virginiana",
+      "occidentalis",
+      "americana",
+      "cinerea",
+      "tulipifera",
+      "grandifolia",
+      "alleghaniensis",
+      "pennsylvanica",
+      "deltoides",
+      "balsamifera",
+      "tremuloides",
+      "grandidentata",
+      "papyrifera",
+      "styraciflua",
+      "biflora",
+      "serotina",
+      "NA",
+      "pensylvanicum",
+      "spicatum",
+      "caroliniana",
+      "alba",
+      "bicolor",
+      "macrocarpa",
+      "muehlenbergii",
+      "rubra",
+      "velutina",
+      "palustris",
+      "ellipsoidalis",
+      "cordiformis",
+      "ovata",
+      "glabra",
+      "nigrum",
+      "saccharum",
+      "rubrum",
+      "saccharinum",
+      "thomasii"
+    ]
+  },
+  {
+    "id": "hahn_1991",
+    "title": "Cubic and board foot volume models for the Central States",
+    "year": 1991,
+    "authors": "Hahn, Jerold T and Hansen, Mark H",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-IN",
+      "US-IL",
+      "US-MO",
+      "US-IA"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Fagaceae",
+      "Juglandaceae",
+      "Malvaceae",
+      "Betulaceae",
+      "Sapindaceae",
+      "Ulmaceae",
+      "Cannabaceae",
+      "Oleaceae",
+      "Platanaceae",
+      "Salicaceae",
+      "Magnoliaceae",
+      "Rosaceae",
+      "Lauraceae",
+      "Altingiaceae",
+      "Fabaceae",
+      "Nyssaceae",
+      "Ebenaceae",
+      "Moraceae",
+      "Cornaceae",
+      "Bignoniaceae",
+      "Simaroubaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Thuja",
+      "Larix",
+      "Tsuga",
+      "Abies",
+      "Picea",
+      "Taxodium",
+      "Juniperus",
+      "Quercus",
+      "Carya",
+      "Tilia",
+      "Fagus",
+      "Betula",
+      "Acer",
+      "Ulmus",
+      "Celtis",
+      "Fraxinus",
+      "Platanus",
+      "Populus",
+      "Salix",
+      "Liriodendron",
+      "Juglans",
+      "Prunus",
+      "Sassafras",
+      "Liquidambar",
+      "Gleditsia",
+      "Robinia",
+      "Nyssa",
+      "Diospyros",
+      "Maclura",
+      "Cornus",
+      "Morus",
+      "Aesculus",
+      "Gymnocladus",
+      "Ostrya",
+      "Cercis",
+      "Crataegus",
+      "Catalpa",
+      "Magnolia",
+      "Carpinus",
+      "Ailanthus",
+      "Malus"
+    ],
+    "species": [
+      "resinosa",
+      "strobus",
+      "banksiana",
+      "sylvestris",
+      "echinata",
+      "virginiana",
+      "taeda",
+      "occidentalis",
+      "laricina",
+      "canadensis",
+      "balsamea",
+      "glauca",
+      "mariana",
+      "distichum",
+      "alba",
+      "macrocarpa",
+      "muehlenbergii",
+      "bicolor",
+      "michauxii",
+      "stellata",
+      "prinus",
+      "lyrata",
+      "rubra",
+      "pagoda",
+      "shumardii",
+      "velutina",
+      "coccinea",
+      "palustris",
+      "marilandica",
+      "imbricaria",
+      "falcata",
+      "ellipsoidalis",
+      "phellos",
+      "ovata",
+      "laciniosa",
+      "illinoinensis",
+      "glabra",
+      "cordiformis",
+      "texana",
+      "americana",
+      "grandifolia",
+      "alleghaniensis",
+      "saccharum",
+      "nigrum",
+      "saccharinum",
+      "rubrum",
+      "alata",
+      "thomasii",
+      "pennsylvanica",
+      "nigra",
+      "quadrangulata",
+      "deltoides",
+      "tremuloides",
+      "grandidentata",
+      "balsamifera",
+      "tulipifera",
+      "serotina",
+      "albidum",
+      "styraciflua",
+      "negundo",
+      "triacanthos",
+      "pseudoacacia",
+      "biflora",
+      "kaki",
+      "pomifera",
+      "cinerea",
+      "florida",
+      "dioicus",
+      "papyrifera",
+      "NA",
+      "speciosa",
+      "laevigata",
+      "acuminata",
+      "caroliniana",
+      "altissima",
+      "sylvatica"
+    ]
+  },
+  {
+    "id": "hann_1978",
+    "title": "Comprehensive tree volume equations for major species of New Mexico and Arizona. I. Results and methodology. II. Tables for unforked trees",
+    "year": 1978,
+    "authors": "Hann, DW and Bare, BB",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-AZ",
+      "US-NM"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Picea",
+      "Pseudotsuga",
+      "Populus",
+      "Abies"
+    ],
+    "species": [
+      "strobus",
+      "engelmanii",
+      "jeffreyi",
+      "ponderosa",
+      "menziesii",
+      "tremuloides",
+      "concolor"
+    ]
+  },
+  {
+    "id": "hann_1987",
+    "title": "Dominant-height-growth and site-index equations for Douglas-fir and ponderosa pine in southwest Oregon",
+    "year": 1987,
+    "authors": "Hann, David W and Scrivani, John A and others, ",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Pinus"
+    ],
+    "species": [
+      "menziesii",
+      "ponderosa"
+    ]
+  },
+  {
+    "id": "hann_1997",
+    "title": "Equations for predicting the largest crown width of stand-grown trees in western Oregon",
+    "year": 1997,
+    "authors": "Hann, D.W.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Sapindaceae",
+      "Fagaceae",
+      "Ericaceae",
+      "Betulaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Calocedrus",
+      "Pinus",
+      "Abies",
+      "Tsuga",
+      "Acer",
+      "Quercus",
+      "Chrysolepis",
+      "Arbutus",
+      "Alnus",
+      "Notholithocarpus"
+    ],
+    "species": [
+      "menziesii",
+      "decurrens",
+      "ponderosa",
+      "lambertiana",
+      "concolor",
+      "grandis",
+      "magnifica",
+      "procera",
+      "lasiocarpa",
+      "amabilis",
+      "heterophylla",
+      "macrophyllum",
+      "kelloggii",
+      "chrysolepis",
+      "chrysophylla",
+      "garryana",
+      "rubra",
+      "densiflorus"
+    ]
+  },
+  {
+    "id": "hann_2011",
+    "title": "Revised volume and taper equations for six major conifer species in southwest Oregon",
+    "year": 2011,
+    "authors": "Hann, David W",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter",
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Calocedrus",
+      "Pinus",
+      "Abies"
+    ],
+    "species": [
+      "menziesii",
+      "ponderosa",
+      "lambertiana",
+      "concolor",
+      "grandis"
+    ]
+  },
+  {
+    "id": "hanson_2002",
+    "title": "Site index equations and mean annual increment equations for Pacific Northwest Research Station forest inventory and analysis inventories, 1985-2001",
+    "year": 2002,
+    "authors": "Hanson, Erica J and Azuma, David L and Hiserote, Bruce A",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "US-CA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Betulaceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Abies",
+      "Pinus",
+      "Tsuga",
+      "Picea",
+      "Thuja",
+      "Larix",
+      "Alnus",
+      "Populus"
+    ],
+    "species": [
+      "menziesii",
+      "grandis",
+      "monticola",
+      "procera",
+      "shastensis",
+      "lasiocarpa",
+      "concolor",
+      "amabilis",
+      "mertensiana",
+      "heterophylla",
+      "sitchensis",
+      "engelmannii",
+      "ponderosa",
+      "jeffreyi",
+      "coulteri",
+      "muricata",
+      "plicata",
+      "occidentalis",
+      "rubra",
+      "balsamifera",
+      "fremontii"
+    ]
+  },
+  {
+    "id": "harrington_1986",
+    "title": "Height growth and site index curves for red alder",
+    "year": 1986,
+    "authors": "Harrington, CA and Curtis, RO",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Betulaceae"
+    ],
+    "genera": [
+      "Alnus"
+    ],
+    "species": [
+      "rubra"
+    ]
+  },
+  {
+    "id": "herman_1978",
+    "title": "Height growth and site index estimates for noble fir in high elevation forests of the Oregon-Washington Cascades",
+    "year": 1978,
+    "authors": "Herman, Francis R and Curtis, Robert O and DeMars, Donald J",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Abies"
+    ],
+    "species": [
+      "procera"
+    ]
+  },
+  {
+    "id": "hibbs_2011",
+    "title": "Stem taper and volume of managed red alder",
+    "year": 2007,
+    "authors": "Hibbs, David and Bluhm, Andrew and Garber, Sean",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "CA-BC"
+    ],
+    "model_types": [
+      "taper"
+    ],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Betulaceae"
+    ],
+    "genera": [
+      "Alnus"
+    ],
+    "species": [
+      "rubra"
+    ]
+  },
+  {
+    "id": "hoyer_1989",
+    "title": "Height-age and site index curves for Pacific silver fir in the Pacific Northwest",
+    "year": 1989,
+    "authors": "Hoyer, Gerald E and Herman, Francis R",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Abies"
+    ],
+    "species": [
+      "amabilis"
+    ]
+  },
+  {
+    "id": "hughes_1999",
+    "title": "Biomass, carbon, and nutrient dynamics of secondary forests in a humid tropical region of Mexico",
+    "year": 1999,
+    "authors": "Hughes, R Flint and Kauffman, J Boone and Jaramillo, Victor J",
+    "countries": [
+      "MX"
+    ],
+    "regions": [
+      "MX-VER"
+    ],
+    "model_types": [],
+    "measures": [
+      "height",
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Arecaceae"
+    ],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "huy_2019",
+    "title": "Taxon-specific modeling systems for improving reliability of tree aboveground biomass and its components estimates in tropical dry dipterocarp forests",
+    "year": 2019,
+    "authors": "Huy, Bao and Tinh, Nguyen Thi and Poudel, Krishna P and Frank, Bryce Michael and Temesgen, Hailemariam",
+    "countries": [
+      "VN"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Dipterocarpaceae"
+    ],
+    "genera": [
+      "Dipterocarpus",
+      "Shorea"
+    ],
+    "species": []
+  },
+  {
+    "id": "huynh_2022",
+    "title": "Allometric equations to estimate aboveground biomass in spotted gum (Corymbia citriodora subspecies variegata) plantations in Queensland",
+    "year": 2022,
+    "authors": "Huynh, Trinh and Lewis, Tom and Applegate, Grahame and Pachas, Anibal Nahuel A and Lee, David J",
+    "countries": [
+      "AU"
+    ],
+    "regions": [
+      "AU-QLD"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Myrtaceae"
+    ],
+    "genera": [
+      "Corymbia"
+    ],
+    "species": [
+      "citriodora"
+    ]
+  },
+  {
+    "id": "iffsc_2022",
+    "title": "Modelos de biomassa para espécies arbóreas nativas de Santa Catarina",
+    "year": 2022,
+    "authors": "IFFSC, ",
+    "countries": [
+      "BR"
+    ],
+    "regions": [
+      "BR-SC"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Uritaceae",
+      "Araucariaceae",
+      "Cyatheaceae",
+      "Arecaceae"
+    ],
+    "genera": [
+      "Cecropia",
+      "Araucaria",
+      "Cyathea",
+      "Euterpe"
+    ],
+    "species": [
+      "galaziovii",
+      "angustifolia",
+      "delgadii",
+      "edulist"
+    ]
+  },
+  {
+    "id": "king_1966",
+    "title": "Site index curves for Douglas-fir in the Pacific Northwest",
+    "year": 1966,
+    "authors": "King, James E.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "kozak_1988",
+    "title": "A variable-exponent taper equation",
+    "year": 1988,
+    "authors": "Kozak, A",
+    "countries": [
+      "CA"
+    ],
+    "regions": [
+      "CA-BC"
+    ],
+    "model_types": [
+      "taper"
+    ],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Thuja",
+      "Pinus",
+      "Populus"
+    ],
+    "species": [
+      "menziesii",
+      "plicata",
+      "contorta",
+      "trichocarpa"
+    ]
+  },
+  {
+    "id": "krisnawati_2016",
+    "title": "A compatible estimation model of stem volume and taper for Acacia mangium Willd. plantations",
+    "year": 2016,
+    "authors": "Krisnawati, Haruni",
+    "countries": [
+      "ID"
+    ],
+    "regions": [
+      "ID-SS"
+    ],
+    "model_types": [
+      "taper"
+    ],
+    "measures": [
+      "volume",
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Fabaceae"
+    ],
+    "genera": [
+      "Acacia"
+    ],
+    "species": [
+      "mangium"
+    ]
+  },
+  {
+    "id": "krumland_2005",
+    "title": "Site index systems for major young-growth forest and woodland species in northern California",
+    "year": 2005,
+    "authors": "Krumland, Helge",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-CA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Pinaceae",
+      "Fagaceae",
+      "Betulaceae",
+      "Ericaceae",
+      "Lauraceae"
+    ],
+    "genera": [
+      "Sequoia",
+      "Abies",
+      "Notholithocarpus",
+      "Pseudotsuga",
+      "Pinus",
+      "Calocedrus",
+      "Quercus",
+      "Alnus",
+      "Arbutus",
+      "Umbellularia"
+    ],
+    "species": [
+      "sempervirens",
+      "grandis",
+      "densiflorus",
+      "menziesii",
+      "ponderosa",
+      "lambertiana",
+      "concolor",
+      "contorta",
+      "magnifica",
+      "decurrens",
+      "kelloggii",
+      "rubra",
+      "agrifolia",
+      "garryana",
+      "chrysolepis",
+      "douglasii",
+      "wislizeni",
+      "californica",
+      "jeffreyi"
+    ]
+  },
+  {
+    "id": "lambert_2005",
+    "title": "Canadian national tree aboveground biomass equations",
+    "year": 2005,
+    "authors": "Lambert, MC and Ung, CH and Raulier, Fr'ed'eric",
+    "countries": [
+      "CA"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Salicaceae",
+      "Malvaceae",
+      "Fagaceae",
+      "Oleaceae",
+      "Rosaceae",
+      "Cupressaceae",
+      "Betulaceae",
+      "Sapindaceae",
+      "Ulmaceae",
+      "NA"
+    ],
+    "genera": [
+      "Abies",
+      "Populus",
+      "Tilia",
+      "Fagus",
+      "Fraxinus",
+      "Prunus",
+      "Picea",
+      "Tsuga",
+      "Juniperus",
+      "Thuja",
+      "Pinus",
+      "Betula",
+      "Ostrya",
+      "Acer",
+      "Quercus",
+      "Larix",
+      "Ulmus",
+      "Carya",
+      "NA"
+    ],
+    "species": [
+      "lasiocarpa",
+      "balsamea",
+      "balsamifera",
+      "americana",
+      "grandifolia",
+      "nigra",
+      "serotina",
+      "mariana",
+      "canadensis",
+      "virginiana",
+      "occidentalis",
+      "strobus",
+      "populifolia",
+      "banksiana",
+      "grandidentata",
+      "contorta",
+      "pennsylvanica",
+      "rubrum",
+      "rubra",
+      "resinosa",
+      "rubens",
+      "saccharinum",
+      "saccharum",
+      "laricina",
+      "tremuloids",
+      "papifera",
+      "alba",
+      "glauca",
+      "alleghaniensis",
+      "NA"
+    ]
+  },
+  {
+    "id": "larsen_1985",
+    "title": "Equations for predicting diameter and squared diameter inside bark at breast height for six major conifers of southwest Oregon",
+    "year": 1985,
+    "authors": "Larsen, David Rolf and Hann, David W",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Abies",
+      "Pinus",
+      "Calocedrus"
+    ],
+    "species": [
+      "menziesii",
+      "grandis",
+      "concolor",
+      "ponderosa",
+      "lambertiana",
+      "decurrens"
+    ]
+  },
+  {
+    "id": "mcardle_1961",
+    "title": "The Yield of Douglas-fir in the Pacific Northwest",
+    "year": 1961,
+    "authors": "McArdle, Richard E and Meyer, Walter H and Bruce, Donald",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "means_1989",
+    "title": "Height Growth and Site Index Curves for Douglas-Fir in the Siuslaw National Forest, Oregon",
+    "year": 1989,
+    "authors": "Means, JF and Sabin, TE",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "montero_2005",
+    "title": "Biomass production and CO2 fixation by Spanish forests",
+    "year": 2005,
+    "authors": "Montero, Gregorio and Ruiz-Peinado, Ricardo and Munoz, Marta",
+    "countries": [
+      "ES"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Aquifoliaceae",
+      "Betulaceae",
+      "Cupressaceae",
+      "Ericaceae",
+      "Fabaceae",
+      "Fagaceae",
+      "Lauraceae",
+      "Myricaceae",
+      "Myrtaceae",
+      "Oleaceae",
+      "Pinaceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Ilex",
+      "Alnus",
+      "Betula",
+      "Juniperus",
+      "Erica",
+      "Ceratonia",
+      "Castanea",
+      "Fagus",
+      "Quercus",
+      "Laurus",
+      "Myrica",
+      "Eucalyptus",
+      "Fraxinus",
+      "Olea",
+      "Abies",
+      "Pinus",
+      "Populus"
+    ],
+    "species": [
+      "canariensis",
+      "glutinosa",
+      "NA",
+      "oxycedrus",
+      "phoenicea",
+      "thurifera",
+      "arborea",
+      "siliqua",
+      "sativa",
+      "sylvatica",
+      "faginea",
+      "ilex",
+      "pyrenaica",
+      "robur",
+      "suber",
+      "azorica",
+      "faya",
+      "europaea",
+      "pinsapo",
+      "halepensis",
+      "nigra",
+      "pinaster",
+      "pinea",
+      "radiata",
+      "sylvestris",
+      "uncinata",
+      "euramericana"
+    ]
+  },
+  {
+    "id": "montero_2020",
+    "title": "Biomass production and carbon sequestration by Spanish shrublands and by the superficial organic horizon of forest soils",
+    "year": 2020,
+    "authors": "Montero, G and López-Leiva, C and Ruiz-Peinado, R and López-Senespleda, E and Onrubia, R and Pasalodos, M",
+    "countries": [
+      "ES"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "height",
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Ericaceae",
+      "Anacardiaceae",
+      "Apocynaceae",
+      "Rosaceae",
+      "Berberidaceae",
+      "Buxaceae",
+      "Fagaceae",
+      "Myrtaceae",
+      "Fabaceae",
+      "Cistaceae",
+      "Lamiaceae",
+      "Oleaceae",
+      "Rhamnaceae"
+    ],
+    "genera": [
+      "Erica",
+      "Pistacia",
+      "Nerium",
+      "Rosa",
+      "Berberis",
+      "Buxus",
+      "Quercus",
+      "Arbutus",
+      "Myrtus",
+      "Cytisus",
+      "Retama",
+      "Ulex",
+      "Genista",
+      "Calicotome",
+      "Cistus",
+      "Halimium",
+      "Rosmarinus",
+      "Lavandula",
+      "Phlomis",
+      "Thymus",
+      "Crataegus",
+      "Phillyrea",
+      "Rhamnus",
+      "Calluna",
+      "Adenocarpus",
+      "Rhododendron"
+    ],
+    "species": [
+      "scoparia",
+      "lentiscus",
+      "oleander",
+      "canina",
+      "vulgaris",
+      "sempervirens",
+      "ilex",
+      "coccifera",
+      "unedo",
+      "communis",
+      "arborea",
+      "australis",
+      "scoparius",
+      "sphaerocarpa",
+      "europaeus",
+      "parviflorous",
+      "scorpius",
+      "ssp",
+      "ladanifer",
+      "albidus",
+      "populifolius",
+      "salviifolius",
+      "halimifolium",
+      "officinalis",
+      "stoechas",
+      "purpurea",
+      "spp",
+      "monogyna",
+      "angustifolia",
+      "lycioides",
+      "oromediterraneus",
+      "multiflorus",
+      "florida",
+      "cinerea",
+      "tinctoria",
+      "linifolia",
+      "laurifolius",
+      "monspeliensi",
+      "libanotis",
+      "ferrugineum"
+    ]
+  },
+  {
+    "id": "moore_1996",
+    "title": "Height-diameter equations for ten tree species in the Inland Northwest",
+    "year": 1996,
+    "authors": "Moore, James A and Zhang, Lianjun and Stuck, Dean",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-MT",
+      "US-OR",
+      "US-WA",
+      "US-ID"
+    ],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Larix",
+      "Pseudotsuga",
+      "Abies",
+      "Tsuga",
+      "Thuja",
+      "Picea"
+    ],
+    "species": [
+      "monticola",
+      "occidentalis",
+      "menziesii",
+      "grandis",
+      "heterophylla",
+      "plicata",
+      "contorta",
+      "engelmannii",
+      "lasiocarpa",
+      "ponderosa"
+    ]
+  },
+  {
+    "id": "myers_1964a",
+    "title": "Volume tables and point-sampling factors for ponderosa pine in the Black Hills",
+    "year": 1964,
+    "authors": "Myers, Clifford A",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-WY",
+      "US-SD"
+    ],
+    "model_types": [
+      "VBAR"
+    ],
+    "measures": [
+      "volume",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "myers_1972",
+    "title": "Volume tables and point-sampling factors for Engelmann spruce in Colorado and Wyoming",
+    "year": 1972,
+    "authors": "Myers, Clifford A and Edminster, Carleton B",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-CO",
+      "US-WY"
+    ],
+    "model_types": [
+      "VBAR"
+    ],
+    "measures": [
+      "volume",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "nunes_2022",
+    "title": "Bulk Density of Shrub Types and Tree Crowns to Use with Forest Inventories in the Iberian Peninsula",
+    "year": 2022,
+    "authors": "Nunes, Leonia and Pasalodos-Tato, Maria and Alberdi, Iciar and Sequeira, Ana Catarina and Vega, Jose Antonio and Silva, Vasco and Vieira, Pedro and Rego, Francisco Castro",
+    "countries": [
+      "ES"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "height",
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Mirtaceae",
+      "Fagaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Eucalyptus",
+      "Quercus",
+      "Castanea"
+    ],
+    "species": [
+      "pinaster",
+      "pinea",
+      "halepensis",
+      "sylvestris",
+      "suber",
+      "ilex",
+      "pyrenaica",
+      "sativa"
+    ]
+  },
+  {
+    "id": "paine_1982",
+    "title": "Maximum crown-width equations for southwestern Oregon tree species",
+    "year": 1982,
+    "authors": "Paine, D.W.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Fagaceae",
+      "Pinaceae",
+      "Cupressaceae",
+      "Ericaceae"
+    ],
+    "genera": [
+      "Quercus",
+      "Chrysolepis",
+      "Pseudotsuga",
+      "Calocedrus",
+      "Pinus",
+      "Arbutus",
+      "Abies",
+      "Notholithocarpus",
+      "Tsuga"
+    ],
+    "species": [
+      "kelloggii",
+      "chrysophylla",
+      "menziesii",
+      "decurrens",
+      "jeffreyi",
+      "procera",
+      "garryana",
+      "ponderosa",
+      "magnifica",
+      "lambertiana",
+      "densiflorus",
+      "heterophylla",
+      "monticola",
+      "concolor",
+      "grandis"
+    ]
+  },
+  {
+    "id": "poudel_2018",
+    "title": "Estimating upper stem diameters and volume of Douglas-fir and Western hemlock trees in the Pacific northwest",
+    "year": 2018,
+    "authors": "Poudel, Krishna P and Temesgen, Hailemariam and Gray, Andrew N",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA"
+    ],
+    "model_types": [
+      "taper"
+    ],
+    "measures": [
+      "ratio",
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Tsuga"
+    ],
+    "species": [
+      "menziesii",
+      "heterophylla"
+    ]
+  },
+  {
+    "id": "poudel_2019",
+    "title": "Estimating individual-tree aboveground biomass of tree species in the western USA",
+    "year": 2019,
+    "authors": "Poudel, Krishna P and Temesgen, Hailemariam and Radtke, Philip J and Gray, Andrew N",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "CA-BC",
+      "US-WA",
+      "US-OR",
+      "US-CA",
+      "US-NV",
+      "US-ID",
+      "US-MT",
+      "US-UT",
+      "US-AZ",
+      "US-CO"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass",
+      "volume",
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Betulaceae",
+      "Salicaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Abies",
+      "Chamaecyparis",
+      "Larix",
+      "Calocedrus",
+      "Picea",
+      "Pseudotsuga",
+      "Sequoia",
+      "Thuja",
+      "Tsuga",
+      "Alnus",
+      "Populus",
+      "Sequoiadendron",
+      "Juniperus",
+      "Betula"
+    ],
+    "species": [
+      "ponderosa",
+      "concolor",
+      "grandis",
+      "lasiocarpa",
+      "magnifica",
+      "nootkatensis",
+      "occidentalis",
+      "decurrens",
+      "engelmannii",
+      "glauca",
+      "sitchensis",
+      "contorta",
+      "flexilis",
+      "jeffreyi",
+      "lambertiana",
+      "monticola",
+      "menziesii",
+      "sempervirens",
+      "plicata",
+      "heterophylla",
+      "mertensiana",
+      "rubra",
+      "tremuloides",
+      "amabilis",
+      "mariana",
+      "monophylla",
+      "giganteum",
+      "balsamifera",
+      "osteosperma",
+      "papyrifera"
+    ]
+  },
+  {
+    "id": "ritche_1987",
+    "title": "Equations for predicting height to crown base for fourteen tree species in southwest Oregon",
+    "year": 1987,
+    "authors": "Ritchie, Martin W and Hann, David W",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "ratio"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Fagaceae",
+      "Pinaceae",
+      "Ericaceae",
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Notholithocarpus",
+      "Quercus",
+      "Pseudotsuga",
+      "Abies",
+      "Pinus",
+      "Arbutus",
+      "Calocedrus",
+      "Chrysolepis",
+      "Tsuga"
+    ],
+    "species": [
+      "densiflorus",
+      "chrysolepis",
+      "kelloggii",
+      "menziesii",
+      "grandis",
+      "concolor",
+      "ponderosa",
+      "lambertiana",
+      "decurrens",
+      "chrysophylla",
+      "heterophylla",
+      "garryana"
+    ]
+  },
+  {
+    "id": "rolim_2019a",
+    "title": "Biometric Models for Mixed-species Plantation in the North of Espirito Santo, Brazil",
+    "year": 2019,
+    "authors": "Rolim, Samir and Orellano, Enrique and Piotto, Daniel and de, Edgar",
+    "countries": [
+      "BR"
+    ],
+    "regions": [
+      "BR-ES"
+    ],
+    "model_types": [],
+    "measures": [
+      "height",
+      "volume",
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "rolim_2019b",
+    "title": "Diameter Growth Models for 35 Atlantic Forest Tree Species in Silvicultural Trials in the North of Espirito Santo, Brazil",
+    "year": 2019,
+    "authors": "Rolim, Samir and Piotto, Daniel and Orellana, Enrique",
+    "countries": [
+      "BR"
+    ],
+    "regions": [
+      "BR-ES"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Fabaceae",
+      "Anacardiaceae",
+      "Malvaceae",
+      "Combretaceae",
+      "Bignoniaceae",
+      "Aponyaceae",
+      "Lecythidaceae",
+      "Euphorbiaceae",
+      "Sapotaceae",
+      "Moraceae",
+      "Boraginaceae",
+      "Simaroubaceae"
+    ],
+    "genera": [
+      "Amburana",
+      "Bowdichia",
+      "Copaifera",
+      "Moldenhawera",
+      "Myracrodruon",
+      "Pterygota",
+      "Terminalia",
+      "Zeyheria",
+      "Aspidosperma",
+      "Pachira",
+      "Astronium",
+      "Barnebydendron",
+      "Cariniana",
+      "Centrolobium",
+      "Dalbergia",
+      "Goniorrhachis",
+      "Handroanthus",
+      "Hymenaea",
+      "Joannesia",
+      "Lecythis",
+      "Libidibia",
+      "Manilkara",
+      "Paratecoma",
+      "Parkia",
+      "Paubrasilia",
+      "Pterocarpus",
+      "Senegalia",
+      "Spondias",
+      "Tachigali",
+      "Vatairea",
+      "Vataireopsis",
+      "Clarisia",
+      "Cordia",
+      "Simarouba"
+    ],
+    "species": [
+      "cearensis",
+      "virgilioides",
+      "langsdorffii",
+      "papillanthera",
+      "urundeuva",
+      "brasiliensis",
+      "mameluco",
+      "tuberculosa",
+      "pyricollum",
+      "endecaphylla",
+      "concinnum",
+      "riedelii",
+      "legalis",
+      "tomentosum",
+      "nigra",
+      "marginata",
+      "serratifolius",
+      "courbaril",
+      "princeps",
+      "pisonis",
+      "ferrea",
+      "longifolia",
+      "peroba",
+      "pendula",
+      "echinata",
+      "rohrii",
+      "polyphylla",
+      "venulosa",
+      "vulgaris",
+      "heteroptera",
+      "araroba",
+      "graveolens",
+      "racemosa",
+      "trichotoma",
+      "amara"
+    ]
+  },
+  {
+    "id": "rustagi_1991",
+    "title": "Compatible variable-form volume and stem-profile equations for Douglas-fir",
+    "year": 1991,
+    "authors": "Rustagi, Krishna P and Loveless Jr, Robert S",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "CA-BC"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "scott_1981",
+    "title": "Northeastern forest survey revised cubic-foot volume equations",
+    "year": 1981,
+    "authors": "Scott, Charles Thomas",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-TN",
+      "US-OH",
+      "US-WV",
+      "US-MD",
+      "US-DE",
+      "US-PA",
+      "US-NJ",
+      "US-NY",
+      "US-CT",
+      "US-RI",
+      "US-MA",
+      "US-VT",
+      "US-NH",
+      "US-ME"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Sapindaceae",
+      "Magnoliaceae",
+      "Rosaceae",
+      "Fagaceae",
+      "Malvaceae",
+      "Altingiaceae",
+      "Nyssaceae"
+    ],
+    "genera": [
+      "Pinus",
+      "Picea",
+      "Abies",
+      "Tsuga",
+      "Larix",
+      "Acer",
+      "Liriodendron",
+      "Prunus",
+      "Fagus",
+      "Tilia",
+      "Liquidambar",
+      "Nyssa",
+      "Quercus"
+    ],
+    "species": [
+      "strobus",
+      "resinosa",
+      "rubens",
+      "glauca",
+      "mariana",
+      "balsamea",
+      "canadensis",
+      "laricina",
+      "abies",
+      "saccharum",
+      "saccharinum",
+      "tulipifera",
+      "serotina",
+      "grandifolia",
+      "americana",
+      "styraciflua",
+      "sylvatica",
+      "prinus"
+    ]
+  },
+  {
+    "id": "sharma_2015",
+    "title": "Modeling height-diameter relationships for Norway spruce, Scots pine, and downy birch using Norwegian national forest inventory data",
+    "year": 2015,
+    "authors": "Sharma, Ram P and Breidenbach, Johannes",
+    "countries": [
+      "NO"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Betulaceae"
+    ],
+    "genera": [
+      "Picea",
+      "Pinus",
+      "Betula"
+    ],
+    "species": [
+      "abies",
+      "sylvestris",
+      "pubescens"
+    ]
+  },
+  {
+    "id": "temesgen_2007",
+    "title": "Regional height--diameter equations for major tree species of southwest Oregon",
+    "year": 2007,
+    "authors": "Temesgen, Hailemariam and Hann, David W and Monleon, Vincente J",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Cupressaceae",
+      "Pinaceae",
+      "Ericaceae",
+      "Fagaceae"
+    ],
+    "genera": [
+      "Calocedrus",
+      "Abies",
+      "Pinus",
+      "Pseudotsuga",
+      "Arbutus",
+      "Chrysolepis",
+      "Notholithocarpus",
+      "Quercus"
+    ],
+    "species": [
+      "decurrens",
+      "grandis",
+      "concolor",
+      "lambertiana",
+      "ponderosa",
+      "menziesii",
+      "chysophylla",
+      "densiflorus",
+      "chrysolepis",
+      "kelloggii"
+    ]
+  },
+  {
+    "id": "temesgen_2008",
+    "title": "Analysis and comparison of nonlinear tree height prediction\n          strategies for Douglas-fir forests",
+    "year": 2008,
+    "authors": "Temesgen, Hailemariam and Monleon, Vicente J. and Hann, David W.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pseudotsuga"
+    ],
+    "species": [
+      "menziesii"
+    ]
+  },
+  {
+    "id": "turner_2000",
+    "title": "Assessing alternative allometric algorithms for estimating leaf area of Douglas-fir trees and stands",
+    "year": 2000,
+    "authors": "Turner, David P and Acker, Steven A and Means, Joseph E and Garman, Steven L",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-OR"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Cupressaceae"
+    ],
+    "genera": [
+      "Pseudotsuga",
+      "Tsuga",
+      "Thuja"
+    ],
+    "species": [
+      "menziesii",
+      "heterophylla",
+      "plicata"
+    ]
+  },
+  {
+    "id": "uller_2019",
+    "title": "Aboveground biomass quantification and tree-level prediction models for the Brazilian subtropical Atlantic Forest",
+    "year": 2019,
+    "authors": "Uller, Heitor Felippe and Zimermann Oliveira, Laio and Klitzke, Aline Renata and Roberto Eleotério, Jackson and Fantini, Alfredo Celso and Vibrans, Alexander Christian",
+    "countries": [
+      "BR"
+    ],
+    "regions": [
+      "BR-SC"
+    ],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "ung_2008",
+    "title": "Canadian national biomass equations: new parameter estimates that include British Columbia data",
+    "year": 2008,
+    "authors": "Ung, Chhun-Huor and Bernier, Pierre and Guo, Xiao-Jing",
+    "countries": [
+      "CA"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Pinaceae",
+      "Salicaceae",
+      "Betulaceae",
+      "Cupressaceae",
+      "NA"
+    ],
+    "genera": [
+      "Abies",
+      "Picea",
+      "Pinus",
+      "Populus",
+      "Betula",
+      "Pseudotsuga",
+      "Alnus",
+      "Tsuga",
+      "Thuja",
+      "NA"
+    ],
+    "species": [
+      "lasiocarpa",
+      "mariana",
+      "contorta",
+      "tremuloides",
+      "papyrifera",
+      "glauca",
+      "menziesii",
+      "engelmannii",
+      "amabilis",
+      "trichocarpa",
+      "rubra",
+      "sitchensis",
+      "heterophylla",
+      "plicata",
+      "NA"
+    ]
+  },
+  {
+    "id": "vibrans_2015",
+    "title": "Generic and specific stem volume models for three subtropical forest types in southern Brazil",
+    "year": 2015,
+    "authors": "Vibrans, Alexander C and Moser, Paolo and Oliveira, Laio Z and de, João P",
+    "countries": [
+      "BR"
+    ],
+    "regions": [
+      "BR-SC"
+    ],
+    "model_types": [],
+    "measures": [
+      "volume"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Lauraceae",
+      "Meliaceae",
+      "Clethraceae",
+      "Sapindaceae",
+      "Rosaceae",
+      "Euphorbiaceae",
+      "Phyllanthaceae",
+      "Melastomataceae",
+      "Asteraceae",
+      "Anacardiaceae",
+      "Myristicaceae"
+    ],
+    "genera": [
+      "Nectandra",
+      "Ocotea",
+      "Cedrela",
+      "Clethra",
+      "Matayba",
+      "Prunus",
+      "Alchornea",
+      "Hieronyma",
+      "Miconia",
+      "Piptocarpha",
+      "Tapirira",
+      "Virola"
+    ],
+    "species": [
+      "megapotamica",
+      "puberula",
+      "fissilis",
+      "scabra",
+      "elaeagnoides",
+      "myrtifolia",
+      "triplinervia",
+      "alchorneoides",
+      "cinnamomifolia",
+      "oppositifolia",
+      "angustifolia",
+      "guianensis",
+      "bicuhyba"
+    ]
+  },
+  {
+    "id": "wiley_1978",
+    "title": "Site index tables for western hemlock in the Pacific Northwest",
+    "year": 1978,
+    "authors": "Wiley, Kenneth N.",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "regions": [
+      "US-OR",
+      "US-WA",
+      "CA-BC"
+    ],
+    "model_types": [
+      "site index"
+    ],
+    "measures": [
+      "height"
+    ],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Tsuga"
+    ],
+    "species": [
+      "heterophylla"
+    ]
+  },
+  {
+    "id": "winck_2015",
+    "title": "Regional prediction models for the aboveground biomass estimation of eucalyptus grandis in Northeastern Argentina",
+    "year": 2015,
+    "authors": "Winck, Rosa and Fassola, Hugo and Barth, Sara Regina and Crechi, Ernesto and Keller, Aldo and Videla, Daniel and Zaderenko, Constantino",
+    "countries": [
+      "AR"
+    ],
+    "regions": [],
+    "model_types": [],
+    "measures": [
+      "biomass"
+    ],
+    "stat_types": [
+      "fixed_effects_set"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  },
+  {
+    "id": "zeide_2002",
+    "title": "The effect of density on the height-diameter relationship",
+    "year": 2002,
+    "authors": "Zeide, Boris and Vanderschaaf, Curtis",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-AR"
+    ],
+    "model_types": [],
+    "measures": [],
+    "stat_types": [
+      "fixed_effects"
+    ],
+    "families": [],
+    "genera": [],
+    "species": []
+  }
+]

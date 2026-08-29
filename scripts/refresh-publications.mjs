@@ -1,6 +1,7 @@
-// Regenerate src/lib/publications.json and src/lib/vns.json from the
-// allometric/models repo (v4). Uses git protocol (not the GitHub REST API)
-// so it is never rate-limited. Run: npm run refresh:models
+// Regenerate src/lib/publications.json, src/lib/vns.json, and
+// src/lib/publications.index.json from the allometric/models repo (v4).
+// Uses git protocol (not the GitHub REST API) so it is never rate-limited.
+// Run: npm run refresh:models
 import { execSync } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -10,6 +11,11 @@ import { parse } from 'yaml';
 const REPO = 'allometric/models';
 const REF = 'v4';
 const dir = mkdtempSync(join(tmpdir(), 'models-tree-'));
+
+const asList = (v) => (Array.isArray(v) ? v.map(String) : v == null ? [] : [String(v)]);
+const addUniq = (arr, v) => {
+	if (v && !arr.includes(v)) arr.push(v);
+};
 
 try {
 	execSync(`git clone --depth 1 --filter=blob:none --no-checkout https://github.com/${REPO} ${dir}`, {
@@ -21,28 +27,21 @@ try {
 		.toString()
 		.trim()
 		.split('\n');
-
 	const yamls = allPaths.filter((p) => /^(publications|families)\/.*\.yaml$/.test(p));
 	const toEntry = (p) => ({ id: p.split('/').pop().replace(/\.yaml$/, ''), path: p });
 	const sort = (a, b) => a.id.localeCompare(b.id);
 	const publications = yamls.filter((p) => p.startsWith('publications/')).map(toEntry).sort(sort);
 	const families = yamls.filter((p) => p.startsWith('families/')).map(toEntry).sort(sort);
 
-	writeFileSync(
-		'src/lib/publications.json',
-		JSON.stringify({ ref: REF, publications, families }, null, 2) + '\n',
-	);
-	console.log(`Wrote ${publications.length} publications, ${families.length} families.`);
+	const commit = execSync(`git -C ${dir} rev-parse FETCH_HEAD`).toString().trim();
 
-	// vns variable naming system, bundled for client-side tooltips and titles.
+	// --- vns (needed to derive model_types / measures for the index) ---
 	const components = {};
-	const compData = parse(execSync(`git -C ${dir} show FETCH_HEAD:vns/components.yaml`).toString());
-	for (const c of compData?.components ?? []) {
+	for (const c of parse(execSync(`git -C ${dir} show FETCH_HEAD:vns/components.yaml`).toString())?.components ?? []) {
 		if (c.code && c.name) components[c.code] = c.name;
 	}
 	const modelTypes = {};
-	const mtData = parse(execSync(`git -C ${dir} show FETCH_HEAD:vns/model_types.yaml`).toString());
-	for (const mt of mtData?.model_types ?? []) {
+	for (const mt of parse(execSync(`git -C ${dir} show FETCH_HEAD:vns/model_types.yaml`).toString())?.model_types ?? []) {
 		if (mt.model_type) modelTypes[mt.model_type] = mt.response_name_starts ?? [];
 	}
 	const vnsVars = {};
@@ -57,11 +56,69 @@ try {
 			};
 		}
 	}
+
+	writeFileSync(
+		'src/lib/publications.json',
+		JSON.stringify({ ref: REF, commit, publications, families }, null, 2) + '\n',
+	);
+	console.log(`Wrote ${publications.length} publications, ${families.length} families (commit ${commit.slice(0, 7)}).`);
 	writeFileSync(
 		'src/lib/vns.json',
 		JSON.stringify({ variables: vnsVars, model_types: modelTypes }, null, 2) + '\n',
 	);
 	console.log(`Wrote ${Object.keys(vnsVars).length} vns variables (${Object.keys(modelTypes).length} model types).`);
+
+	// --- aggregated publication index for faceted browsing ---
+	const addTaxa = (entry, taxa) => {
+		if (!Array.isArray(taxa)) return;
+		for (const t of taxa) {
+			addUniq(entry.families, t?.family);
+			addUniq(entry.genera, t?.genus);
+			addUniq(entry.species, t?.species);
+		}
+	};
+	const index = [];
+	for (const pub of publications) {
+		const data = parse(execSync(`git -C ${dir} show FETCH_HEAD:${pub.path}`).toString());
+		const meta = data?.publication ?? {};
+		const models = Array.isArray(data?.models) ? data.models : [];
+		const sets = Array.isArray(data?.model_sets) ? data.model_sets : [];
+		const entry = {
+			id: pub.id,
+			title: meta.title ?? '',
+			year: meta.year ?? null,
+			authors: meta.author ?? '',
+			countries: asList(meta.descriptors?.country),
+			regions: asList(meta.descriptors?.region),
+			model_types: [],
+			measures: [],
+			stat_types: [],
+			families: [],
+			genera: [],
+			species: [],
+		};
+		const responseVars = [];
+		for (const m of models) {
+			addUniq(entry.stat_types, m?.type);
+			if (m?.response) for (const k of Object.keys(m.response)) responseVars.push(k);
+			addTaxa(entry, m?.taxa);
+		}
+		for (const s of sets) {
+			addUniq(entry.stat_types, s?.type);
+			if (s?.response) for (const k of Object.keys(s.response)) responseVars.push(k);
+			for (const spec of s?.specifications ?? []) addTaxa(entry, spec?.taxa);
+		}
+		for (const v of responseVars) {
+			for (const [type, prefixes] of Object.entries(modelTypes)) {
+				if (prefixes.some((pre) => v.startsWith(pre))) addUniq(entry.model_types, type);
+			}
+			const info = vnsVars[v];
+			if (info?.measure) addUniq(entry.measures, info.measure);
+		}
+		index.push(entry);
+	}
+	writeFileSync('src/lib/publications.index.json', JSON.stringify(index, null, 2) + '\n');
+	console.log(`Wrote ${index.length} indexed publications.`);
 } finally {
 	rmSync(dir, { recursive: true, force: true });
 }

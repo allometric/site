@@ -1,5 +1,5 @@
 ---
-import { REPO, REF, listPublications } from '../../lib/repo';
+import { REPO, COMMIT, listPublications } from '../../lib/repo';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 
 // Generic publication page: one static shell per publication in the
@@ -17,8 +17,8 @@ export async function getStaticPaths() {
 
 const { pubPath } = Astro.props as { pubPath: string };
 const pubId = Astro.params.pub_id;
-const rawUrl = `https://raw.githubusercontent.com/${REPO}/${REF}/${pubPath}`;
-const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
+const rawUrl = `https://raw.githubusercontent.com/${REPO}/${COMMIT}/${pubPath}`;
+const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 ---
 
 	<StarlightPage
@@ -26,16 +26,19 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 			title: pubId,
 		}}
 	>
-	<div id="publication" class="publication" data-raw-url={rawUrl} data-pub-id={pubId}>
+	<div id="publication" class="publication" data-raw-url={rawUrl} data-pub-id={pubId} data-github-url={githubUrl}>
 		<p id="status" class="status" role="status">Loading publication record…</p>
 	</div>
 
-	<p class="source-note">
-		Rendered live from{' '}
-		<a href={githubUrl} target="_blank" rel="noopener noreferrer">
-			{REPO}@{REF}/{pubPath}
-		</a>
-	</p>
+	<footer class="source-note">
+		<p>
+			Rendered from{' '}
+			<a href={`https://github.com/${REPO}/commit/${COMMIT}`} target="_blank" rel="noopener noreferrer">
+				{REPO}@{COMMIT.slice(0, 7)}
+			</a>
+			· <a href={githubUrl} target="_blank" rel="noopener noreferrer">{pubPath}</a>
+		</p>
+	</footer>
 </StarlightPage>
 
 	<style is:global>
@@ -60,9 +63,20 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 		margin-block-start: 1rem;
 	}
 
+	/* The in-body title is the page h1; hide StarlightPage's frontmatter h1 (pub_id). */
+	body:has(#publication) [data-slot='doc-title-header'] {
+		display: none;
+	}
+	#publication .pub-header {
+		position: static;
+	}
 	.pub-title {
 		font-size: var(--sl-text-3xl);
 		margin-block: 0 0.5rem;
+	}
+	.pub-title a,
+	.pub-meta a {
+		color: var(--sl-color-accent);
 	}
 	#publication .pub-meta {
 		color: var(--sl-color-gray-3);
@@ -206,39 +220,46 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 	}
 	.code-tab-bar {
 		display: flex;
+		align-items: center;
 		gap: 0.25rem;
 		padding: 0.375rem 0.5rem;
 		background: var(--sl-color-gray-7);
 		border-block-end: 1px solid var(--sl-color-gray-6);
 	}
 	.code-tab {
+		display: inline-flex;
+		align-items: center;
+		margin: 0;
 		background: transparent;
 		border: none;
 		border-radius: 0.25rem;
-		padding: 0.2rem 0.6rem;
+		padding: 0.15rem 0.6rem;
 		font-family: inherit;
 		font-size: var(--sl-text-xs);
-		line-height: 1.4;
+		line-height: 1;
 		font-weight: var(--sl-font-weight-semibold);
 		color: var(--sl-color-gray-3);
 		cursor: pointer;
+		white-space: nowrap;
 	}
 	.code-tab:hover {
 		color: var(--sl-color-text);
-		background: var(--sl-color-gray-8);
+		background: color-mix(in oklab, var(--sl-color-gray-6) 40%, transparent);
 	}
 	.code-tab.active {
 		color: var(--sl-color-accent-high);
-		background: var(--sl-color-gray-8);
+		background: color-mix(in oklab, var(--sl-color-accent) 18%, transparent);
 	}
 	.code-tab-panel {
 		display: none;
+		margin: 0;
 	}
 	.code-tab-panel.active {
 		display: block;
 	}
 	.code-tab-panel .code {
 		margin: 0;
+		padding: 0.5rem 1rem;
 		background: var(--sl-color-gray-8);
 		border: none;
 		border-radius: 0;
@@ -315,8 +336,6 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 		color: #a0a1a7;
 	}
 	.specs {
-		max-height: 18rem;
-		overflow-y: auto;
 		border: 1px solid var(--sl-color-gray-6);
 		border-radius: 0.375rem;
 	}
@@ -324,12 +343,6 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 		margin: 0;
 		width: 100%;
 		border: none;
-	}
-	.specs thead th {
-		position: sticky;
-		top: 0;
-		background: var(--sl-color-gray-8);
-		z-index: 1;
 	}
 	.code {
 		background: var(--sl-color-gray-7);
@@ -362,6 +375,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 	const status = document.getElementById('status');
 	const yamlUrl = root.dataset.rawUrl;
 	const pubId = root.dataset.pubId;
+	const githubUrl = root.dataset.githubUrl;
 
 	function el(tag, className, text) {
 		const node = document.createElement(tag);
@@ -440,8 +454,8 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 	}
 
 	function renderPublication(pub) {
-		const header = el('header');
-		header.append(el('h2', 'pub-title', pub.title ?? 'Untitled'));
+		const header = el('header', 'pub-header');
+		header.append(el('h1', 'pub-title', pub.title ?? 'Untitled'));
 
 		const meta = el('p', 'pub-meta');
 		const nodes = [];
@@ -456,6 +470,15 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 			const match = pub.doi.match(/doi\.org\/(.+)$/);
 			link.textContent = match ? match[1] : pub.doi;
 			nodes.push(link);
+		}
+		// pub_id as a link to the YAML, bracketed at the end of the citation.
+		if (pubId) {
+			const pubLink = document.createElement('a');
+			pubLink.href = githubUrl;
+			pubLink.target = '_blank';
+			pubLink.rel = 'noopener noreferrer';
+			pubLink.textContent = `[${pubId}]`;
+			nodes.push(pubLink);
 		}
 		for (let i = 0; i < nodes.length; i++) {
 			if (i > 0) meta.append(document.createTextNode('. '));
@@ -501,13 +524,21 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 					? Object.keys(model.covariates)
 					: [];
 			const fnName = `${pubId}_${model.name ?? 'model'}`;
-			const code = `${fnName} <- function(${covariates.join(', ')}) {\n  ${String(model.prediction_function)}\n}`;
-			section.append(el('h4', 'block-title', 'Prediction Function'));
-			const pre = el('pre', 'code');
-			const codeEl = el('code');
-			codeEl.innerHTML = highlightR(code);
-			pre.append(codeEl);
-			section.append(pre);
+			const fnBody = wrapLines(String(model.prediction_function))
+				.map((l, i) => (i === 0 ? '  ' : '    ') + l)
+				.join('\n');
+			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n${fnBody}\n}`;
+			const loadCode = `model <- load_model("${pubId}", "${model.name ?? ''}")`;
+			section.append(
+				codeTabs([
+					{ label: 'Prediction Function', code: fnCode },
+					{ label: 'Load model', code: loadCode },
+				]),
+			);
+		}
+		if (model.parameters && typeof model.parameters === 'object') {
+			section.append(el('h4', 'block-title', 'Parameters'));
+			section.append(renderParamsTable(model.parameters));
 		}
 		return section;
 	}
@@ -545,7 +576,10 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 					? Object.keys(set.covariates)
 					: [];
 			const fnName = `${pubId}_${set.name ?? 'model'}`;
-			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n  ${String(set.prediction_function)}\n}`;
+			const fnBody = wrapLines(String(set.prediction_function))
+				.map((l, i) => (i === 0 ? '  ' : '    ') + l)
+				.join('\n');
+			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n${fnBody}\n}`;
 			const loadCode = `set <- load_set("${pubId}", "${set.name ?? ''}")`;
 			section.append(
 				codeTabs([
@@ -564,6 +598,33 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 	/** Syntax-highlight an R snippet, returning HTML-safe markup. */
 	function highlightR(code) {
 		return hljs.highlight(code, { language: 'r' }).value;
+	}
+
+	/** Wrap an R expression to a max line width, breaking at top-level operators. */
+	function wrapLines(expr, width = 80) {
+		let depth = 0;
+		let line = '';
+		const lines = [];
+		const over = () => line.length >= width;
+		for (let i = 0; i < expr.length; i++) {
+			const ch = expr[i];
+			if (ch === '(') depth++;
+			if (ch === ')') depth--;
+			line += ch;
+			// semicolons separate statements: always break after one at top level.
+			if (depth === 0 && ch === ';') {
+				lines.push(line.trim());
+				line = '';
+				continue;
+			}
+			// break after an operator at any depth once the line is wide.
+			if (/[+\-*/,]/.test(ch) && over() && i < expr.length - 1) {
+				lines.push(line.trim());
+				line = '';
+			}
+		}
+		if (line.trim()) lines.push(line.trim());
+		return lines;
 	}
 
 	/** Round a parameter to two significant figures; use scientific notation for very small/large values. */
@@ -606,6 +667,25 @@ const githubUrl = `https://github.com/${REPO}/blob/${REF}/${pubPath}`;
 				const value = spec.parameters?.[name];
 				tr.append(el('td', 'param-value', value === undefined ? '' : formatParam(value)));
 			}
+			tbody.append(tr);
+		}
+		table.append(thead, tbody);
+		container.append(table);
+		return container;
+	}
+
+	/** Render a single model's parameters as a self-scrolling Parameter/Value table. */
+	function renderParamsTable(params) {
+		const container = el('div', 'specs');
+		const table = el('table', 'params');
+		const thead = el('thead');
+		const headRow = el('tr');
+		headRow.append(el('th', undefined, 'Parameter'), el('th', undefined, 'Value'));
+		thead.append(headRow);
+		const tbody = el('tbody');
+		for (const [name, value] of Object.entries(params)) {
+			const tr = el('tr');
+			tr.append(el('td', 'param-name', name), el('td', 'param-value', formatParam(value)));
 			tbody.append(tr);
 		}
 		table.append(thead, tbody);

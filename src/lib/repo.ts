@@ -8,6 +8,8 @@ export const REPO = 'allometric/models';
 export const REF = 'v4';
 export const PUB_PREFIX = 'publications/';
 export const FAMILY_PREFIX = 'families/';
+// The snapshot commit the site is rendered against (captured at refresh time).
+export const COMMIT = cached.commit ?? REF;
 
 export interface PubEntry {
 	/** record key, e.g. `barnes_1962` */
@@ -91,7 +93,7 @@ export async function enrichWithTitles(
 	return Promise.all(
 		entries.map(async (entry) => {
 			try {
-				const res = await fetch(`https://raw.githubusercontent.com/${REPO}/${REF}/${entry.path}`);
+				const res = await fetch(`https://raw.githubusercontent.com/${REPO}/${COMMIT}/${entry.path}`);
 				if (!res.ok) return entry;
 				const title = titleOf(parse(await res.text()));
 				return typeof title === 'string' && title.length > 0 ? { ...entry, title } : entry;
