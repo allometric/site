@@ -14,7 +14,6 @@ export default defineConfig({
 				lucode({
 					navLinks: [
 						{ label: 'Publications', link: '/publications/' },
-						{ label: 'Families', link: '/families/' },
 						{ label: 'Docs', link: '/guides/example/' },
 					],
 				}),
