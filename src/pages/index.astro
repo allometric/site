@@ -1,6 +1,7 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import TypewriterYaml from '../components/TypewriterYaml.astro';
+import { ContainerSection } from 'lucode-starlight/components';
 
 // A small pool of short, real model records cycled by the landing-page typing demo.
 const models = {
@@ -88,15 +89,203 @@ const filenames = ['barnes_1962.yaml', 'barrett_1978.yaml', 'bell_1981.yaml'];
 		},
 	}}
 >
-	<div class="typewriter-wrap">
-		<TypewriterYaml sources={sources} filenames={filenames} />
-	</div>
+	<!-- Decorative site-index curves (height vs. age), Chapman–Richards family. -->
+	<svg class="bg-curves" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+		<path d="M 0.0 85.0 L 2.0 84.1 L 4.0 82.8 L 6.0 81.4 L 8.0 80.0 L 10.0 78.5 L 12.0 77.0 L 14.0 75.6 L 16.0 74.2 L 18.0 72.8 L 20.0 71.5 L 22.0 70.3 L 24.0 69.1 L 26.0 68.0 L 28.0 66.9 L 30.0 65.9 L 32.0 64.9 L 34.0 64.0 L 36.0 63.1 L 38.0 62.3 L 40.0 61.5 L 42.0 60.8 L 44.0 60.1 L 46.0 59.5 L 48.0 58.9 L 50.0 58.3 L 52.0 57.8 L 54.0 57.3 L 56.0 56.8 L 58.0 56.4 L 60.0 56.0 L 62.0 55.6 L 64.0 55.3 L 66.0 54.9 L 68.0 54.6 L 70.0 54.3 L 72.0 54.0 L 74.0 53.8 L 76.0 53.5 L 78.0 53.3 L 80.0 53.1 L 82.0 52.9 L 84.0 52.7 L 86.0 52.5 L 88.0 52.4 L 90.0 52.2 L 92.0 52.1 L 94.0 51.9 L 96.0 51.8 L 98.0 51.7 L 100.0 51.6" />
+		<path d="M 0.0 85.0 L 2.0 83.8 L 4.0 82.1 L 6.0 80.2 L 8.0 78.2 L 10.0 76.2 L 12.0 74.3 L 14.0 72.3 L 16.0 70.4 L 18.0 68.6 L 20.0 66.9 L 22.0 65.2 L 24.0 63.6 L 26.0 62.1 L 28.0 60.7 L 30.0 59.3 L 32.0 58.0 L 34.0 56.8 L 36.0 55.6 L 38.0 54.5 L 40.0 53.5 L 42.0 52.5 L 44.0 51.6 L 46.0 50.8 L 48.0 50.0 L 50.0 49.2 L 52.0 48.5 L 54.0 47.8 L 56.0 47.2 L 58.0 46.6 L 60.0 46.1 L 62.0 45.5 L 64.0 45.1 L 66.0 44.6 L 68.0 44.2 L 70.0 43.8 L 72.0 43.4 L 74.0 43.1 L 76.0 42.7 L 78.0 42.4 L 80.0 42.1 L 82.0 41.9 L 84.0 41.6 L 86.0 41.4 L 88.0 41.2 L 90.0 41.0 L 92.0 40.8 L 94.0 40.6 L 96.0 40.4 L 98.0 40.3 L 100.0 40.1" />
+		<path d="M 0.0 85.0 L 2.0 83.5 L 4.0 81.4 L 6.0 79.0 L 8.0 76.5 L 10.0 74.0 L 12.0 71.5 L 14.0 69.1 L 16.0 66.7 L 18.0 64.5 L 20.0 62.3 L 22.0 60.2 L 24.0 58.2 L 26.0 56.3 L 28.0 54.5 L 30.0 52.7 L 32.0 51.1 L 34.0 49.6 L 36.0 48.1 L 38.0 46.8 L 40.0 45.5 L 42.0 44.3 L 44.0 43.1 L 46.0 42.0 L 48.0 41.0 L 50.0 40.1 L 52.0 39.2 L 54.0 38.3 L 56.0 37.5 L 58.0 36.8 L 60.0 36.1 L 62.0 35.5 L 64.0 34.9 L 66.0 34.3 L 68.0 33.8 L 70.0 33.2 L 72.0 32.8 L 74.0 32.3 L 76.0 31.9 L 78.0 31.5 L 80.0 31.2 L 82.0 30.8 L 84.0 30.5 L 86.0 30.2 L 88.0 30.0 L 90.0 29.7 L 92.0 29.5 L 94.0 29.2 L 96.0 29.0 L 98.0 28.8 L 100.0 28.6" />
+		<path d="M 0.0 85.0 L 2.0 83.2 L 4.0 80.7 L 6.0 77.8 L 8.0 74.9 L 10.0 71.9 L 12.0 69.0 L 14.0 66.1 L 16.0 63.3 L 18.0 60.6 L 20.0 58.0 L 22.0 55.5 L 24.0 53.2 L 26.0 50.9 L 28.0 48.8 L 30.0 46.7 L 32.0 44.8 L 34.0 43.0 L 36.0 41.3 L 38.0 39.6 L 40.0 38.1 L 42.0 36.7 L 44.0 35.3 L 46.0 34.0 L 48.0 32.8 L 50.0 31.7 L 52.0 30.6 L 54.0 29.6 L 56.0 28.7 L 58.0 27.8 L 60.0 27.0 L 62.0 26.2 L 64.0 25.5 L 66.0 24.8 L 68.0 24.2 L 70.0 23.6 L 72.0 23.0 L 74.0 22.5 L 76.0 22.0 L 78.0 21.6 L 80.0 21.2 L 82.0 20.8 L 84.0 20.4 L 86.0 20.0 L 88.0 19.7 L 90.0 19.4 L 92.0 19.1 L 94.0 18.8 L 96.0 18.6 L 98.0 18.4 L 100.0 18.1" />
+		<path d="M 0.0 85.0 L 2.0 83.0 L 4.0 80.1 L 6.0 76.8 L 8.0 73.5 L 10.0 70.1 L 12.0 66.7 L 14.0 63.4 L 16.0 60.2 L 18.0 57.1 L 20.0 54.2 L 22.0 51.3 L 24.0 48.6 L 26.0 46.0 L 28.0 43.6 L 30.0 41.3 L 32.0 39.1 L 34.0 37.0 L 36.0 35.0 L 38.0 33.1 L 40.0 31.4 L 42.0 29.7 L 44.0 28.2 L 46.0 26.7 L 48.0 25.4 L 50.0 24.1 L 52.0 22.9 L 54.0 21.7 L 56.0 20.7 L 58.0 19.7 L 60.0 18.7 L 62.0 17.8 L 64.0 17.0 L 66.0 16.2 L 68.0 15.5 L 70.0 14.8 L 72.0 14.2 L 74.0 13.6 L 76.0 13.0 L 78.0 12.5 L 80.0 12.0 L 82.0 11.6 L 84.0 11.1 L 86.0 10.7 L 88.0 10.4 L 90.0 10.0 L 92.0 9.7 L 94.0 9.4 L 96.0 9.1 L 98.0 8.8 L 100.0 8.6" />
+	</svg>
+	<ContainerSection>
+		<div class="typewriter-wrap">
+			<TypewriterYaml sources={sources} filenames={filenames} />
+		</div>
+	</ContainerSection>
 </StarlightPage>
 
 <style>
+	/* Single-fold hero: copy sits around 1/3 of the page height; a shorter
+	   terminal (about 60% of its full height) sits below it and scrolls
+	   internally, so the page never scrolls itself. */
+	:global(.container-section .container-wrapper) {
+		max-width: 80rem;
+	}
+
+	/* Pin the fold to the viewport so flex-shrink (not page growth) absorbs any
+	   tight-viewport overflow — the page can never scroll. */
+	:global([data-slot='layout']) {
+		height: 100svh;
+		/* Faint square grid across the whole background. color-mix on the theme
+		   foreground keeps it subtle in both light and dark mode. */
+		background-image:
+			linear-gradient(to right, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+			linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+		background-size: 5.2rem 5.2rem;
+	}
+
+	/* Decorative site-index curves behind the content, adaptive-faint like the grid. */
+	.bg-curves {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		width: 100%;
+		height: 100%;
+	}
+	.bg-curves path {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1;
+		vector-effect: non-scaling-stroke;
+		opacity: 0.08;
+	}
+	/* Dots sit on the curves at each grid line; created by JS in the same SVG so
+	   they share the curves' transform and land exactly on the lines. */
+	:global(.bg-curves ellipse) {
+		fill: currentColor;
+		opacity: 0.25;
+	}
+
+	:global(main main) {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		min-height: 0;
+		padding: 0;
+	}
+
+	/* Hero section pinned to the upper third; the copy is pushed to its bottom so
+	   the text block sits around 1/3 of the page height. */
+	:global(.container-section:not(:has(.tty))) {
+		flex: 0 0 auto;
+		min-height: 0;
+		height: calc(33.33svh - var(--header-height));
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.container-section:not(:has(.tty)) .container-wrapper),
+	:global(.container-section:not(:has(.tty)) .container) {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.hero) {
+		align-items: flex-start;
+		justify-content: flex-start;
+		margin-top: auto;
+		padding-block: 1.5rem 2rem;
+	}
+
+	:global(.hero-info) {
+		max-width: 40rem;
+		text-align: left;
+		align-items: flex-start;
+	}
+
+	:global(.hero-title-container),
+	:global(.hero-content-container) {
+		align-items: flex-start;
+	}
+
+	:global(.hero .actions) {
+		justify-content: flex-start;
+	}
+
+	/* Terminal: fixed 60% height just below the copy; the code window scrolls
+	   internally like a terminal. */
+	:global(main main .markdown-wrapper),
+	:global(main main .sl-markdown-content),
+	:global(.container-section:has(.tty)),
+	:global(.container-section:has(.tty) .container-wrapper),
+	:global(.container-section:has(.tty) .container) {
+		flex: 0 1 auto;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
 	.typewriter-wrap {
+		flex: 0 1 auto;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
 		max-width: 44rem;
-		margin: 0.75rem auto 0;
-		padding: 0 1rem 3rem;
+		margin: 0;
+		/* 60% of the terminal's full (1/3 → footer) height; copy bottom stays at ~1/3. */
+		height: calc(40svh - 3.6rem);
+		padding-block-end: 1.5rem;
+		--tty-code-height: auto;
+	}
+
+	:global(.typewriter-wrap .tty) {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.typewriter-wrap .tty-code) {
+		flex: 1;
+		min-height: 0;
+	}
+
+	/* Single-fold page: never scrolls. */
+	:global(html) {
+		overflow: clip;
 	}
 </style>
+
+<script>
+	// Site-index curve dots: on each curve, place a point at every vertical grid
+	// line (x = grid boundary, y = curve value). Params must match the SVG paths.
+	const bh = 0.15;
+	const k = 3.4;
+	const c = 1.35;
+	const As = [0.5, 0.62, 0.74, 0.85, 0.95];
+
+	const layout = document.querySelector('[data-slot="layout"]');
+	const NS = 'http://www.w3.org/2000/svg';
+
+	if (layout) {
+		const draw = () => {
+			const svg = document.querySelector('.bg-curves');
+			if (!svg) return;
+			svg.querySelectorAll('ellipse').forEach((e) => e.remove());
+
+			const rect = svg.getBoundingClientRect();
+			const cell = parseFloat(getComputedStyle(layout).backgroundSize.split(',')[0]);
+			const xScale = rect.width / 100;
+			const yScale = rect.height / 100;
+			// Screen-space radius ~1.5px, counter-scaled so dots stay round.
+			const rx = 1.5 / xScale;
+			const ry = 1.5 / yScale;
+
+			const frag = document.createDocumentFragment();
+			for (let px = 0; px < rect.width; px += cell) {
+				const vx = px / xScale; // viewBox x for this grid line
+				const age = vx / 100;
+				for (const A of As) {
+					const h = bh + (A - bh) * Math.pow(1 - Math.exp(-k * age), c);
+					const e = document.createElementNS(NS, 'ellipse');
+					e.setAttribute('cx', vx);
+					e.setAttribute('cy', 100 - h * 100);
+					e.setAttribute('rx', rx);
+					e.setAttribute('ry', ry);
+					frag.appendChild(e);
+				}
+			}
+			svg.appendChild(frag);
+		};
+
+		draw();
+		let t;
+		window.addEventListener('resize', () => {
+			clearTimeout(t);
+			t = setTimeout(draw, 150);
+		});
+	}
+</script>

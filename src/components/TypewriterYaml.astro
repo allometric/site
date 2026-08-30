@@ -37,7 +37,7 @@ const filenamesJson = JSON.stringify(filenames);
 		border: 1px solid var(--sl-color-gray-6);
 		border-radius: 0.5rem;
 		overflow: hidden;
-		background: var(--sl-color-gray-8);
+		background: var(--sl-color-gray-8, var(--code-background));
 		box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.45);
 		min-width: 0;
 	}
@@ -66,6 +66,10 @@ const filenamesJson = JSON.stringify(filenames);
 		margin: 0;
 		padding: 0.9rem 1rem;
 		overflow-x: auto;
+		/* Fixed window: ~14 lines visible; typed content scrolls inside it like a terminal. */
+		height: var(--tty-code-height, min(calc(14 * 1.6em), 60svh));
+		overflow-y: auto;
+		scrollbar-gutter: stable;
 		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
 		font-size: 0.85rem;
 		line-height: 1.6;
@@ -153,11 +157,20 @@ const filenamesJson = JSON.stringify(filenames);
 
 	document.querySelectorAll('[data-typewriter]').forEach((root) => {
 		const code = root.querySelector('.tty-code-inner');
+		const pre = root.querySelector('.tty-code');
 		const fileLabel = root.querySelector('.tty-file');
 		const sources = JSON.parse(root.dataset.sources);
 		const filenames = JSON.parse(root.dataset.filenames || '[]');
 		const delay = Number(root.dataset.delay || 0);
 		const cooldown = Number(root.dataset.cooldown || 20000);
+
+		// Keep the caret visible like a real terminal: auto-scroll the window, but
+		// only when it is already at the bottom so a user scrolling up isn't fought.
+		const followCaret = () => {
+			if (pre.scrollHeight - pre.scrollTop - pre.clientHeight <= 24) {
+				pre.scrollTop = pre.scrollHeight;
+			}
+		};
 
 		// Random next index, avoiding an immediate repeat when the pool allows.
 		let current = -1;
@@ -181,9 +194,11 @@ const filenamesJson = JSON.stringify(filenames);
 			const source = sources[i];
 			fileLabel.textContent = filenames[i] ?? 'model.yaml';
 			code.innerHTML = '';
+			pre.scrollTop = 0;
 
 			if (reduceMotion) {
 				code.innerHTML = hljs.highlight(source, { language: 'yaml' }).value;
+				followCaret();
 				root.classList.add('is-done');
 				scheduleNext();
 				return;
@@ -202,6 +217,7 @@ const filenamesJson = JSON.stringify(filenames);
 				if (now >= next) {
 					pos++;
 					code.innerHTML = hljs.highlight(source.slice(0, pos), { language: 'yaml' }).value;
+					followCaret();
 					const c = source[pos - 1];
 					let wait = interval * (0.6 + Math.random() * 0.8);
 					if (c === '\n') wait += 140 + Math.random() * 120;
