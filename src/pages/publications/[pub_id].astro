@@ -579,7 +579,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			];
 			const headers = ['Taxa', ...descNames, ...paramNames];
 			const row = [
-				taxaLabel(model.taxa),
+				taxaCell(model.taxa),
 				...descNames.map((n) => model.descriptors[n] ?? ''),
 				...paramNames.map((n) => formatParam(model.parameters[n])),
 			];
@@ -662,18 +662,42 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		return lines;
 	}
 
-	/** Format a parameter value to two decimal places. */
+	/**
+	 * Format a parameter value to two decimal places. Values small enough to round
+	 * to "0.00" fall back to scientific notation so their scale isn't lost.
+	 */
 	function formatParam(value) {
 		const num = Number(value);
 		if (!Number.isFinite(num)) return value === null || value === undefined ? '' : String(value);
+		if (num !== 0 && Math.abs(num) < 0.005) return num.toExponential(2);
 		return num.toFixed(2);
 	}
 
-	/** Format a taxa list as "Genus species, …" (or "—" when empty). */
-	function taxaLabel(taxa) {
-		return (taxa ?? [])
+	/** Render the taxa for a table cell: one name with a "…" toggle to expand to all (and back). */
+	function taxaCell(taxa) {
+		const names = (taxa ?? [])
 			.map((t) => [t.genus, t.species].filter(Boolean).join(' '))
-			.join(', ') || '—';
+			.filter(Boolean);
+		if (names.length <= 1) return document.createTextNode(names[0] || '—');
+		const span = el('span');
+		const btn = el('button', 'expand', '←');
+		btn.type = 'button';
+		let expanded = false;
+		const render = () => {
+			btn.textContent = expanded ? '←' : '…';
+			btn.setAttribute('aria-expanded', String(expanded));
+			span.replaceChildren(
+				document.createTextNode(expanded ? names.join(', ') : names[0]),
+				document.createTextNode(' '),
+				btn,
+			);
+		};
+		btn.addEventListener('click', () => {
+			expanded = !expanded;
+			render();
+		});
+		render();
+		return span;
 	}
 
 	/** Render the per-taxon specifications as a self-scrolling table. */
@@ -701,7 +725,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		];
 		const headers = ['Taxa', ...descNames, ...paramNames];
 		const rows = specs.map((spec) => [
-			taxaLabel(spec.taxa),
+			taxaCell(spec.taxa),
 			...descNames.map((name) => spec.descriptors?.[name] ?? ''),
 			...paramNames.map((name) =>
 				spec.parameters?.[name] === undefined ? '' : formatParam(spec.parameters[name]),
@@ -755,9 +779,12 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		const tbody = el('tbody');
 		for (const row of rows) {
 			const tr = el('tr');
-			row.forEach((value, i) =>
-				tr.append(el('td', i >= paramFrom ? 'param-value param-num' : 'param-value', value)),
-			);
+			row.forEach((value, i) => {
+				const td = el('td', i >= paramFrom ? 'param-value param-num' : 'param-value');
+				if (value instanceof Node) td.append(value);
+				else td.textContent = value;
+				tr.append(td);
+			});
 			tbody.append(tr);
 		}
 		table.append(thead, tbody);
