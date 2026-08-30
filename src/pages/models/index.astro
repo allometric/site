@@ -1,0 +1,414 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Models',
+		description: 'Browse every model and model set in allometric/models by type, response variable, or covariates.',
+	}}
+>
+	<div class="models-controls">
+		<input id="model-search" type="search" placeholder="Search by model, publication, type, variable, or taxa…" aria-label="Search models" />
+		<span id="model-count" class="count" role="status"></span>
+	</div>
+	<div class="filters" role="group" aria-label="Filter models">
+		<label>Model type
+			<select id="f-model-type" aria-label="Filter by model type"></select>
+		</label>
+		<label>Family
+			<select id="f-family" aria-label="Filter by family"></select>
+		</label>
+		<label>Genus
+			<select id="f-genus" aria-label="Filter by genus"></select>
+		</label>
+		<label>Species
+			<select id="f-species" aria-label="Filter by species"></select>
+		</label>
+		<label>Country
+			<select id="f-country" aria-label="Filter by country"></select>
+		</label>
+		<label>Region
+			<select id="f-region" aria-label="Filter by region"></select>
+		</label>
+	</div>
+	<div class="models-scroll">
+		<table id="model-table" class="models">
+			<thead>
+				<tr>
+					<th scope="col">Model</th>
+					<th scope="col">Type</th>
+					<th scope="col">Model type</th>
+					<th scope="col">Response</th>
+					<th scope="col">Covariates</th>
+					<th scope="col">Taxa</th>
+				</tr>
+			</thead>
+			<tbody id="model-rows">
+				<tr><td class="status" colspan="6">Loading models…</td></tr>
+			</tbody>
+		</table>
+	</div>
+</StarlightPage>
+
+<style is:global>
+	.models-controls {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-block-end: 1rem;
+	}
+	#model-search {
+		flex: 1 1 16rem;
+		min-width: 10rem;
+		padding: 0.4rem 0.75rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-7);
+		color: var(--sl-color-text);
+		font-family: inherit;
+		font-size: var(--sl-text-sm);
+	}
+	#model-search:focus {
+		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
+		outline-offset: 1px;
+	}
+	.filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 0.75rem;
+		margin-block-end: 1rem;
+	}
+	.filters label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+	}
+	.filters select {
+		padding: 0.3rem 0.5rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-7);
+		color: var(--sl-color-text);
+		font-family: inherit;
+		font-size: var(--sl-text-sm);
+		max-width: 14rem;
+	}
+	.filters select:focus {
+		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
+		outline-offset: 1px;
+	}
+	.models-scroll {
+		max-height: 70vh;
+		overflow: auto;
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+	}
+	table.models {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--sl-text-sm);
+	}
+	table.models th,
+	table.models td {
+		text-align: start;
+		vertical-align: top;
+		padding: 0.5rem 0.75rem;
+		border-block-end: 1px solid var(--sl-color-gray-6);
+		white-space: nowrap;
+	}
+	table.models thead th {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		background: var(--sl-color-gray-7);
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+	table.models tbody tr:hover {
+		background: color-mix(in oklab, var(--sl-color-gray-6) 25%, transparent);
+	}
+	.model-name {
+		font-weight: var(--sl-font-weight-semibold);
+	}
+	.model-pub {
+		display: block;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		margin-block-start: 0.1rem;
+	}
+	.badge {
+		font-size: var(--sl-text-xs);
+		border-radius: 999px;
+		padding: 0.1rem 0.55rem;
+		border: 1px solid var(--sl-color-gray-5);
+		color: var(--sl-color-gray-3);
+		white-space: nowrap;
+	}
+	.badge.fixed_effects {
+		color: color-mix(in oklab, var(--sl-color-accent) 58%, var(--sl-color-text));
+		background: color-mix(in oklab, var(--sl-color-accent) 16%, transparent);
+		border-color: color-mix(in oklab, var(--sl-color-accent) 40%, transparent);
+	}
+	.badge.fixed_effects_set {
+		color: color-mix(in oklab, #2fae88 58%, var(--sl-color-text));
+		background: color-mix(in oklab, #2fae88 16%, transparent);
+		border-color: color-mix(in oklab, #2fae88 40%, transparent);
+	}
+	.model-type {
+		color: var(--sl-color-gray-2);
+	}
+	.model-type .none {
+		color: var(--sl-color-gray-4);
+	}
+	.vars {
+		color: var(--sl-color-gray-2);
+	}
+	.var-tip {
+		border-block-end: 1px dotted var(--sl-color-gray-4);
+		cursor: help;
+		position: relative;
+	}
+	.var-tip.has-desc::after {
+		content: attr(data-desc);
+		position: absolute;
+		left: 0;
+		bottom: 135%;
+		z-index: 20;
+		width: max-content;
+		max-width: 280px;
+		background: var(--sl-color-bg, #fff);
+		color: var(--sl-color-text);
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		padding: 0.4rem 0.6rem;
+		font-size: var(--sl-text-xs);
+		font-weight: normal;
+		line-height: 1.4;
+		box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity 0.12s ease;
+	}
+	.var-tip.has-desc:hover::after,
+	.var-tip.has-desc:focus-visible::after {
+		opacity: 1;
+		visibility: visible;
+	}
+	.unit {
+		color: var(--sl-color-gray-4);
+	}
+	.expand {
+		margin-inline-start: 0.25rem;
+		padding: 0 0.35rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.35rem;
+		background: transparent;
+		color: var(--sl-color-gray-3);
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		cursor: pointer;
+	}
+	.expand:hover {
+		color: var(--sl-color-text);
+		background: color-mix(in oklab, var(--sl-color-gray-6) 40%, transparent);
+	}
+	.taxa {
+		color: var(--sl-color-gray-3);
+		font-variant-numeric: tabular-nums;
+	}
+	.status,
+	.empty {
+		color: var(--sl-color-gray-4);
+	}
+	.empty {
+		text-align: center;
+		padding: 2rem 0;
+	}
+</style>
+
+<script>
+	import models from '../../lib/models.index.json';
+	import vns from '../../lib/vns.json';
+
+	const rowsEl = document.getElementById('model-rows');
+	const searchEl = document.getElementById('model-search');
+	const countEl = document.getElementById('model-count');
+
+	const filterEls = {
+		modelType: document.getElementById('f-model-type'),
+		family: document.getElementById('f-family'),
+		genus: document.getElementById('f-genus'),
+		species: document.getElementById('f-species'),
+		country: document.getElementById('f-country'),
+		region: document.getElementById('f-region'),
+	};
+
+	function el(tag, className, text) {
+		const node = document.createElement(tag);
+		if (className) node.className = className;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	/** A variable name with a vns description tooltip (no tooltip when unknown). */
+	function varTip(name) {
+		const span = el('span', 'var-tip', name);
+		const desc = vns.variables[name]?.description;
+		if (desc) {
+			span.dataset.desc = desc;
+			span.classList.add('has-desc');
+		}
+		return span;
+	}
+
+	/** Append `{name (unit)}` variable chips separated by commas. */
+	function appendVars(container, pairs) {
+		pairs.forEach(([name, unit], i) => {
+			if (i > 0) container.append(document.createTextNode(', '));
+			container.append(varTip(name));
+			if (unit) container.append(el('span', 'unit', ` (${unit})`));
+		});
+	}
+
+	/** An expandable list: shows `limit` items, then a "…" toggle to reveal the rest. */
+	function expandable(pairs, limit = 3) {
+		const span = el('span', 'vars');
+		if (pairs.length <= limit) {
+			appendVars(span, pairs);
+			return span;
+		}
+		let expanded = false;
+		const btn = el('button', 'expand');
+		btn.type = 'button';
+		btn.setAttribute('aria-expanded', 'false');
+		const render = () => {
+			btn.textContent = expanded ? '−' : `… +${pairs.length - limit}`;
+			btn.setAttribute('aria-expanded', String(expanded));
+			span.replaceChildren();
+			appendVars(span, expanded ? pairs : pairs.slice(0, limit));
+			span.append(' ');
+			span.append(btn);
+		};
+		btn.addEventListener('click', () => {
+			expanded = !expanded;
+			render();
+		});
+		render();
+		return span;
+	}
+
+	/** Human label for the derived model_type, falling back to the measure. */
+	function modelTypeLabel(m) {
+		return m.model_type || (m.measure ? m.measure.charAt(0).toUpperCase() + m.measure.slice(1) : '');
+	}
+
+	/** Populate a filter `<select>` with distinct values (plus an "All" default). */
+	function fillSelect(select, values, includeUnclassified = false) {
+		select.append(Object.assign(document.createElement('option'), { value: '', textContent: 'All' }));
+		const opts = [...new Set(values)].filter(Boolean).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+		if (includeUnclassified) {
+			opts.push('Unclassified');
+			opts.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+		}
+		for (const v of opts) select.append(Object.assign(document.createElement('option'), { value: v, textContent: v }));
+	}
+
+	// Populate the filter dropdowns once from the full dataset.
+	fillSelect(filterEls.modelType, models.map((m) => m.model_type), true);
+	fillSelect(filterEls.family, models.flatMap((m) => m.families));
+	fillSelect(filterEls.genus, models.flatMap((m) => m.genera));
+	fillSelect(filterEls.species, models.flatMap((m) => m.species));
+	fillSelect(filterEls.country, models.flatMap((m) => m.countries));
+	fillSelect(filterEls.region, models.flatMap((m) => m.regions));
+
+	function matches(m, q) {
+		if (filterEls.modelType.value) {
+			const want = filterEls.modelType.value;
+			if (want === 'Unclassified' ? m.model_type : m.model_type !== want) return false;
+		}
+		if (filterEls.family.value && !m.families.includes(filterEls.family.value)) return false;
+		if (filterEls.genus.value && !m.genera.includes(filterEls.genus.value)) return false;
+		if (filterEls.species.value && !m.species.includes(filterEls.species.value)) return false;
+		if (filterEls.country.value && !m.countries.includes(filterEls.country.value)) return false;
+		if (filterEls.region.value && !m.regions.includes(filterEls.region.value)) return false;
+		if (!q) return true;
+		const haystack = [
+			m.id,
+			m.pub_id,
+			m.pub_title,
+			m.type,
+			m.model_type,
+			m.measure,
+			...m.response.map((p) => p[0]),
+			...m.covariates.map((p) => p[0]),
+			...m.families,
+			...m.genera,
+			...m.species,
+		]
+			.filter(Boolean)
+			.join(' ')
+			.toLowerCase();
+		return haystack.includes(q);
+	}
+
+	function renderRow(m) {
+		const tr = el('tr');
+
+		const modelCell = el('td');
+		const a = document.createElement('a');
+		a.href = `/publications/${m.pub_id}/`;
+		a.className = 'model-name';
+		a.textContent = m.id;
+		modelCell.append(a);
+		modelCell.append(el('span', 'model-pub', m.pub_id));
+		tr.append(modelCell);
+
+		const typeCell = el('td');
+		typeCell.append(el('span', `badge ${m.type}`, m.is_set ? 'Model Set' : 'Model'));
+		tr.append(typeCell);
+
+		const typeLabel = el('td', 'model-type');
+		const label = modelTypeLabel(m);
+		typeLabel.append(el('span', label ? '' : 'none', label || '—'));
+		tr.append(typeLabel);
+
+		const respCell = el('td', 'vars');
+		appendVars(respCell, m.response);
+		tr.append(respCell);
+
+		const covCell = el('td');
+		if (m.covariates.length) covCell.append(expandable(m.covariates));
+		else covCell.append(el('span', 'none', '—'));
+		tr.append(covCell);
+
+		tr.append(el('td', 'taxa', m.taxa_count ? `${m.taxa_count} ${m.is_set ? 'species' : 'taxa'}` : '—'));
+		return tr;
+	}
+
+	function render() {
+		const q = searchEl.value.trim().toLowerCase();
+		const rows = models.filter((m) => matches(m, q));
+		rowsEl.replaceChildren();
+		countEl.textContent = `${rows.length} of ${models.length} models`;
+		if (rows.length === 0) {
+			const tr = el('tr');
+			tr.append(el('td', 'empty', 'No models match your search.'));
+			rowsEl.append(tr);
+			return;
+		}
+		for (const m of rows) rowsEl.append(renderRow(m));
+	}
+
+	searchEl.addEventListener('input', render);
+	Object.values(filterEls).forEach((select) => select.addEventListener('change', render));
+	render();
+</script>

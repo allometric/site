@@ -1,0 +1,230 @@
+---
+interface Props {
+	/** Pool of full YAML sources, typed one after another. */
+	sources: string[];
+	/** Optional parallel filenames shown in the tab bar. */
+	filenames?: string[];
+	/** Delay (ms) before the first model starts typing once in view. */
+	delay?: number;
+	/** Idle time (ms) after a model finishes before the next one starts. */
+	cooldown?: number;
+}
+
+const {
+	sources,
+	filenames = [],
+	delay = 0,
+	cooldown = 20000,
+} = Astro.props;
+
+// JSON-encoded so attributes carry newlines/quotes safely; parsed client-side.
+const sourcesJson = JSON.stringify(sources);
+const filenamesJson = JSON.stringify(filenames);
+---
+
+<div class="tty" data-typewriter data-sources={sourcesJson} data-filenames={filenamesJson} data-delay={delay} data-cooldown={cooldown}>
+	<div class="tty-bar">
+		<span class="tty-dot" aria-hidden="true"></span>
+		<span class="tty-dot" aria-hidden="true"></span>
+		<span class="tty-dot" aria-hidden="true"></span>
+		<span class="tty-file">{filenames[0] ?? 'model.yaml'}</span>
+	</div>
+	<pre class="tty-code"><code class="tty-code-inner"></code><span class="tty-caret" aria-hidden="true"></span></pre>
+</div>
+
+<style>
+	.tty {
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+		overflow: hidden;
+		background: var(--sl-color-gray-8);
+		box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.45);
+		min-width: 0;
+	}
+	.tty-bar {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.5rem 0.75rem;
+		background: var(--sl-color-gray-7);
+		border-block-end: 1px solid var(--sl-color-gray-6);
+	}
+	.tty-dot {
+		width: 0.55rem;
+		height: 0.55rem;
+		border-radius: 999px;
+		background: var(--sl-color-gray-4);
+	}
+	.tty-file {
+		margin-inline-start: auto;
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+		white-space: nowrap;
+	}
+	.tty-code {
+		margin: 0;
+		padding: 0.9rem 1rem;
+		overflow-x: auto;
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--sl-color-gray-1);
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+	}
+	.tty-code :global(.hljs-attr) {
+		color: #e06c75;
+	}
+	.tty-code :global(.hljs-string) {
+		color: #98c379;
+	}
+	.tty-code :global(.hljs-number) {
+		color: #d19a66;
+	}
+	.tty-code :global(.hljs-bullet) {
+		color: #56b6c2;
+	}
+	.tty-code :global(.hljs-operator) {
+		color: #56b6c2;
+	}
+	.tty-code :global(.hljs-comment) {
+		color: #7f848e;
+	}
+	.tty-code :global(.hljs-keyword) {
+		color: #c678dd;
+	}
+	.tty-code :global(.hljs-built_in) {
+		color: #e5c07b;
+	}
+	.tty-code :global(.hljs-punctuation) {
+		color: inherit;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-attr) {
+		color: #e45649;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-string) {
+		color: #50a14f;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-number) {
+		color: #986801;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-bullet),
+	html[data-theme='light'] .tty-code :global(.hljs-operator) {
+		color: #0184bc;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-comment) {
+		color: #a0a1a7;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-keyword) {
+		color: #a626a4;
+	}
+	html[data-theme='light'] .tty-code :global(.hljs-built_in) {
+		color: #c18401;
+	}
+	.tty-caret {
+		display: inline-block;
+		width: 0.55em;
+		height: 1.05em;
+		margin-inline-start: 2px;
+		vertical-align: text-bottom;
+		background: var(--sl-color-text-accent);
+		animation: tty-blink 1.1s steps(2, start) infinite;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.tty-caret {
+			animation: none;
+		}
+	}
+	@keyframes tty-blink {
+		to {
+			visibility: hidden;
+		}
+	}
+</style>
+
+<script>
+	import hljs from 'highlight.js/lib/core';
+	import yamlLang from 'highlight.js/lib/languages/yaml';
+
+	hljs.registerLanguage('yaml', yamlLang);
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	document.querySelectorAll('[data-typewriter]').forEach((root) => {
+		const code = root.querySelector('.tty-code-inner');
+		const fileLabel = root.querySelector('.tty-file');
+		const sources = JSON.parse(root.dataset.sources);
+		const filenames = JSON.parse(root.dataset.filenames || '[]');
+		const delay = Number(root.dataset.delay || 0);
+		const cooldown = Number(root.dataset.cooldown || 20000);
+
+		// Random next index, avoiding an immediate repeat when the pool allows.
+		let current = -1;
+		const pickNext = () => {
+			let idx;
+			do {
+				idx = Math.floor(Math.random() * sources.length);
+			} while (sources.length > 1 && idx === current);
+			return idx;
+		};
+
+		const scheduleNext = () => {
+			setTimeout(() => {
+				root.classList.remove('is-done');
+				typeSource(pickNext());
+			}, cooldown);
+		};
+
+		const typeSource = (i) => {
+			current = i;
+			const source = sources[i];
+			fileLabel.textContent = filenames[i] ?? 'model.yaml';
+			code.innerHTML = '';
+
+			if (reduceMotion) {
+				code.innerHTML = hljs.highlight(source, { language: 'yaml' }).value;
+				root.classList.add('is-done');
+				scheduleNext();
+				return;
+			}
+
+			const interval = Math.max(8, Math.min(18, 9500 / source.length));
+			let pos = 0;
+			let next = performance.now();
+
+			const tick = (now) => {
+				if (pos >= source.length) {
+					root.classList.add('is-done');
+					scheduleNext();
+					return;
+				}
+				if (now >= next) {
+					pos++;
+					code.innerHTML = hljs.highlight(source.slice(0, pos), { language: 'yaml' }).value;
+					const c = source[pos - 1];
+					let wait = interval * (0.6 + Math.random() * 0.8);
+					if (c === '\n') wait += 140 + Math.random() * 120;
+					if (c === ' ') wait += 6;
+					next = now + wait;
+				}
+				requestAnimationFrame(tick);
+			};
+			requestAnimationFrame(tick);
+		};
+
+		// Start once the panel scrolls into view.
+		const io = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						io.disconnect();
+						setTimeout(() => typeSource(pickNext()), delay);
+					}
+				});
+			},
+			{ rootMargin: '0px 0px -8% 0px' },
+		);
+		io.observe(root);
+	});
+</script>

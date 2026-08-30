@@ -1,6 +1,73 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import TypewriterYaml from '../components/TypewriterYaml.astro';
+
+// A small pool of short, real model records cycled by the landing-page typing demo.
+const models = {
+	volumeModel: `publication:
+  key: barnes_1962
+  bibtype: techreport
+  title: Yield of even-aged stands of western hemlock
+  author: Barnes, George H
+  year: 1962
+  descriptors:
+    country: US
+    region: [US-OR, US-WA]
+models:
+- name: hstix50
+  type: fixed_effects
+  taxa:
+  - family: Pinaceae
+    genus: Tsuga
+    species: heterophylla
+  response: {hstix50: ft}
+  covariates: {atb: year, hst: ft}
+  parameters: {a: 22.6, b: 0.014482, c: 0.001162}
+  prediction_function: 4.5 + a * exp((b - c * log(atb)) * (hst - 4.5))`,
+	heightModel: `publication:
+  key: barrett_1978
+  bibtype: techreport
+  title: Height growth and site index curves for ponderosa pine
+  author: Barrett, James Willis
+  year: 1978
+  descriptors:
+    country: US
+    region: [US-WA, US-OR]
+models:
+- name: hstix100
+  type: fixed_effects
+  taxa:
+  - family: Pinaceae
+    genus: Pinus
+    species: ponderosa
+  response: {hstix100: ft}
+  covariates: {hst: ft, atb: years}
+  parameters: {a: 100.43, b: 1.198632, c: 0.00283073, d: 8.44441}
+  prediction_function: a - (b - c * atb + d / atb) * (hst - 4.5) + 4.5`,
+	volume2Model: `publication:
+  key: bell_1981
+  bibtype: techreport
+  title: Tarif tables for mountain hemlock
+  author: Bell, John F and Marshall, David D and Johnson, Gregory P
+  year: 1981
+  descriptors:
+    country: US
+    region: US-OR
+models:
+- name: vsia
+  type: fixed_effects
+  taxa:
+  - family: Pinaceae
+    genus: Tsuga
+    species: mertensiana
+  response: {vsia: ft3}
+  covariates: {dsob: in, hst: ft}
+  parameters: {a: -2.956054, b: 1.8140497, c: 1.2744923}
+  prediction_function: 10^a * dsob^b * hst^c`,
+};
+
+const sources = [models.volumeModel, models.heightModel, models.volume2Model];
+const filenames = ['barnes_1962.yaml', 'barrett_1978.yaml', 'bell_1981.yaml'];
 ---
 
 <StarlightPage
@@ -15,27 +82,21 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 			tagline:
 				'Structured allometric models for trees.',
 			actions: [
-				{ text: 'Browse publications', link: '/publications/', variant: 'default' },
+				{ text: 'Browse models', link: '/models/', variant: 'default' },
 				{ text: 'Read the docs', link: '/guides/example/', variant: 'ghost' },
 			],
 		},
 	}}
 >
-	<CardGrid>
-		<LinkCard
-			title="Publications"
-			href="/publications/"
-			description="Every publication archived in the models repository, each with a live-rendered page."
-		/>
-		<LinkCard
-			title="Model families"
-			href="/families/"
-			description="Named groups of related models with shared structure."
-		/>
-		<LinkCard
-			title="Documentation"
-			href="/guides/example/"
-			description="Guides and reference for working with Allometric."
-		/>
-	</CardGrid>
+	<div class="typewriter-wrap">
+		<TypewriterYaml sources={sources} filenames={filenames} />
+	</div>
 </StarlightPage>
+
+<style>
+	.typewriter-wrap {
+		max-width: 44rem;
+		margin: 0.75rem auto 0;
+		padding: 0 1rem 3rem;
+	}
+</style>

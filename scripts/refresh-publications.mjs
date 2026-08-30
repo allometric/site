@@ -117,8 +117,70 @@ try {
 		}
 		index.push(entry);
 	}
-	writeFileSync('src/lib/publications.index.json', JSON.stringify(index, null, 2) + '\n');
-	console.log(`Wrote ${index.length} indexed publications.`);
+	// --- aggregated model index: one row per model and model set, across all publications ---
+	const modelIndex = [];
+	const pairOf = (vars) =>
+		Object.entries(vars ?? {}).map(([name, unit]) => [name, typeof unit === 'string' ? unit : '']);
+	for (const pub of publications) {
+		const data = parse(execSync(`git -C ${dir} show FETCH_HEAD:${pub.path}`).toString());
+		const meta = data?.publication ?? {};
+		const pubTitle = meta.title ?? '';
+		const records = [
+			...(Array.isArray(data?.models) ? data.models.map((m) => ({ record: m, isSet: false })) : []),
+			...(Array.isArray(data?.model_sets)
+				? data.model_sets.map((s) => ({ record: s, isSet: true }))
+				: []),
+		];
+		for (const { record, isSet } of records) {
+			const response =
+				record?.response && typeof record.response === 'object' ? record.response : {};
+			const covariates =
+				record?.covariates && typeof record.covariates === 'object' ? record.covariates : {};
+			let modelType = '';
+			let measure = '';
+			for (const v of Object.keys(response)) {
+				if (!modelType) {
+					for (const [type, prefixes] of Object.entries(modelTypes)) {
+						if (prefixes.some((pre) => v.startsWith(pre))) {
+							modelType = type;
+							break;
+						}
+					}
+				}
+				if (!measure && vnsVars[v]?.measure) measure = vnsVars[v].measure;
+			}
+			const taxa = isSet
+				? (record?.specifications ?? []).flatMap((spec) => spec?.taxa ?? [])
+				: (record?.taxa ?? []);
+			const families = [];
+			const genera = [];
+			const species = [];
+			for (const t of taxa) {
+				addUniq(families, t?.family);
+				addUniq(genera, t?.genus);
+				addUniq(species, t?.species);
+			}
+			modelIndex.push({
+				id: record?.name ?? '',
+				pub_id: pub.id,
+				pub_title: pubTitle,
+				type: record?.type ?? '',
+				is_set: isSet,
+				model_type: modelType,
+				measure,
+				response: pairOf(response),
+				covariates: pairOf(covariates),
+				taxa_count: taxa.length,
+				families,
+				genera,
+				species,
+				countries: asList(meta.descriptors?.country),
+				regions: asList(meta.descriptors?.region),
+			});
+		}
+	}
+	writeFileSync('src/lib/models.index.json', JSON.stringify(modelIndex, null, 2) + '\n');
+	console.log(`Wrote ${modelIndex.length} indexed models.`);
 } finally {
 	rmSync(dir, { recursive: true, force: true });
 }

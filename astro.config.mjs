@@ -13,6 +13,7 @@ export default defineConfig({
 			plugins: [
 				lucode({
 					navLinks: [
+						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
 						{ label: 'Docs', link: '/guides/example/' },
 					],
@@ -33,6 +34,10 @@ export default defineConfig({
 				{
 					label: 'Reference',
 					items: [{ autogenerate: { directory: 'reference' } }],
+				},
+				{
+					label: 'Models',
+					link: '/models/',
 				},
 				{
 					label: 'Publications',
