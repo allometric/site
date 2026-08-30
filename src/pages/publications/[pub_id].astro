@@ -34,9 +34,9 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		<p>
 			Rendered from{' '}
 			<a href={`https://github.com/${REPO}/commit/${COMMIT}`} target="_blank" rel="noopener noreferrer">
-				{REPO}@{COMMIT.slice(0, 7)}
+				{REPO.split('/').pop()}@{COMMIT.slice(0, 7)}
 			</a>
-			· <a href={githubUrl} target="_blank" rel="noopener noreferrer">{pubPath}</a>
+			:<a href={githubUrl} target="_blank" rel="noopener noreferrer">{pubId}.yaml</a>
 		</p>
 	</footer>
 </StarlightPage>
@@ -76,14 +76,16 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	}
 	.pub-title a,
 	.pub-meta a {
-		color: var(--sl-color-accent);
+		color: var(--sl-color-text-accent);
 	}
 	#publication .pub-meta {
 		color: var(--sl-color-gray-3);
 		margin-block: 0 0.25rem;
 	}
+	/* Citation links: same color as surrounding citation text, underline only. */
 	.pub-meta a {
-		color: var(--sl-color-accent);
+		color: var(--sl-color-gray-3);
+		text-decoration: underline;
 	}
 	.pub-line {
 		color: var(--sl-color-gray-3);
@@ -100,7 +102,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		padding: 0 0.1rem;
 		font: inherit;
 		line-height: inherit;
-		color: var(--sl-color-accent);
+		color: var(--sl-color-text-accent);
 		cursor: pointer;
 	}
 	.badge {
@@ -279,9 +281,33 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		padding: 0.3rem 0.75rem;
 		border-block-end: 1px solid var(--sl-color-gray-6);
 	}
-	.params th {
+	/* Label column (taxa) keeps its natural width on the left; parameter columns
+	   absorb the remaining width and fill the container on the right. Scoped to
+	   data rows so the grouped header row's first column isn't affected. */
+	.params.has-label tbody td:first-child {
+		width: 1%;
+		white-space: nowrap;
+	}
+	/* Group-header row (e.g. "Descriptors" / "Parameters") spanning its columns,
+	   styled like the code-block tab bar. */
+	.params .group-row {
+		background: var(--sl-color-gray-7);
+	}
+	/* Group labels borrow the code-tab typography (small, muted, normal weight).
+	   Explicit 400: the code-tab is a button (400), but group th cells inherit a
+	   Starlight `th` rule that forces 600, so it must be overridden here. */
+	.params .group {
+		text-align: start;
+		font-size: var(--sl-text-xs);
+		font-weight: 400;
+		line-height: 1;
+		padding-block: 0.525rem;
 		color: var(--sl-color-gray-3);
-		font-weight: var(--sl-font-weight-semibold);
+	}
+	/* Parameter columns use a monospace face for aligned, data-like numerics. */
+	.params .param-header,
+	.params .param-num {
+		font-family: var(--sl-font-mono, var(--sl-font-system-mono));
 	}
 	.code-block .hljs-number,
 	.code .hljs-number {
@@ -338,8 +364,10 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	.specs {
 		border: 1px solid var(--sl-color-gray-6);
 		border-radius: 0.375rem;
+		overflow-x: auto;
 	}
 	.specs .params {
+		display: table;
 		margin: 0;
 		width: 100%;
 		border: none;
@@ -418,6 +446,21 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			.join('; ');
 	}
 
+	/** Venue from the BibTeX metadata: journal (article), institution (techreport), booktitle (proceedings). */
+	function venueName(pub) {
+		switch (pub.bibtype) {
+			case 'article':
+				return pub.journal;
+			case 'techreport':
+				return pub.institution;
+			case 'inproceedings':
+			case 'incollection':
+				return pub.booktitle;
+			default:
+				return pub.journal ?? pub.institution ?? pub.booktitle;
+		}
+	}
+
 	/** Normalize a scalar-or-array YAML value into a string array. */
 	function asList(value) {
 		if (Array.isArray(value)) return value.map((v) => String(v));
@@ -462,6 +505,13 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		const authors = formatAuthors(pub.author);
 		if (authors) nodes.push(document.createTextNode(authors));
 		if (pub.year) nodes.push(document.createTextNode(String(pub.year)));
+		const venue = venueName(pub);
+		if (venue) {
+			// Journals are italicized in citations; institution/booktitle are plain.
+			nodes.push(
+				pub.bibtype === 'article' ? el('em', undefined, venue) : document.createTextNode(venue),
+			);
+		}
 		if (pub.doi) {
 			const link = document.createElement('a');
 			link.href = pub.doi;
@@ -477,7 +527,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			pubLink.href = githubUrl;
 			pubLink.target = '_blank';
 			pubLink.rel = 'noopener noreferrer';
-			pubLink.textContent = `[${pubId}]`;
+			pubLink.textContent = `@${pubId}`;
 			nodes.push(pubLink);
 		}
 		for (let i = 0; i < nodes.length; i++) {
@@ -496,16 +546,10 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	function renderModel(model) {
 		const section = el('section', 'model');
 		const head = el('div', 'model-head');
-		head.append(el('h3', 'model-name', model.name ?? 'Model'));
+		head.append(el('h3', 'model-name', modelTitle(model, 'Model')));
 		head.append(typeBadge('Model', 'model-type', 'A solitary prediction function with one set of parameters.'));
 		section.append(head);
 
-		if (Array.isArray(model.taxa) && model.taxa.length > 0) {
-			const taxa = model.taxa
-				.map((t) => [t.family, t.genus, t.species].filter(Boolean).join(' · '))
-				.join('; ');
-			if (taxa) section.append(el('p', 'model-taxa', taxa));
-		}
 		if (model.response && typeof model.response === 'object') {
 			const p = el('p', 'model-vars');
 			p.append(el('strong', undefined, 'Response: '));
@@ -519,26 +563,33 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			section.append(p);
 		}
 		if (model.prediction_function !== undefined && model.prediction_function !== null) {
-			const covariates =
-				model.covariates && typeof model.covariates === 'object'
-					? Object.keys(model.covariates)
-					: [];
-			const fnName = `${pubId}_${model.name ?? 'model'}`;
-			const fnBody = wrapLines(String(model.prediction_function))
-				.map((l, i) => (i === 0 ? '  ' : '    ') + l)
-				.join('\n');
-			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n${fnBody}\n}`;
-			const loadCode = `model <- load_model("${pubId}", "${model.name ?? ''}")`;
-			section.append(
-				codeTabs([
-					{ label: 'Prediction Function', code: fnCode },
-					{ label: 'Load model', code: loadCode },
-				]),
-			);
+			section.append(renderCodeTabs(model, 'model'));
 		}
 		if (model.parameters && typeof model.parameters === 'object') {
-			section.append(el('h4', 'block-title', 'Parameters'));
-			section.append(renderParamsTable(model.parameters));
+			const descNames =
+				model.descriptors && typeof model.descriptors === 'object'
+					? Object.keys(model.descriptors)
+					: [];
+			const paramNames = Object.keys(model.parameters);
+			// "Descriptors" spans the label column (Taxa) plus any explicit descriptors;
+			// "Parameters" spans the parameter columns.
+			const groups = [
+				{ label: 'Descriptors', count: descNames.length + 1 },
+				{ label: 'Parameters', count: paramNames.length },
+			];
+			const headers = ['Taxa', ...descNames, ...paramNames];
+			const row = [
+				taxaLabel(model.taxa),
+				...descNames.map((n) => model.descriptors[n] ?? ''),
+				...paramNames.map((n) => formatParam(model.parameters[n])),
+			];
+			section.append(
+				renderParamsTable(headers, [row], {
+					labelFirstCol: true,
+					groups,
+					paramFrom: 1 + descNames.length,
+				}),
+			);
 		}
 		return section;
 	}
@@ -547,7 +598,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	function renderModelSet(set) {
 		const section = el('section', 'model');
 		const head = el('div', 'model-head');
-		head.append(el('h3', 'model-name', setTitle(set)));
+		head.append(el('h3', 'model-name', modelTitle(set, 'Model set')));
 		head.append(typeBadge('Model Set', 'set-type', 'A collection of models sharing the same functional form; parameter values vary per specification (e.g. one set per species).'));
 		section.append(head);
 
@@ -566,30 +617,14 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		if (Array.isArray(set.specifications)) {
 			const count = set.specifications.length;
 			const p = el('p', 'model-vars');
-			p.append(el('strong', undefined, 'Set size: '));
+			p.append(el('strong', undefined, 'Set Size: '));
 			p.append(document.createTextNode(`${count} model${count === 1 ? '' : 's'}`));
 			section.append(p);
 		}
 		if (set.prediction_function !== undefined && set.prediction_function !== null) {
-			const covariates =
-				set.covariates && typeof set.covariates === 'object'
-					? Object.keys(set.covariates)
-					: [];
-			const fnName = `${pubId}_${set.name ?? 'model'}`;
-			const fnBody = wrapLines(String(set.prediction_function))
-				.map((l, i) => (i === 0 ? '  ' : '    ') + l)
-				.join('\n');
-			const fnCode = `${fnName} <- function(${covariates.join(', ')}) {\n${fnBody}\n}`;
-			const loadCode = `set <- load_set("${pubId}", "${set.name ?? ''}")`;
-			section.append(
-				codeTabs([
-					{ label: 'Prediction Function', code: fnCode },
-					{ label: 'Load set', code: loadCode },
-				]),
-			);
+			section.append(renderCodeTabs(set, 'set'));
 		}
 		if (Array.isArray(set.specifications) && set.specifications.length > 0) {
-			section.append(el('h4', 'block-title', 'Specifications'));
 			section.append(renderSpecifications(set.specifications));
 		}
 		return section;
@@ -627,65 +662,102 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		return lines;
 	}
 
-	/** Round a parameter to two significant figures; use scientific notation for very small/large values. */
+	/** Format a parameter value to two decimal places. */
 	function formatParam(value) {
 		const num = Number(value);
 		if (!Number.isFinite(num)) return value === null || value === undefined ? '' : String(value);
-		if (num === 0) return '0';
-		const abs = Math.abs(num);
-		if (abs >= 0.01 && abs < 100000) {
-			return Number(num.toPrecision(2)).toString();
-		}
-		return num.toExponential(1);
+		return num.toFixed(2);
+	}
+
+	/** Format a taxa list as "Genus species, …" (or "—" when empty). */
+	function taxaLabel(taxa) {
+		return (taxa ?? [])
+			.map((t) => [t.genus, t.species].filter(Boolean).join(' '))
+			.join(', ') || '—';
 	}
 
 	/** Render the per-taxon specifications as a self-scrolling table. */
 	function renderSpecifications(specs) {
-		const container = el('div', 'specs');
-		const table = el('table', 'params');
-		const thead = el('thead');
-		const headRow = el('tr');
-		headRow.append(el('th', undefined, 'Taxa'));
+		// Union descriptor and parameter names across every spec → one column each.
+		const descNames = [];
 		const paramNames = [];
 		for (const spec of specs) {
+			if (spec.descriptors && typeof spec.descriptors === 'object') {
+				for (const name of Object.keys(spec.descriptors)) {
+					if (!descNames.includes(name)) descNames.push(name);
+				}
+			}
 			if (spec.parameters && typeof spec.parameters === 'object') {
 				for (const name of Object.keys(spec.parameters)) {
 					if (!paramNames.includes(name)) paramNames.push(name);
 				}
 			}
 		}
-		for (const name of paramNames) headRow.append(el('th', undefined, name));
-		thead.append(headRow);
-		const tbody = el('tbody');
-		for (const spec of specs) {
-			const tr = el('tr');
-			const taxa = (spec.taxa ?? [])
-				.map((t) => [t.genus, t.species].filter(Boolean).join(' '))
-				.join(', ');
-			tr.append(el('td', 'param-name', taxa || '—'));
-			for (const name of paramNames) {
-				const value = spec.parameters?.[name];
-				tr.append(el('td', 'param-value', value === undefined ? '' : formatParam(value)));
-			}
-			tbody.append(tr);
-		}
-		table.append(thead, tbody);
-		container.append(table);
-		return container;
+		// "Descriptors" spans the label column (Taxa) plus any explicit descriptors;
+		// "Parameters" spans the parameter columns.
+		const groups = [
+			{ label: 'Descriptors', count: descNames.length + 1 },
+			{ label: 'Parameters', count: paramNames.length },
+		];
+		const headers = ['Taxa', ...descNames, ...paramNames];
+		const rows = specs.map((spec) => [
+			taxaLabel(spec.taxa),
+			...descNames.map((name) => spec.descriptors?.[name] ?? ''),
+			...paramNames.map((name) =>
+				spec.parameters?.[name] === undefined ? '' : formatParam(spec.parameters[name]),
+			),
+		]);
+		return renderParamsTable(headers, rows, {
+			labelFirstCol: true,
+			groups,
+			paramFrom: 1 + descNames.length,
+		});
 	}
 
-	/** Render a single model's parameters as a self-scrolling Parameter/Value table. */
-	function renderParamsTable(params) {
+	/**
+	 * Render a self-scrolling `.specs > table.params` from column headers and data rows.
+	 * Single source of truth for the Model (one row) and Model Set (per-spec) parameter
+	 * tables, so both stay structurally consistent.
+	 * @param {string[]} headers column labels, starting with the label column when
+	 *   `labelFirstCol` (e.g. "Taxa") followed by descriptor/parameter columns
+	 * @param {string[][]} rows  one array of formatted cell values per row
+	 * @param {{ labelFirstCol?: boolean, groups?: {label: string, count: number}[],
+	 *            paramFrom?: number }} [options]
+	 *   `labelFirstCol` marks the first column as a natural-width label (e.g. taxa);
+	 *   `groups` renders a group-header row (e.g. "Descriptors" / "Parameters") above
+	 *   the column names, each spanning its columns; `paramFrom` is the index of the
+	 *   first parameter column (styled monospace).
+	 */
+	function renderParamsTable(headers, rows, { labelFirstCol = false, groups = null, paramFrom = Infinity } = {}) {
 		const container = el('div', 'specs');
-		const table = el('table', 'params');
+		const table = el('table', labelFirstCol ? 'params has-label' : 'params');
 		const thead = el('thead');
+
+		if (groups && groups.length) {
+			// Group-header row (e.g. "Descriptors" / "Parameters") spanning its columns.
+			// The first group ("Descriptors") includes the label column (Taxa), so it
+			// starts at the table's left edge and the band spans the full width.
+			const groupRow = el('tr', 'group-row');
+			for (const g of groups) {
+				const th = el('th', 'group', g.label);
+				th.colSpan = g.count;
+				groupRow.append(th);
+			}
+			thead.append(groupRow);
+		}
+
 		const headRow = el('tr');
-		headRow.append(el('th', undefined, 'Parameter'), el('th', undefined, 'Value'));
+		headers.forEach((label, i) =>
+			headRow.append(el('th', i >= paramFrom ? 'param-header' : undefined, label)),
+		);
 		thead.append(headRow);
+
 		const tbody = el('tbody');
-		for (const [name, value] of Object.entries(params)) {
+		for (const row of rows) {
 			const tr = el('tr');
-			tr.append(el('td', 'param-name', name), el('td', 'param-value', formatParam(value)));
+			row.forEach((value, i) =>
+				tr.append(el('td', i >= paramFrom ? 'param-value param-num' : 'param-value', value)),
+			);
 			tbody.append(tr);
 		}
 		table.append(thead, tbody);
@@ -770,10 +842,33 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		return container;
 	}
 
-	/** vns-derived model-set title: model_type when it matches, else "Measure - Component". */
-	function setTitle(set) {
+	/**
+	 * Build the Prediction Function / Load code tabs for a Model or Model Set.
+	 * Shared so both emit identical R scaffolding. The Prediction Function tab
+	 * shows the raw expression body (no function wrapper); the Load tab shows
+	 * the loader call. Callers guard on prediction_function.
+	 * @param {{name?: string, prediction_function: unknown}} record
+	 * @param {'model'|'set'} kind
+	 */
+	function renderCodeTabs(record, kind) {
+		const isSet = kind === 'set';
+		const fnCode = wrapLines(String(record.prediction_function)).join('\n');
+		const loadFn = isSet ? 'load_set' : 'load_model';
+		const loadVar = isSet ? 'set' : 'model';
+		const loadCode = `${loadVar} <- ${loadFn}("${pubId}", "${record.name ?? ''}")`;
+		return codeTabs([
+			{ label: 'Prediction Function', code: fnCode },
+			{ label: isSet ? 'Load Set' : 'Load Model', code: loadCode },
+		]);
+	}
+
+	/**
+	 * vns-derived title shared by Model and Model Set: model_type when it matches,
+	 * else "Measure - Component". Falls back to `type`/`name`, then `fallback`.
+	 */
+	function modelTitle(record, fallback) {
 		const response =
-			set.response && typeof set.response === 'object' ? Object.keys(set.response)[0] : null;
+			record.response && typeof record.response === 'object' ? Object.keys(record.response)[0] : null;
 		if (response) {
 			for (const [type, prefixes] of Object.entries(vns.model_types)) {
 				if (prefixes.some((prefix) => response.startsWith(prefix))) return type;
@@ -785,7 +880,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 				if (parts.length > 0) return parts.join(' - ');
 			}
 		}
-		return set.type ?? set.name ?? 'Model set';
+		return record.type ?? record.name ?? fallback;
 	}
 
 	/** Append `{variable (unit), variable (unit)}` with tooltips for each variable. */
