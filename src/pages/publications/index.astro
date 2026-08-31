@@ -92,6 +92,12 @@ import '../../styles/content-page.css';
 		font-size: var(--sl-text-sm);
 		break-inside: avoid;
 	}
+	/* Two columns need ~640px; below that each pub gets the full width. */
+	@media (max-width: 640px) {
+		.group-list {
+			columns: 1;
+		}
+	}
 	.group-list .title {
 		color: var(--sl-color-gray-3);
 		margin-inline-start: 0.5rem;

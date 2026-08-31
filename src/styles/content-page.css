@@ -19,6 +19,20 @@
 	margin-inline-start: 140px !important;
 }
 
+/* Below the desktop breakpoint the sidebar is hidden and the fixed 140px
+   inset would crush the pane to a sliver; the content goes full width and
+   the page scrolls normally instead of inside a viewport-height pane. */
+@media (max-width: 1023px) {
+	.sl-markdown-content {
+		margin-inline: 0;
+		height: auto;
+	}
+	[data-slot='doc-title'] h1,
+	[data-slot='doc-title'] p {
+		margin-inline-start: 0 !important;
+	}
+}
+
 /* These pages are full-viewport; the site footer would force a page scroll. */
 footer {
 	display: none !important;

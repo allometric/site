@@ -249,6 +249,47 @@ import '../../styles/content-page.css';
 		text-align: center;
 		padding: 2rem 0;
 	}
+	/* Narrow screens: the four nowrap columns can't share a fixed row, so each
+	   model becomes a stacked card with the header names as labels. */
+	@media (max-width: 640px) {
+		.models-scroll {
+			border: none;
+		}
+		table.models thead {
+			display: none;
+		}
+		table.models,
+		table.models tbody,
+		table.models tr,
+		table.models td {
+			display: block;
+		}
+		table.models tbody tr {
+			border: 1px solid var(--sl-color-gray-6);
+			border-radius: 0.5rem;
+			padding: 0.4rem 0.75rem 0.6rem;
+			margin-block-end: 0.75rem;
+		}
+		table.models td {
+			border: none;
+			padding: 0.3rem 0;
+			white-space: normal;
+		}
+		table.models td:not(.status):not(.empty)::before {
+			content: attr(data-label);
+			display: block;
+			font-size: var(--sl-text-xs);
+			font-weight: var(--sl-font-weight-semibold);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			color: var(--sl-color-gray-3);
+			margin-block-end: 0.15rem;
+		}
+		table.models td.empty {
+			text-align: start;
+			padding: 1rem 0.25rem;
+		}
+	}
 </style>
 
 <script>
@@ -452,11 +493,13 @@ import '../../styles/content-page.css';
 		const tr = el('tr');
 
 		const modelCell = el('td');
+		modelCell.dataset.label = 'Model Form';
 		modelCell.append(modelForm(m));
 		modelCell.append(el('span', 'model-pub', typeLabel(m)));
 		tr.append(modelCell);
 
 		const pubCell = el('td');
+		pubCell.dataset.label = 'Publication';
 		const a = document.createElement('a');
 		a.href = `/publications/${m.pub_id}/`;
 		a.textContent = m.pub_id;
@@ -464,10 +507,13 @@ import '../../styles/content-page.css';
 		tr.append(pubCell);
 
 		const typeCell = el('td');
+		typeCell.dataset.label = 'Type';
 		typeCell.append(el('span', `badge ${m.type}`, m.is_set ? 'Model Set' : 'Model'));
 		tr.append(typeCell);
 
-		tr.append(el('td', 'taxa', taxaLabel(m)));
+		const taxaCell = el('td', 'taxa', taxaLabel(m));
+		taxaCell.dataset.label = 'Taxa';
+		tr.append(taxaCell);
 		return tr;
 	}
 
