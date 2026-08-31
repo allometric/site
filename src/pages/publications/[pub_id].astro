@@ -66,16 +66,16 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		font-size: var(--sl-text-sm);
 		margin-block-start: 1rem;
 	}
-	/* The shared layout caps .sl-markdown-content to the viewport; the record
-	   scrolls inside the pane (like the browse tables) while the source note
-	   stays pinned at the bottom. */
+	/* The record flows through the page: the shared layout caps
+	   .sl-markdown-content to the viewport, so lift that cap here and let the
+	   page scroll normally (no nested pane scrollbar). */
+	body:has(#publication) .sl-markdown-content {
+		height: auto;
+	}
 	#publication {
 		flex: 1 1 auto;
 		min-height: 0;
-		overflow-y: auto;
-	}
-	.source-note {
-		flex-shrink: 0;
+		overflow-y: visible;
 	}
 	/* The shared layout hides the site footer; the source note is the pub's own
 	   in-content footer, pinned below the scrolling record. */
