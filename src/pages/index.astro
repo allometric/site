@@ -114,7 +114,7 @@ const filenames = ['barnes_1962.yaml', 'barrett_1978.yaml', 'bell_1981.yaml'];
 
 	/* Pin the fold to the viewport so flex-shrink (not page growth) absorbs any
 	   tight-viewport overflow — the page can never scroll. */
-	:global([data-slot='layout']) {
+	:global(html [data-slot='layout']) {
 		height: 100svh;
 		/* Faint square grid across the whole background. color-mix on the theme
 		   foreground keeps it subtle in both light and dark mode. */
@@ -173,25 +173,25 @@ const filenames = ['barnes_1962.yaml', 'barrett_1978.yaml', 'bell_1981.yaml'];
 		flex-direction: column;
 	}
 
-	:global(.hero) {
+	:global(body .hero) {
 		align-items: flex-start;
 		justify-content: flex-start;
 		margin-top: auto;
 		padding-block: 1.5rem 2rem;
 	}
 
-	:global(.hero-info) {
+	:global(body .hero-info) {
 		max-width: 40rem;
 		text-align: left;
 		align-items: flex-start;
 	}
 
-	:global(.hero-title-container),
-	:global(.hero-content-container) {
+	:global(body .hero-title-container),
+	:global(body .hero-content-container) {
 		align-items: flex-start;
 	}
 
-	:global(.hero .actions) {
+	:global(body .hero .actions) {
 		justify-content: flex-start;
 	}
 
