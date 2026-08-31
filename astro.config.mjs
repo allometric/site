@@ -18,9 +18,10 @@ export default defineConfig({
 			plugins: [
 				lucode({
 					navLinks: [
+						{ label: 'Home', link: '/' },
 						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
-						{ label: 'Docs', link: '/guides/introduction/' },
+						{ label: 'Introduction', link: '/guides/introduction/' },
 					],
 				}),
 			],
