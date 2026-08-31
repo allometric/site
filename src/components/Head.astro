@@ -1,0 +1,9 @@
+---
+// Starlight's default Head with the favicon link stripped: the site ships no
+// favicon, so browsers should not request /favicon.svg.
+const { head } = Astro.locals.starlightRoute;
+---
+
+{head
+	.filter(({ attrs }) => attrs?.rel !== 'shortcut icon')
+	.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}

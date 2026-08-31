@@ -1,18 +1,22 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import '../../styles/content-page.css';
 ---
 
-<StarlightPage
-	frontmatter={{
-		title: 'Publications',
-		description: 'Browse all publications in allometric/models by id, model type, measure, region, or year.',
-	}}
->
+	<StarlightPage
+		frontmatter={{
+			title: 'Publications',
+			description: 'Browse all publications in allometric/models by id, model type, measure, region, or year.',
+			tableOfContents: false,
+			prev: false,
+			next: false,
+		}}
+	>
 	<div class="pub-controls">
-		<input id="pub-search" type="search" placeholder="Search by id, title, or author…" aria-label="Search publications" />
+		<input id="pub-search" class="search-input" type="search" placeholder="Search by id, title, or author…" aria-label="Search publications" />
 		<div class="view-switch" role="tablist" aria-label="Group publications by">
 			<button data-mode="id" class="active" role="tab">ID</button>
-			<button data-mode="type" role="tab">Type</button>
+			<button data-mode="type" role="tab">Model Type</button>
 			<button data-mode="measure" role="tab">Measure</button>
 			<button data-mode="region" role="tab">Region</button>
 			<button data-mode="year" role="tab">Year</button>
@@ -30,21 +34,6 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 		gap: 0.75rem;
 		flex-wrap: wrap;
 		margin-block-end: 1.25rem;
-	}
-	#pub-search {
-		flex: 1 1 14rem;
-		min-width: 10rem;
-		padding: 0.4rem 0.75rem;
-		border-radius: 0.375rem;
-		border: 1px solid var(--sl-color-gray-5);
-		background: var(--sl-color-gray-7);
-		color: var(--sl-color-text);
-		font-family: inherit;
-		font-size: var(--sl-text-sm);
-	}
-	#pub-search:focus {
-		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
-		outline-offset: 1px;
 	}
 	.view-switch {
 		display: inline-flex;
@@ -81,6 +70,9 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 	.pub-groups {
 		display: flex;
 		flex-direction: column;
+		flex: 0 1 auto;
+		min-height: 0;
+		overflow: auto;
 		gap: 1.25rem;
 	}
 	.group h2 {
@@ -112,10 +104,19 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 
 <script>
 	import pubs from '../../lib/publications.index.json';
+	import models from '../../lib/models.index.json';
+	import { typeLabel } from '../../lib/model-types';
 
 	const groupsEl = document.getElementById('pub-groups');
 	const searchEl = document.getElementById('pub-search');
 	const viewBtns = [...document.querySelectorAll('.view-switch button')];
+	// Derived model types per publication, from each pub's models.
+	const pubTypes = new Map();
+	for (const m of models) {
+		const t = typeLabel(m);
+		if (!pubTypes.has(m.pub_id)) pubTypes.set(m.pub_id, new Set());
+		pubTypes.get(m.pub_id).add(t);
+	}
 
 	function el(tag, className, text) {
 		const node = document.createElement(tag);
@@ -149,7 +150,8 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 					add((pub.id[0] ?? '?').toUpperCase(), pub);
 					break;
 				case 'type': {
-					const types = pub.model_types.length ? pub.model_types : ['Unclassified'];
+					const types = [...(pubTypes.get(pub.id) ?? [])];
+					if (types.length === 0) types.push('Unclassified');
 					for (const t of types) add(t, pub);
 					break;
 				}

@@ -1,11 +1,22 @@
 ---
-title: Example Reference
-description: A reference page in the Allometric docs site.
+title: Getting Started
+description: Install the allometric package and load models for prediction.
 ---
 
-Reference pages are ideal for outlining how things work in terse and clear terms.
-Less concerned with telling a story or addressing a specific use case, they should give a comprehensive outline of what you're documenting.
+The [`allometric` R package](https://github.com/allometric/allometric) provides
+tools for predicting tree attributes from the models stored in the
+[`allometric/models`](https://github.com/allometric/models) repository. Install
+it from GitHub, install the compiled model distribution, and load the models:
 
-## Further reading
+```r
+devtools::install_github("allometric/allometric")
 
-- Read [about reference](https://diataxis.fr/reference/) in the Diátaxis framework
+library(allometric)
+install_models()          # downloads the compiled v4 model distribution
+allometric_models <- load_models()
+```
+
+`load_models()` returns a table of every model in the distribution, which you
+can filter by publication, model type, country, or region. See [The allometric
+Package](/reference/r-allometric/) for a full walkthrough of finding and
+predicting with models.

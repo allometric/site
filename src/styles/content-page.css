@@ -1,0 +1,42 @@
+/* Shared layout for full-viewport pages (models, publications, publication
+   records, and future list pages). Anchors the content near the sidebar,
+   caps its width, and fills the viewport as a flex column so dense
+   lists/tables scroll internally without the page itself scrolling. */
+
+.sl-markdown-content {
+	display: flex;
+	flex-direction: column;
+	margin-inline: 140px;
+	max-width: 850px;
+	height: calc(100dvh - 170px);
+}
+
+/* The page title and description header sits outside the content column;
+   align it with the inset content. Scoped to the header slot so the margin
+   never leaks into content paragraphs (e.g. publication record lines). */
+[data-slot='doc-title'] h1,
+[data-slot='doc-title'] p {
+	margin-inline-start: 140px !important;
+}
+
+/* These pages are full-viewport; the site footer would force a page scroll. */
+footer {
+	display: none !important;
+}
+
+/* Shared search input for pages that filter by text. */
+.search-input {
+	flex: 1 1 16rem;
+	min-width: 10rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 0.375rem;
+	border: 1px solid var(--sl-color-gray-5);
+	background: var(--sl-color-gray-7);
+	color: var(--sl-color-text);
+	font-family: inherit;
+	font-size: var(--sl-text-sm);
+}
+.search-input:focus {
+	outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
+	outline-offset: 1px;
+}

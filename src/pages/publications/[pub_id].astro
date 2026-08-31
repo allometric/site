@@ -1,6 +1,7 @@
 ---
 import { REPO, COMMIT, listPublications } from '../../lib/repo';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import '../../styles/content-page.css';
 
 // Generic publication page: one static shell per publication in the
 // allometric/models repository. Content is fetched and rendered client-side
@@ -24,6 +25,9 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	<StarlightPage
 		frontmatter={{
 			title: pubId,
+			tableOfContents: false,
+			prev: false,
+			next: false,
 		}}
 	>
 	<div id="publication" class="publication" data-raw-url={rawUrl} data-pub-id={pubId} data-github-url={githubUrl}>
@@ -61,6 +65,22 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		color: var(--sl-color-gray-4);
 		font-size: var(--sl-text-sm);
 		margin-block-start: 1rem;
+	}
+	/* The shared layout caps .sl-markdown-content to the viewport; the record
+	   scrolls inside the pane (like the browse tables) while the source note
+	   stays pinned at the bottom. */
+	#publication {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow-y: auto;
+	}
+	.source-note {
+		flex-shrink: 0;
+	}
+	/* The shared layout hides the site footer; the source note is the pub's own
+	   in-content footer, pinned below the scrolling record. */
+	footer.source-note {
+		display: block !important;
 	}
 
 	/* The in-body title is the page h1; hide StarlightPage's frontmatter h1 (pub_id). */
@@ -304,6 +324,12 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		padding-block: 0.525rem;
 		color: var(--sl-color-gray-3);
 	}
+	/* Column names: same normal weight. The 600 Starlight `th` forces makes
+	   semibold mono/sans headers heavy under the muted group row; the
+	   font-family (mono for parameters) still separates them from values. */
+	.params thead th:not(.group) {
+		font-weight: 400;
+	}
 	/* Parameter columns use a monospace face for aligned, data-like numerics. */
 	.params .param-header,
 	.params .param-num {
@@ -398,6 +424,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	import hljs from 'highlight.js/lib/core';
 	import rLang from 'highlight.js/lib/languages/r';
 	hljs.registerLanguage('r', rLang);
+	import { formatR } from '../../lib/formatR';
 
 	const root = document.getElementById('publication');
 	const status = document.getElementById('status');
@@ -635,33 +662,6 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		return hljs.highlight(code, { language: 'r' }).value;
 	}
 
-	/** Wrap an R expression to a max line width, breaking at top-level operators. */
-	function wrapLines(expr, width = 80) {
-		let depth = 0;
-		let line = '';
-		const lines = [];
-		const over = () => line.length >= width;
-		for (let i = 0; i < expr.length; i++) {
-			const ch = expr[i];
-			if (ch === '(') depth++;
-			if (ch === ')') depth--;
-			line += ch;
-			// semicolons separate statements: always break after one at top level.
-			if (depth === 0 && ch === ';') {
-				lines.push(line.trim());
-				line = '';
-				continue;
-			}
-			// break after an operator at any depth once the line is wide.
-			if (/[+\-*/,]/.test(ch) && over() && i < expr.length - 1) {
-				lines.push(line.trim());
-				line = '';
-			}
-		}
-		if (line.trim()) lines.push(line.trim());
-		return lines;
-	}
-
 	/**
 	 * Format a parameter value to two decimal places. Values small enough to round
 	 * to "0.00" fall back to scientific notation so their scale isn't lost.
@@ -879,7 +879,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	 */
 	function renderCodeTabs(record, kind) {
 		const isSet = kind === 'set';
-		const fnCode = wrapLines(String(record.prediction_function)).join('\n');
+		const fnCode = formatR(String(record.prediction_function));
 		const loadFn = isSet ? 'load_set' : 'load_model';
 		const loadVar = isSet ? 'set' : 'model';
 		const loadCode = `${loadVar} <- ${loadFn}("${pubId}", "${record.name ?? ''}")`;
@@ -891,7 +891,8 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 
 	/**
 	 * vns-derived title shared by Model and Model Set: model_type when it matches,
-	 * else "Measure - Component". Falls back to `type`/`name`, then `fallback`.
+	 * else "Component Measure" (e.g. "Stem Volume"). Falls back to `type`/`name`,
+	 * then `fallback`.
 	 */
 	function modelTitle(record, fallback) {
 		const response =
@@ -902,9 +903,12 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			}
 			const info = vns.variables[response];
 			if (info) {
-				const parts = [info.measure.charAt(0).toUpperCase() + info.measure.slice(1)].filter(Boolean);
-				if (info.component) parts.push(info.component);
-				if (parts.length > 0) return parts.join(' - ');
+				const measure = info.measure.charAt(0).toUpperCase() + info.measure.slice(1);
+				const component = info.component
+					? info.component.charAt(0).toUpperCase() + info.component.slice(1)
+					: '';
+				if (component && measure) return `${component} ${measure}`;
+				if (measure) return measure;
 			}
 		}
 		return record.type ?? record.name ?? fallback;

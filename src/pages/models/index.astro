@@ -1,115 +1,143 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import '../../styles/content-page.css';
 ---
 
-<StarlightPage
-	frontmatter={{
-		title: 'Models',
-		description: 'Browse every model and model set in allometric/models by type, response variable, or covariates.',
-	}}
->
-	<div class="models-controls">
-		<input id="model-search" type="search" placeholder="Search by model, publication, type, variable, or taxa…" aria-label="Search models" />
-		<span id="model-count" class="count" role="status"></span>
-	</div>
+	<StarlightPage
+		frontmatter={{
+			title: 'Models',
+      description: 'Browse models by type, taxa, country, and region.',
+			tableOfContents: false,
+			prev: false,
+			next: false,
+		}}
+	>
 	<div class="filters" role="group" aria-label="Filter models">
-		<label>Model type
+		<label>
+			<span>Model type</span>
 			<select id="f-model-type" aria-label="Filter by model type"></select>
 		</label>
-		<label>Family
-			<select id="f-family" aria-label="Filter by family"></select>
+		<label>
+			<span>Taxa</span>
+			<select id="f-taxa" aria-label="Filter by taxa"></select>
 		</label>
-		<label>Genus
-			<select id="f-genus" aria-label="Filter by genus"></select>
-		</label>
-		<label>Species
-			<select id="f-species" aria-label="Filter by species"></select>
-		</label>
-		<label>Country
+		<label>
+			<span>Country</span>
 			<select id="f-country" aria-label="Filter by country"></select>
 		</label>
-		<label>Region
+		<label>
+			<span>Region</span>
 			<select id="f-region" aria-label="Filter by region"></select>
 		</label>
 	</div>
+	<div id="active-filters" class="active-filters" role="group" aria-label="Active filters"></div>
 	<div class="models-scroll">
-		<table id="model-table" class="models">
-			<thead>
+			<table id="model-table" class="models">
+		<colgroup>
+			<col style="width: 40%">
+			<col style="width: 17%">
+			<col style="width: 17%">
+			<col style="width: 26%">
+		</colgroup>
+		<thead>
 				<tr>
-					<th scope="col">Model</th>
+					<th scope="col">Model Form</th>
+					<th scope="col">Publication</th>
 					<th scope="col">Type</th>
-					<th scope="col">Model type</th>
-					<th scope="col">Response</th>
-					<th scope="col">Covariates</th>
 					<th scope="col">Taxa</th>
 				</tr>
 			</thead>
 			<tbody id="model-rows">
-				<tr><td class="status" colspan="6">Loading models…</td></tr>
+				<tr><td class="status" colspan="4">Loading models…</td></tr>
 			</tbody>
 		</table>
 	</div>
 </StarlightPage>
 
 <style is:global>
-	.models-controls {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		margin-block-end: 1rem;
-	}
-	#model-search {
-		flex: 1 1 16rem;
-		min-width: 10rem;
-		padding: 0.4rem 0.75rem;
-		border-radius: 0.375rem;
-		border: 1px solid var(--sl-color-gray-5);
-		background: var(--sl-color-gray-7);
-		color: var(--sl-color-text);
-		font-family: inherit;
-		font-size: var(--sl-text-sm);
-	}
-	#model-search:focus {
-		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
-		outline-offset: 1px;
-	}
 	.filters {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem 0.75rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		align-items: end;
+		gap: 0.75rem 1rem;
 		margin-block-end: 1rem;
 	}
 	.filters label {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
 		color: var(--sl-color-gray-3);
 		font-size: var(--sl-text-xs);
 		font-weight: var(--sl-font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+	.filters label span {
+		white-space: nowrap;
 	}
 	.filters select {
-		padding: 0.3rem 0.5rem;
+		width: 100%;
+		padding: 0.4rem 0.5rem;
 		border-radius: 0.375rem;
 		border: 1px solid var(--sl-color-gray-5);
 		background: var(--sl-color-gray-7);
 		color: var(--sl-color-text);
 		font-family: inherit;
 		font-size: var(--sl-text-sm);
-		max-width: 14rem;
 	}
 	.filters select:focus {
 		outline: 2px solid color-mix(in oklab, var(--sl-color-accent) 50%, transparent);
 		outline-offset: 1px;
 	}
+	.active-filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		gap: 0.4rem;
+		margin-block-end: 1rem;
+	}
+	.active-filters:empty {
+		display: none;
+	}
+	.filter-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		border: 1px solid color-mix(in oklab, var(--sl-color-accent) 40%, transparent);
+		background: color-mix(in oklab, var(--sl-color-accent) 12%, transparent);
+		color: var(--sl-color-text);
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		line-height: 1.4;
+		cursor: pointer;
+	}
+	.filter-chip:hover {
+		background: color-mix(in oklab, var(--sl-color-accent) 22%, transparent);
+	}
+	.filter-chip.clear {
+		border-color: var(--sl-color-gray-5);
+		background: transparent;
+		color: var(--sl-color-gray-3);
+	}
+	.chip-label {
+		color: var(--sl-color-gray-3);
+	}
+	.chip-x {
+		font-weight: 600;
+		line-height: 1;
+	}
 	.models-scroll {
-		max-height: 70vh;
+		flex: 0 1 auto;
+		min-height: 0;
 		overflow: auto;
 		border: 1px solid var(--sl-color-gray-6);
 		border-radius: 0.5rem;
 	}
 	table.models {
 		width: 100%;
+		table-layout: fixed;
 		border-collapse: collapse;
 		font-size: var(--sl-text-sm);
 	}
@@ -135,8 +163,16 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 	table.models tbody tr:hover {
 		background: color-mix(in oklab, var(--sl-color-gray-6) 25%, transparent);
 	}
-	.model-name {
-		font-weight: var(--sl-font-weight-semibold);
+	.model-form {
+		color: var(--sl-color-text);
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+	}
+	.form-op {
+		color: var(--sl-color-gray-4);
+	}
+	.form-f {
+		font-family: 'Times New Roman', 'Cambria Math', 'STIX Two Math', Georgia, serif;
+		font-style: italic;
 	}
 	.model-pub {
 		display: block;
@@ -158,31 +194,17 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 		border-color: color-mix(in oklab, var(--sl-color-accent) 40%, transparent);
 	}
 	.badge.fixed_effects_set {
-		color: color-mix(in oklab, #2fae88 58%, var(--sl-color-text));
-		background: color-mix(in oklab, #2fae88 16%, transparent);
-		border-color: color-mix(in oklab, #2fae88 40%, transparent);
-	}
-	.model-type {
 		color: var(--sl-color-gray-2);
-	}
-	.model-type .none {
-		color: var(--sl-color-gray-4);
-	}
-	.vars {
-		color: var(--sl-color-gray-2);
+		background: color-mix(in oklab, var(--sl-color-gray-5) 28%, transparent);
+		border-color: var(--sl-color-gray-5);
 	}
 	.var-tip {
 		border-block-end: 1px dotted var(--sl-color-gray-4);
 		cursor: help;
-		position: relative;
 	}
-	.var-tip.has-desc::after {
-		content: attr(data-desc);
-		position: absolute;
-		left: 0;
-		bottom: 135%;
-		z-index: 20;
-		width: max-content;
+	.var-tooltip {
+		position: fixed;
+		z-index: 100;
 		max-width: 280px;
 		background: var(--sl-color-bg, #fff);
 		color: var(--sl-color-text);
@@ -190,36 +212,30 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 		border-radius: 0.375rem;
 		padding: 0.4rem 0.6rem;
 		font-size: var(--sl-text-xs);
-		font-weight: normal;
 		line-height: 1.4;
 		box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
-		opacity: 0;
 		visibility: hidden;
+		opacity: 0;
 		pointer-events: none;
 		transition: opacity 0.12s ease;
 	}
-	.var-tip.has-desc:hover::after,
-	.var-tip.has-desc:focus-visible::after {
-		opacity: 1;
+	.var-tooltip.visible {
 		visibility: visible;
-	}
-	.unit {
-		color: var(--sl-color-gray-4);
+		opacity: 1;
 	}
 	.expand {
 		margin-inline-start: 0.25rem;
-		padding: 0 0.35rem;
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.35rem;
+		padding: 0;
+		border: none;
 		background: transparent;
 		color: var(--sl-color-gray-3);
 		font-family: inherit;
-		font-size: var(--sl-text-xs);
+		font-size: inherit;
+		line-height: 1;
 		cursor: pointer;
 	}
 	.expand:hover {
 		color: var(--sl-color-text);
-		background: color-mix(in oklab, var(--sl-color-gray-6) 40%, transparent);
 	}
 	.taxa {
 		color: var(--sl-color-gray-3);
@@ -238,19 +254,61 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 <script>
 	import models from '../../lib/models.index.json';
 	import vns from '../../lib/vns.json';
+	import { typeLabel } from '../../lib/model-types';
 
 	const rowsEl = document.getElementById('model-rows');
-	const searchEl = document.getElementById('model-search');
-	const countEl = document.getElementById('model-count');
+	const expanded = new Set();
 
 	const filterEls = {
 		modelType: document.getElementById('f-model-type'),
-		family: document.getElementById('f-family'),
-		genus: document.getElementById('f-genus'),
-		species: document.getElementById('f-species'),
+		taxa: document.getElementById('f-taxa'),
 		country: document.getElementById('f-country'),
 		region: document.getElementById('f-region'),
 	};
+	const chipsEl = document.getElementById('active-filters');
+	const FILTER_META = {
+		modelType: 'Model type',
+		taxa: 'Taxa',
+		country: 'Country',
+		region: 'Region',
+	};
+	// Variable tooltips: one body-mounted element at fixed position so the
+	// .models-scroll overflow context can't clip them. Delegated listeners
+	// survive row re-renders.
+	const tooltip = el('div', 'var-tooltip');
+	tooltip.setAttribute('role', 'tooltip');
+	document.body.append(tooltip);
+	let tipTrigger = null;
+
+	function showTooltip(trigger) {
+		tooltip.textContent = trigger.dataset.desc;
+		tooltip.classList.add('visible');
+		const gap = 8;
+		const r = trigger.getBoundingClientRect();
+		const t = tooltip.getBoundingClientRect();
+		const top = r.top - t.height - gap < gap ? r.bottom + gap : r.top - t.height - gap;
+		const left = Math.min(Math.max(r.left, gap), window.innerWidth - t.width - gap);
+		tooltip.style.top = `${top}px`;
+		tooltip.style.left = `${left}px`;
+	}
+
+	function hideTooltip() {
+		tipTrigger = null;
+		tooltip.classList.remove('visible');
+	}
+
+	document.addEventListener('mouseover', (e) => {
+		const t = e.target.closest('.var-tip.has-desc');
+		if (t && t !== tipTrigger) {
+			tipTrigger = t;
+			showTooltip(t);
+		}
+	});
+	document.addEventListener('mouseout', (e) => {
+		if (e.target === tipTrigger) hideTooltip();
+	});
+	// Drop the tooltip when the table scrolls out from under it.
+	window.addEventListener('scroll', hideTooltip, true);
 
 	function el(tag, className, text) {
 		const node = document.createElement(tag);
@@ -270,45 +328,87 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 		return span;
 	}
 
-	/** Append `{name (unit)}` variable chips separated by commas. */
-	function appendVars(container, pairs) {
-		pairs.forEach(([name, unit], i) => {
-			if (i > 0) container.append(document.createTextNode(', '));
-			container.append(varTip(name));
-			if (unit) container.append(el('span', 'unit', ` (${unit})`));
-		});
+	/** Character budget for the covariate names shown in a collapsed form. */
+	const MAX_COV_CHARS = 14;
+
+	/** Covariates to show in a collapsed form: the first three in order when they fit
+	 *  the budget, otherwise the shortest names that fit (up to three). */
+	function collapsedCovariates(names) {
+		const first3 = names.slice(0, 3);
+		if (first3.join(', ').length <= MAX_COV_CHARS) return first3;
+		const byLen = [...names].sort((a, b) => a.length - b.length);
+		const out = [];
+		let len = 0;
+		for (const n of byLen) {
+			if (out.length >= 3) break;
+			const add = n.length + (out.length ? 2 : 0);
+			if (len + add > MAX_COV_CHARS) break;
+			out.push(n);
+			len += add;
+		}
+		return out;
 	}
 
-	/** An expandable list: shows `limit` items, then a "…" toggle to reveal the rest. */
-	function expandable(pairs, limit = 3) {
-		const span = el('span', 'vars');
-		if (pairs.length <= limit) {
-			appendVars(span, pairs);
-			return span;
-		}
-		let expanded = false;
-		const btn = el('button', 'expand');
-		btn.type = 'button';
-		btn.setAttribute('aria-expanded', 'false');
-		const render = () => {
-			btn.textContent = expanded ? '−' : `… +${pairs.length - limit}`;
-			btn.setAttribute('aria-expanded', String(expanded));
-			span.replaceChildren();
-			appendVars(span, expanded ? pairs : pairs.slice(0, limit));
-			span.append(' ');
-			span.append(btn);
+	/** `response = f(covariates)` form: shows up to three covariates, collapsing to a
+	 *  budget-fitting subset with a clickable "…" expander when there are more. */
+	function modelForm(m) {
+		const span = el('span', 'model-form');
+		const covs = m.covariates.map((p) => p[0]);
+		const key = `form:${m.pub_id}/${m.id}`;
+		const open = expanded.has(key);
+		const sep = () => el('span', 'form-op', ', ');
+		const toggle = (label, ariaLabel, state) => {
+			const btn = el('button', 'expand');
+			btn.type = 'button';
+			btn.textContent = label;
+			btn.setAttribute('aria-expanded', String(state));
+			btn.setAttribute('aria-label', ariaLabel);
+			btn.addEventListener('click', () => {
+				expanded.has(key) ? expanded.delete(key) : expanded.add(key);
+				render();
+			});
+			return btn;
 		};
-		btn.addEventListener('click', () => {
-			expanded = !expanded;
-			render();
-		});
-		render();
+
+		span.append(varTip(m.response[0][0]));
+		span.append(el('span', 'form-op', ' = '));
+		span.append(el('span', 'form-f', 'f'));
+		span.append(el('span', 'form-op', '('));
+		if (covs.length === 0) {
+			span.append(el('span', 'none', '—'));
+		} else if (covs.length <= 3 || open) {
+			covs.forEach((name, i) => {
+				if (i > 0) span.append(sep());
+				span.append(varTip(name));
+			});
+			if (open) {
+				span.append(' ');
+				span.append(toggle('−', 'Show fewer covariates', true));
+			}
+		} else {
+			const visible = collapsedCovariates(covs);
+			visible.forEach((name, i) => {
+				if (i > 0) span.append(sep());
+				span.append(varTip(name));
+			});
+			span.append(' ');
+			span.append(toggle('…', `Show all ${covs.length} covariates`, false));
+		}
+		span.append(el('span', 'form-op', ')'));
 		return span;
 	}
 
-	/** Human label for the derived model_type, falling back to the measure. */
-	function modelTypeLabel(m) {
-		return m.model_type || (m.measure ? m.measure.charAt(0).toUpperCase() + m.measure.slice(1) : '');
+	/** Concise taxa: "Genus species" for a single taxon, "N species" for many, "—" when unknown. */
+	function taxaLabel(m) {
+		if (!m.taxa_count) return '—';
+		if (m.taxa_count === 1) {
+			const genus = m.genera[0];
+			const species = m.species[0];
+			if (genus && species) return `${genus} ${species}`;
+			if (genus) return `${genus} sp.`;
+			return '—';
+		}
+		return `${m.taxa_count} species`;
 	}
 
 	/** Populate a filter `<select>` with distinct values (plus an "All" default). */
@@ -322,93 +422,117 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 		for (const v of opts) select.append(Object.assign(document.createElement('option'), { value: v, textContent: v }));
 	}
 
+	/** Scientific names for a model's taxa, e.g. "Pseudotsuga menziesii".
+	 *  Only derivable when the model has one genus or one species; multi×multi
+	 *  sets have unpairable lists and are excluded from taxon filtering. */
+	function taxaOf(m) {
+		const g = m.genera;
+		const s = m.species;
+		if (g.length === 0 || s.length === 0) return [];
+		if (g.length === 1) return s.map((sp) => `${g[0]} ${sp}`);
+		if (s.length === 1) return g.map((ge) => `${ge} ${s[0]}`);
+		return [];
+	}
+
 	// Populate the filter dropdowns once from the full dataset.
-	fillSelect(filterEls.modelType, models.map((m) => m.model_type), true);
-	fillSelect(filterEls.family, models.flatMap((m) => m.families));
-	fillSelect(filterEls.genus, models.flatMap((m) => m.genera));
-	fillSelect(filterEls.species, models.flatMap((m) => m.species));
+	fillSelect(filterEls.modelType, models.map(typeLabel));
+	fillSelect(filterEls.taxa, models.flatMap(taxaOf));
 	fillSelect(filterEls.country, models.flatMap((m) => m.countries));
 	fillSelect(filterEls.region, models.flatMap((m) => m.regions));
 
-	function matches(m, q) {
-		if (filterEls.modelType.value) {
-			const want = filterEls.modelType.value;
-			if (want === 'Unclassified' ? m.model_type : m.model_type !== want) return false;
-		}
-		if (filterEls.family.value && !m.families.includes(filterEls.family.value)) return false;
-		if (filterEls.genus.value && !m.genera.includes(filterEls.genus.value)) return false;
-		if (filterEls.species.value && !m.species.includes(filterEls.species.value)) return false;
+	function matches(m) {
+		if (filterEls.modelType.value && typeLabel(m) !== filterEls.modelType.value) return false;
+		if (filterEls.taxa.value && !taxaOf(m).includes(filterEls.taxa.value)) return false;
 		if (filterEls.country.value && !m.countries.includes(filterEls.country.value)) return false;
 		if (filterEls.region.value && !m.regions.includes(filterEls.region.value)) return false;
-		if (!q) return true;
-		const haystack = [
-			m.id,
-			m.pub_id,
-			m.pub_title,
-			m.type,
-			m.model_type,
-			m.measure,
-			...m.response.map((p) => p[0]),
-			...m.covariates.map((p) => p[0]),
-			...m.families,
-			...m.genera,
-			...m.species,
-		]
-			.filter(Boolean)
-			.join(' ')
-			.toLowerCase();
-		return haystack.includes(q);
+		return true;
 	}
 
 	function renderRow(m) {
 		const tr = el('tr');
 
 		const modelCell = el('td');
+		modelCell.append(modelForm(m));
+		modelCell.append(el('span', 'model-pub', typeLabel(m)));
+		tr.append(modelCell);
+
+		const pubCell = el('td');
 		const a = document.createElement('a');
 		a.href = `/publications/${m.pub_id}/`;
-		a.className = 'model-name';
-		a.textContent = m.id;
-		modelCell.append(a);
-		modelCell.append(el('span', 'model-pub', m.pub_id));
-		tr.append(modelCell);
+		a.textContent = m.pub_id;
+		pubCell.append(a);
+		tr.append(pubCell);
 
 		const typeCell = el('td');
 		typeCell.append(el('span', `badge ${m.type}`, m.is_set ? 'Model Set' : 'Model'));
 		tr.append(typeCell);
 
-		const typeLabel = el('td', 'model-type');
-		const label = modelTypeLabel(m);
-		typeLabel.append(el('span', label ? '' : 'none', label || '—'));
-		tr.append(typeLabel);
-
-		const respCell = el('td', 'vars');
-		appendVars(respCell, m.response);
-		tr.append(respCell);
-
-		const covCell = el('td');
-		if (m.covariates.length) covCell.append(expandable(m.covariates));
-		else covCell.append(el('span', 'none', '—'));
-		tr.append(covCell);
-
-		tr.append(el('td', 'taxa', m.taxa_count ? `${m.taxa_count} ${m.is_set ? 'species' : 'taxa'}` : '—'));
+		tr.append(el('td', 'taxa', taxaLabel(m)));
 		return tr;
 	}
 
+	function renderChips() {
+		chipsEl.replaceChildren();
+		let count = 0;
+		for (const [key, select] of Object.entries(filterEls)) {
+			const value = select.value;
+			if (!value) continue;
+			count++;
+			const chip = document.createElement('button');
+			chip.type = 'button';
+			chip.className = 'filter-chip';
+			chip.setAttribute('aria-label', `Remove ${FILTER_META[key]}: ${value} filter`);
+			chip.append(el('span', 'chip-label', `${FILTER_META[key]}: `));
+			chip.append(el('span', 'chip-value', value));
+			chip.append(el('span', 'chip-x', '×'));
+			chip.addEventListener('click', () => {
+				select.value = '';
+				select.dispatchEvent(new Event('change', { bubbles: true }));
+			});
+			chipsEl.append(chip);
+		}
+		if (count) {
+			const clear = document.createElement('button');
+			clear.type = 'button';
+			clear.className = 'filter-chip clear';
+			clear.textContent = 'Clear all';
+			clear.setAttribute('aria-label', 'Clear all filters');
+			clear.addEventListener('click', () => {
+				Object.values(filterEls).forEach((s) => { s.value = ''; });
+				render();
+			});
+			chipsEl.append(clear);
+		}
+	}
+
 	function render() {
-		const q = searchEl.value.trim().toLowerCase();
-		const rows = models.filter((m) => matches(m, q));
+		hideTooltip();
+		renderChips();
+		const rows = models.filter((m) => matches(m));
 		rowsEl.replaceChildren();
-		countEl.textContent = `${rows.length} of ${models.length} models`;
 		if (rows.length === 0) {
 			const tr = el('tr');
-			tr.append(el('td', 'empty', 'No models match your search.'));
+			tr.append(el('td', 'empty', 'No models match your filters.'));
 			rowsEl.append(tr);
 			return;
 		}
 		for (const m of rows) rowsEl.append(renderRow(m));
 	}
 
-	searchEl.addEventListener('input', render);
+	// Percentage column widths don't resolve against the table in this fixed layout,
+	// so size the columns to fill the table's current width in pixels.
+	const COL_WIDTHS = [0.4, 0.17, 0.17, 0.26];
+	function fitColumns() {
+		const table = document.getElementById('model-table');
+		const cols = table.querySelectorAll('col');
+		const w = table.getBoundingClientRect().width;
+		cols.forEach((col, i) => {
+			col.style.width = `${Math.round(w * COL_WIDTHS[i])}px`;
+		});
+	}
+	fitColumns();
+	window.addEventListener('resize', fitColumns);
+
 	Object.values(filterEls).forEach((select) => select.addEventListener('change', render));
 	render();
 </script>
