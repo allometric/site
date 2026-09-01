@@ -9,7 +9,35 @@ the basis of forest inventory systems worldwide, and many statistical products
 quantifying forest health necessarily rely on them. The number of allometric
 models is vast, and they are often tucked away in obscure reports or other
 resources. The allometric project is a platform for archiving and using these
-models in a robust and interoperable format.
+models in a robust and interoperable format. Models are declared using
+publication YAML files, which are easy to read and write. For example, a
+hypothetical model for estimating tree biomass from diameter and height might be
+
+```{yaml}
+- name: example_biomass_model
+  type: fixed_effects
+  response: { bt: "m3" }
+  covariates: { dsob: "cm" }
+  taxa:
+    - family: Pinaceae
+      genus: Pinus
+      species: ponderosa
+  parameters:
+    a: 22.6
+    b: 0.014482
+    c: 0.001162
+  prediction_function: "4.5 + a * exp((b - c * log(atb)) * (hst - 4.5))"
+  description: |
+    This model estimates tree biomass (bt) in cubic meters from diameter at
+    breast height (dsob) in centimeters and tree height (hst) in meters for
+    ponderosa pine trees.
+```
+
+Here, we declare a hypothetical biomass model for ponderosa pine trees,
+define some information about its usage, and provide a prediction function for
+estimating biomass from tree diameter and height. This approach yields a clear,
+standardized format for allometric storage that can be ingested into other
+processes.
 
 ## Accessing Models
 
