@@ -1,0 +1,3 @@
+[submodule "vendor/orc"]
+	path = vendor/orc
+	url = ../orc

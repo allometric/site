@@ -71,8 +71,8 @@ from a particular publication.
 ## Using the Model
 
 ```r
-tsuga_poudel <- allometric_models %>%
-  dplyr::filter(pub_id == "poudel_2019") %>%
+tsuga_poudel <- allometric_models |>
+  dplyr::filter(pub_id == "poudel_2019") |>
   select_model("1bc22c7e")
 ```
 
@@ -141,7 +141,7 @@ predict(tsuga_poudel, my_trees$dias, my_trees$heights)
 or even using the convenience of `dplyr`
 
 ```r
-my_trees %>%
+my_trees |>
   mutate(vols = predict(tsuga_poudel, dias, heights))
 ```
 

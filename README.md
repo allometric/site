@@ -31,6 +31,31 @@ Images can be added to `src/assets/` and embedded in Markdown with a relative li
 
 Static assets, like favicons, can be placed in the `public/` directory.
 
+## ORC documentation
+
+The ORC documentation is rendered by this site with Starlight. The ORC
+repository is tracked as a pinned submodule at `vendor/orc/`, while the five
+published Markdown pages are symlinked into `src/content/docs/orc/` so the
+Starlight loader does not ingest the ORC repository's root README or metadata.
+Initialize it after cloning:
+
+```sh
+git submodule update --init --recursive
+```
+
+When ORC documentation changes land in the `allometric/orc` repository, update
+the published revision from this repository and commit the submodule pointer:
+
+```sh
+git -C vendor/orc fetch origin main
+git -C vendor/orc checkout origin/main
+git add vendor/orc src/content/docs/orc
+git commit -m "docs: update ORC documentation"
+```
+
+The site Pages workflow checks out submodules recursively, so a missing
+submodule must be fixed before running the site build.
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:

@@ -14,6 +14,7 @@ export default defineConfig({
 				// Strip the default favicon link: the site ships no favicon.
 				Head: './src/components/Head.astro',
 			},
+			customCss: ['./src/styles/starlight.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/allometric' }],
 			plugins: [
 				lucode({
@@ -22,6 +23,7 @@ export default defineConfig({
 						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
 						{ label: 'Introduction', link: '/guides/introduction/' },
+						{ label: 'ORC', link: '/orc/' },
 					],
 				}),
 			],
@@ -35,11 +37,23 @@ export default defineConfig({
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Contributing Models', slug: 'guides/contributing' },
+						{ label: 'Using models', slug: 'guides/using-models' },
 					],
 				},
 				{
-					label: 'R Package Reference',
-					items: [{ autogenerate: { directory: 'reference' } }],
+					label: 'ORC',
+					items: [
+						{ label: 'Home', link: '/orc/' },
+						{
+							label: 'Schema',
+							items: [
+								{ label: 'Publication', slug: 'orc/publication' },
+								{ label: 'Model Families', slug: 'orc/families' },
+							],
+						},
+						{ label: 'Model kinds', slug: 'orc/kinds' },
+						{ label: 'API', slug: 'orc/api' },
+					],
 				},
 			],
 		}),

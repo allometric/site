@@ -13,7 +13,7 @@ models in a robust and interoperable format. Models are declared using
 publication YAML files, which are easy to read and write. For example, a
 hypothetical model for estimating tree biomass from diameter and height might be
 
-```{yaml}
+```yaml
 - name: example_biomass_model
   type: fixed_effects
   response: { bt: "m3" }
@@ -68,7 +68,7 @@ models to the repository. These components include:
 
 1. The [`models`](https://github.com/allometric/models) repository, which stores
    allometric in highly structured YAML files.
-2. The [`orc`](https://github.com/allometric/orc) validator, which ensures
+2. The [`orc`](https://allometric.org/orc/) validator, which ensures
    models are properly specified with a uniform schema.
 3. The [`allometric`](http://github.com/allometric/allometric) R Package, which
    provides analysis tools for working with allometric models and their outputs.
