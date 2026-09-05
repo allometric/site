@@ -37,11 +37,8 @@ export default defineConfig({
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Contributing Models', slug: 'guides/contributing' },
+						{ label: 'Using models', slug: 'guides/using-models' },
 					],
-				},
-				{
-					label: 'R Package Reference',
-					items: [{ autogenerate: { directory: 'reference' } }],
 				},
 				{
 					label: 'ORC',
