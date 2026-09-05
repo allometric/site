@@ -1,0 +1,238 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getLatestChanges } from '../../lib/changes';
+import '../../styles/content-page.css';
+const changes = await getLatestChanges();
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+	year: 'numeric',
+	month: 'short',
+	day: 'numeric',
+	timeZone: 'UTC',
+});
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Latest changes',
+		description: 'Up to 50 of the most recent changes to allometric/models.',
+		tableOfContents: false,
+		prev: false,
+		next: false,
+	}}
+>
+	<div class="changes-page">
+		<p class="intro">
+			{changes.length === 50 ? 'The 50 most recent changes' : `${changes.length} recent changes`}, including fixes, additions, and other updates to allometric/models, read from its commit history at build time.
+			Select a change title to inspect its complete diff.
+		</p>
+		{changes.length > 0 ? (
+			<div class="changes-scroll">
+				<table class="changes">
+					<colgroup>
+						<col style="width: 14%" />
+						<col style="width: 62%" />
+						<col style="width: 24%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">Type</th>
+							<th scope="col">Change</th>
+							<th scope="col">Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						{changes.map((change) => (
+							<tr>
+								<td data-label="Type">
+									<span class:list={['badge', 'change-kind', `kind-${change.kind}`]}>{change.type}</span>
+								</td>
+								<td data-label="Change">
+									<a class="change-title" href={change.commitUrl} target="_blank" rel="noopener noreferrer">{change.description}</a>
+									<div class="change-detail">
+										<a href={change.commitUrl} target="_blank" rel="noopener noreferrer">{change.shortHash}</a>
+										{change.conventional && <span class="commit-note">conventional commit</span>}
+										{change.publications.length > 0 && (
+											<span class="affected">
+												affected publications:{' '}
+												{change.publications.map((pubId, index) => (
+													<span>
+														{index > 0 && ', '}
+														<a href={`/publications/${pubId}/`}>{pubId}</a>
+													</span>
+													))}
+												</span>
+										)}
+									</div>
+								</td>
+								<td data-label="Date"><time datetime={change.date}>{dateFormatter.format(new Date(change.date))}</time></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		) : (
+			<p class="empty">No commit history was available while this page was built.</p>
+		)}
+	</div>
+</StarlightPage>
+
+<style is:global>
+	.changes-page {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+		gap: 0.75rem;
+	}
+
+	.intro {
+		margin: 0;
+		max-width: 52rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-sm);
+	}
+
+	.changes-scroll {
+		flex: 0 1 auto;
+		min-height: 0;
+		overflow: auto;
+		border: 1px solid var(--sl-color-gray-6);
+		border-radius: 0.5rem;
+	}
+
+	table.changes {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		font-size: var(--sl-text-sm);
+	}
+
+	table.changes th,
+	table.changes td {
+		padding: 0.45rem 0.75rem;
+		border-block-end: 1px solid var(--sl-color-gray-6);
+		text-align: start;
+		vertical-align: top;
+	}
+
+	table.changes thead th {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		background: var(--sl-color-gray-7);
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	table.changes tbody tr:last-child td {
+		border-block-end: 0;
+	}
+
+	table.changes tbody tr:hover {
+		background: color-mix(in oklab, var(--sl-color-gray-6) 25%, transparent);
+	}
+
+	.change-kind {
+		display: inline-block;
+		padding: 0.1rem 0.55rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 999px;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+		text-transform: lowercase;
+		white-space: nowrap;
+	}
+
+	.kind-fix {
+		border-color: color-mix(in oklab, #b42318 40%, transparent);
+		background: color-mix(in oklab, #b42318 14%, transparent);
+		color: color-mix(in oklab, #b42318 70%, var(--sl-color-text));
+	}
+	.kind-add, .kind-feat {
+		border-color: color-mix(in oklab, #087443 40%, transparent);
+		background: color-mix(in oklab, #087443 14%, transparent);
+		color: color-mix(in oklab, #087443 70%, var(--sl-color-text));
+	}
+	.kind-docs {
+		border-color: color-mix(in oklab, #175cd3 40%, transparent);
+		background: color-mix(in oklab, #175cd3 14%, transparent);
+		color: color-mix(in oklab, #175cd3 70%, var(--sl-color-text));
+	}
+
+	.change-title {
+		color: var(--sl-color-text);
+		font-weight: var(--sl-font-weight-semibold);
+		text-decoration: none;
+	}
+	.change-title:hover {
+		color: var(--sl-color-accent-high);
+		text-decoration: underline;
+	}
+
+	.change-detail {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.25rem 0.65rem;
+		margin-block-start: 0.15rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+	}
+
+	.commit-note {
+		font-style: italic;
+	}
+
+	.affected {
+		flex-basis: 100%;
+	}
+
+	.empty {
+		margin: 0;
+		padding: 2rem 0;
+		color: var(--sl-color-gray-4);
+		text-align: center;
+	}
+
+	@media (max-width: 640px) {
+		.changes-scroll {
+			border: none;
+		}
+		table.changes,
+		table.changes tbody,
+		table.changes tr,
+		table.changes td {
+			display: block;
+		}
+		table.changes thead {
+			display: none;
+		}
+		table.changes tbody tr {
+			margin-block-end: 0.75rem;
+			padding: 0.4rem 0.75rem 0.6rem;
+			border: 1px solid var(--sl-color-gray-6);
+			border-radius: 0.5rem;
+		}
+		table.changes tbody tr:last-child td {
+			border-block-end: none;
+		}
+		table.changes td {
+			padding: 0.3rem 0;
+			border: none;
+			white-space: normal;
+		}
+		table.changes td::before {
+			display: block;
+			margin-block-end: 0.15rem;
+			color: var(--sl-color-gray-3);
+			content: attr(data-label);
+			font-size: var(--sl-text-xs);
+			font-weight: var(--sl-font-weight-semibold);
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+		}
+	}
+</style>

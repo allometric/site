@@ -22,6 +22,7 @@ export default defineConfig({
 						{ label: 'Home', link: '/' },
 						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
+						{ label: 'Latest changes', link: '/changes/' },
 						{ label: 'Introduction', link: '/guides/introduction/' },
 						{ label: 'ORC', link: '/orc/' },
 					],
@@ -37,7 +38,7 @@ export default defineConfig({
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Contributing Models', slug: 'guides/contributing' },
-						{ label: 'Using models', slug: 'guides/using-models' },
+						{ label: 'Using Models', slug: 'guides/using-models' },
 					],
 				},
 				{
