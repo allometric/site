@@ -1,0 +1,8 @@
+/* Keep terminal examples as plain code blocks instead of faux window chrome. */
+.expressive-code .frame.is-terminal > .header {
+  display: none;
+}
+
+.expressive-code .frame.is-terminal > pre {
+  border-radius: inherit;
+}

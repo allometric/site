@@ -14,6 +14,7 @@ export default defineConfig({
 				// Strip the default favicon link: the site ships no favicon.
 				Head: './src/components/Head.astro',
 			},
+			customCss: ['./src/styles/starlight.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/allometric' }],
 			plugins: [
 				lucode({
