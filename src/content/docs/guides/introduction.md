@@ -13,7 +13,7 @@ models in a robust and interoperable format. Models are declared using
 publication YAML files, which are easy to read and write. For example, a
 hypothetical model for estimating tree biomass from diameter and height might be
 
-```{yaml}
+```yaml
 - name: example_biomass_model
   type: fixed_effects
   response: { bt: "m3" }

@@ -22,6 +22,7 @@ export default defineConfig({
 						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
 						{ label: 'Introduction', link: '/guides/introduction/' },
+						{ label: 'ORC', link: '/orc/' },
 					],
 				}),
 			],
@@ -40,6 +41,21 @@ export default defineConfig({
 				{
 					label: 'R Package Reference',
 					items: [{ autogenerate: { directory: 'reference' } }],
+				},
+				{
+					label: 'ORC',
+					items: [
+						{ label: 'Home', link: '/orc/' },
+						{
+							label: 'Schema',
+							items: [
+								{ label: 'Publication', slug: 'orc/publication' },
+								{ label: 'Model Families', slug: 'orc/families' },
+							],
+						},
+						{ label: 'Model kinds', slug: 'orc/kinds' },
+						{ label: 'API', slug: 'orc/api' },
+					],
 				},
 			],
 		}),
