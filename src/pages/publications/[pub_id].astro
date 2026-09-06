@@ -399,6 +399,28 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		width: 100%;
 		border: none;
 	}
+	/* Footer toggle for row-capped specification tables: a full-width bar under
+	   the table inside the same bordered container. */
+	.specs .specs-more {
+		display: block;
+		width: 100%;
+		margin: 0;
+		padding: 0.5rem 0.75rem;
+		background: var(--sl-color-gray-7);
+		border: none;
+		border-block-start: 1px solid var(--sl-color-gray-6);
+		color: var(--sl-color-text-accent);
+		font: inherit;
+		font-size: var(--sl-text-xs);
+		font-weight: var(--sl-font-weight-semibold);
+		letter-spacing: 0.05em;
+		text-align: start;
+		border-radius: 0 0 0.375rem 0.375rem;
+		cursor: pointer;
+	}
+	.specs .specs-more:hover {
+		background: color-mix(in oklab, var(--sl-color-gray-6) 45%, transparent);
+	}
 	.code {
 		background: var(--sl-color-gray-7);
 		border: 1px solid var(--sl-color-gray-6);
@@ -497,6 +519,9 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	}
 
 	const MAX_VISIBLE = 5;
+	// Specification tables of huge model sets (e.g. 100+ species in one set)
+	// are collapsed to this many rows with a "show all" footer toggle.
+	const SPEC_ROW_LIMIT = 10;
 
 	/** Render "Label: a, b, ..." with a clickable ellipsis that reveals the rest. */
 	function renderLine(label, items) {
@@ -736,6 +761,7 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 			labelFirstCol: true,
 			groups,
 			paramFrom: 1 + descNames.length,
+			rowLimit: SPEC_ROW_LIMIT,
 		});
 	}
 
@@ -747,13 +773,18 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 	 *   `labelFirstCol` (e.g. "Taxa") followed by descriptor/parameter columns
 	 * @param {string[][]} rows  one array of formatted cell values per row
 	 * @param {{ labelFirstCol?: boolean, groups?: {label: string, count: number}[],
-	 *            paramFrom?: number }} [options]
+	 *            paramFrom?: number, rowLimit?: number }} [options]
 	 *   `labelFirstCol` marks the first column as a natural-width label (e.g. taxa);
 	 *   `groups` renders a group-header row (e.g. "Descriptors" / "Parameters") above
 	 *   the column names, each spanning its columns; `paramFrom` is the index of the
-	 *   first parameter column (styled monospace).
+	 *   first parameter column (styled monospace); `rowLimit` caps the rendered rows
+	 *   to the first N and appends a footer toggle revealing (and re-hiding) the rest.
 	 */
-	function renderParamsTable(headers, rows, { labelFirstCol = false, groups = null, paramFrom = Infinity } = {}) {
+	function renderParamsTable(
+		headers,
+		rows,
+		{ labelFirstCol = false, groups = null, paramFrom = Infinity, rowLimit = 0 } = {},
+	) {
 		const container = el('div', 'specs');
 		const table = el('table', labelFirstCol ? 'params has-label' : 'params');
 		const thead = el('thead');
@@ -777,19 +808,47 @@ const githubUrl = `https://github.com/${REPO}/blob/${COMMIT}/${pubPath}`;
 		);
 		thead.append(headRow);
 
+		const appendRows = (tbody, rows) => {
+			for (const row of rows) {
+				const tr = el('tr');
+				row.forEach((value, i) => {
+					const td = el('td', i >= paramFrom ? 'param-value param-num' : 'param-value');
+					if (value instanceof Node) td.append(value);
+					else td.textContent = value;
+					tr.append(td);
+				});
+				tbody.append(tr);
+			}
+		};
+
+		const limited = rowLimit > 0 && rows.length > rowLimit;
 		const tbody = el('tbody');
-		for (const row of rows) {
-			const tr = el('tr');
-			row.forEach((value, i) => {
-				const td = el('td', i >= paramFrom ? 'param-value param-num' : 'param-value');
-				if (value instanceof Node) td.append(value);
-				else td.textContent = value;
-				tr.append(td);
-			});
-			tbody.append(tr);
-		}
+		appendRows(tbody, limited ? rows.slice(0, rowLimit) : rows);
 		table.append(thead, tbody);
 		container.append(table);
+
+		if (limited) {
+			// Collapse huge specification tables (e.g. 200-spec model sets) to the
+			// first rows, with a footer toggle that reveals (and re-hides) the rest.
+			const more = el('button', 'expand specs-more');
+			more.type = 'button';
+			let expanded = false;
+			const render = () => {
+				more.textContent = expanded ? 'Show fewer' : `Show all ${rows.length} specifications`;
+				more.setAttribute('aria-expanded', String(expanded));
+			};
+			more.addEventListener('click', () => {
+				expanded = !expanded;
+				if (expanded) {
+					appendRows(tbody, rows.slice(rowLimit));
+				} else {
+					while (tbody.rows.length > rowLimit) tbody.deleteRow(-1);
+				}
+				render();
+			});
+			render();
+			container.append(more);
+		}
 		return container;
 	}
 
