@@ -19,12 +19,10 @@ export default defineConfig({
 			plugins: [
 				lucode({
 					navLinks: [
-						{ label: 'Home', link: '/' },
 						{ label: 'Models', link: '/models/' },
 						{ label: 'Publications', link: '/publications/' },
 						{ label: 'Latest changes', link: '/changes/' },
 						{ label: 'Introduction', link: '/guides/introduction/' },
-						{ label: 'ORC', link: '/orc/' },
 					],
 				}),
 			],

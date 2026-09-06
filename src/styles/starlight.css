@@ -6,3 +6,25 @@
 .expressive-code .frame.is-terminal > pre {
   border-radius: inherit;
 }
+
+/* Lucode hides the site-title wrapper (brand + nav) below 768px, which leaves
+   mobile without a tap-to-home affordance. Show the brand next to the menu
+   button on small screens; the nav links stay drawer-only there. */
+@media (max-width: 767px) {
+  .site-title-wrapper {
+    display: flex !important;
+    margin-right: 0;
+  }
+  .site-title-wrapper .nav-bar {
+    display: none;
+  }
+}
+
+/* This site ships no logo, so the brand is just the title text — which lucode
+   hides below 1024px. Keep it visible so the brand is tappable at every
+   width (logo-less theme assumption). */
+@media (max-width: 1023px) {
+  .site-title .title-text {
+    display: inline-block;
+  }
+}
