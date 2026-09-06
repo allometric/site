@@ -1946,6 +1946,43 @@
     ]
   },
   {
+    "id": "krajicek_1961",
+    "title": "Crown competition - a measure of density",
+    "year": 1961,
+    "authors": "Krajicek, John E.; Brinkman, Kenneth A.; Gingrich, Samuel F.",
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-IA"
+    ],
+    "model_types": [],
+    "measures": [
+      "diameter"
+    ],
+    "stat_types": [
+      "fixed_effects",
+      "fixed_effects_set"
+    ],
+    "families": [
+      "Fagaceae",
+      "Juglandaceae",
+      "Pinaceae"
+    ],
+    "genera": [
+      "Quercus",
+      "Carya",
+      "Picea"
+    ],
+    "species": [
+      "alba",
+      "rubra",
+      "velutina",
+      "ovata",
+      "abies"
+    ]
+  },
+  {
     "id": "krisnawati_2016",
     "title": "A compatible estimation model of stem volume and taper for Acacia mangium Willd. plantations",
     "year": 2016,

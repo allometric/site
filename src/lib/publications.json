@@ -1,6 +1,6 @@
 {
   "ref": "main",
-  "commit": "e8b2a442e4a40665ba5191ae46b78687294c3636",
+  "commit": "996d4ca833c01ca91ecee218979692c9a56dfc6e",
   "publications": [
     {
       "id": "barnes_1962",
@@ -181,6 +181,10 @@
     {
       "id": "kozak_1988",
       "path": "publications/k_o/kozak_1988.yaml"
+    },
+    {
+      "id": "krajicek_1961",
+      "path": "publications/k_o/krajicek_1961.yaml"
     },
     {
       "id": "krisnawati_2016",

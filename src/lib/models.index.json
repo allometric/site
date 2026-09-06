@@ -14435,6 +14435,93 @@
     ]
   },
   {
+    "id": "dcm",
+    "pub_id": "krajicek_1961",
+    "pub_title": "Crown competition - a measure of density",
+    "type": "fixed_effects",
+    "is_set": false,
+    "model_type": "",
+    "measure": "diameter",
+    "response": [
+      [
+        "dcm",
+        "ft"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ]
+    ],
+    "taxa_count": 4,
+    "families": [
+      "Fagaceae",
+      "Juglandaceae"
+    ],
+    "genera": [
+      "Quercus",
+      "Carya"
+    ],
+    "species": [
+      "alba",
+      "rubra",
+      "velutina",
+      "ovata"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-IA"
+    ]
+  },
+  {
+    "id": "mca",
+    "pub_id": "krajicek_1961",
+    "pub_title": "Crown competition - a measure of density",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "",
+    "response": [
+      [
+        "mca",
+        "percent"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ]
+    ],
+    "taxa_count": 5,
+    "families": [
+      "Fagaceae",
+      "Juglandaceae",
+      "Pinaceae"
+    ],
+    "genera": [
+      "Quercus",
+      "Carya",
+      "Picea"
+    ],
+    "species": [
+      "alba",
+      "rubra",
+      "velutina",
+      "ovata",
+      "abies"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": [
+      "US-IA"
+    ]
+  },
+  {
     "id": "vsoa",
     "pub_id": "krisnawati_2016",
     "pub_title": "A compatible estimation model of stem volume and taper for Acacia mangium Willd. plantations",
