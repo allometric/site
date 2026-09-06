@@ -1,6 +1,6 @@
 {
-  "ref": "v4",
-  "commit": "0f62961cb6cf42c619409d270d69989dcbac14ab",
+  "ref": "main",
+  "commit": "a9a48790995d58d76edb9e03555afb8f1574abc5",
   "publications": [
     {
       "id": "barnes_1962",
@@ -289,6 +289,10 @@
     {
       "id": "vibrans_2015",
       "path": "publications/u_z/vibrans_2015.yaml"
+    },
+    {
+      "id": "westfall_2024",
+      "path": "publications/u_z/westfall_2024.yaml"
     },
     {
       "id": "wiley_1978",

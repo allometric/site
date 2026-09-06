@@ -3,10 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  repository_dispatch:
+    types: [models-updated]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -32,10 +34,17 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Refresh models snapshot
+        run: npm run refresh:models
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Commit refreshed models snapshot
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: refresh models snapshot'
+          file_pattern: 'src/lib/*.json'
 
   deploy:
     needs: build

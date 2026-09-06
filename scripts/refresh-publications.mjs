@@ -1,5 +1,5 @@
 // Regenerate src/lib/publications.json, src/lib/vns.json, and
-// src/lib/publications.index.json from the allometric/models repo (v4).
+// src/lib/publications.index.json from the allometric/models repo (main).
 // Uses git protocol (not the GitHub REST API) so it is never rate-limited.
 // Run: npm run refresh:models
 import { execSync } from 'node:child_process';
@@ -9,7 +9,7 @@ import { join } from 'node:path';
 import { parse } from 'yaml';
 
 const REPO = 'allometric/models';
-const REF = 'v4';
+const REF = 'main';
 const dir = mkdtempSync(join(tmpdir(), 'models-tree-'));
 
 const asList = (v) => (Array.isArray(v) ? v.map(String) : v == null ? [] : [String(v)]);

@@ -20495,6 +20495,304 @@
     ]
   },
   {
+    "id": "biomass_total_wood_bark_branch_m1",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "biomass",
+    "response": [
+      [
+        "bt",
+        "lb"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 143,
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Sapindaceae",
+      "Betulaceae",
+      "Juglandaceae",
+      "Cannabaceae",
+      "Fabaceae",
+      "Cornaceae",
+      "Ebenaceae",
+      "Fagaceae",
+      "Oleaceae",
+      "Aquifoliaceae",
+      "Altingiaceae",
+      "Magnoliaceae",
+      "Nyssaceae",
+      "Ericaceae",
+      "Platanaceae",
+      "Salicaceae",
+      "Rosaceae",
+      "Malvaceae",
+      "Ulmaceae",
+      "Tracheophyta"
+    ],
+    "genera": [
+      "Abies",
+      "Juniperus",
+      "Larix",
+      "Picea",
+      "Pinus",
+      "Pseudotsuga",
+      "Sequoia",
+      "Taxodium",
+      "Tsuga",
+      "Acer",
+      "Betula",
+      "Carpinus",
+      "Carya",
+      "Celtis",
+      "Cercis",
+      "Cornus",
+      "Diospyros",
+      "Fagus",
+      "Fraxinus",
+      "Ilex",
+      "Juglans",
+      "Liquidambar",
+      "Magnolia",
+      "Nyssa",
+      "Oxydendrum",
+      "Platanus",
+      "Populus",
+      "Prunus",
+      "Quercus",
+      "Robinia",
+      "Salix",
+      "Tilia",
+      "Ulmus",
+      "Tree"
+    ],
+    "species": [
+      "amabilis",
+      "concolor",
+      "fraseri",
+      "grandis",
+      "magnifica",
+      "virginiana",
+      "laricina",
+      "occidentalis",
+      "engelmannii",
+      "glauca",
+      "mariana",
+      "rubens",
+      "sitchensis",
+      "banksiana",
+      "contorta",
+      "echinata",
+      "jeffreyi",
+      "palustris",
+      "ponderosa",
+      "pungens",
+      "rigida",
+      "strobus",
+      "menziesii",
+      "sempervirens",
+      "distichum",
+      "ascendens",
+      "heterophylla",
+      "mertensiana",
+      "negundo",
+      "saccharinum",
+      "saccharum",
+      "spp.",
+      "alleghaniensis",
+      "papyrifera",
+      "caroliniana",
+      "cordiformis",
+      "glabra",
+      "laevigata",
+      "canadensis",
+      "florida",
+      "grandifolia",
+      "americana",
+      "nigra",
+      "pennsylvanica",
+      "opaca",
+      "styraciflua",
+      "aquatica",
+      "sylvatica",
+      "biflora",
+      "arboreum",
+      "balsamifera",
+      "deltoides",
+      "grandidentata",
+      "tremuloides",
+      "serotina",
+      "coccinea",
+      "falcata",
+      "pagoda",
+      "laevis",
+      "laurifolia",
+      "lyrata",
+      "macrocarpa",
+      "marilandica",
+      "texana",
+      "phellos",
+      "prinus",
+      "rubra",
+      "stellata",
+      "velutina",
+      "margarettiae",
+      "incana",
+      "pseudoacacia",
+      "unknown"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "biomass_total_wood_bark_branch_m2",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "biomass",
+    "response": [
+      [
+        "bt",
+        "lb"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 21,
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Fagaceae"
+    ],
+    "genera": [
+      "Abies",
+      "Pinus",
+      "Thuja",
+      "Tsuga",
+      "Quercus"
+    ],
+    "species": [
+      "balsamea",
+      "lasiocarpa",
+      "elliottii",
+      "resinosa",
+      "taeda",
+      "occidentalis",
+      "canadensis",
+      "alba"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "biomass_total_wood_bark_branch_m3",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "biomass",
+    "response": [
+      [
+        "bt",
+        "lb"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 2,
+    "families": [
+      "Pinaceae"
+    ],
+    "genera": [
+      "Pinus"
+    ],
+    "species": [
+      "elliottii"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "biomass_total_wood_bark_branch_m4",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "biomass",
+    "response": [
+      [
+        "bt",
+        "lb"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 7,
+    "families": [
+      "Sapindaceae",
+      "Magnoliaceae"
+    ],
+    "genera": [
+      "Acer",
+      "Liriodendron"
+    ],
+    "species": [
+      "rubrum",
+      "tulipifera"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
     "id": "hstix50",
     "pub_id": "wiley_1978",
     "pub_title": "Site index tables for western hemlock in the Pacific Northwest",

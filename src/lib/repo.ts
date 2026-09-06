@@ -5,7 +5,7 @@ import { parse } from 'yaml';
 import cached from './publications.json';
 
 export const REPO = 'allometric/models';
-export const REF = 'v4';
+export const REF = 'main';
 export const PUB_PREFIX = 'publications/';
 export const FAMILY_PREFIX = 'families/';
 // The snapshot commit the site is rendered against (captured at refresh time).
