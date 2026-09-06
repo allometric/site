@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/merge-model_tbl.md

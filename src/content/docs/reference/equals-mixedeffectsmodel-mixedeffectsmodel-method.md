@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/equals-mixedeffectsmodel-mixedeffectsmodel-method.md

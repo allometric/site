@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/check_models_installed.md

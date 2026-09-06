@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/filter_joined_models.md

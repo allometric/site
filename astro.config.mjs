@@ -1,7 +1,30 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import lucode from 'lucode-starlight';
+import { readFileSync } from 'node:fs';
+
+// The allometric R package is vendored as a git submodule; its generated
+// reference pages (docs/reference/*.md) drive this sidebar section.
+function loadRReferenceSidebar() {
+	try {
+		const url = new URL('./vendor/allometric/docs/reference/_index.json', import.meta.url);
+		const manifest = JSON.parse(readFileSync(url, 'utf8'));
+		return manifest.groups
+			.filter((group) => group.label !== 'Overview')
+			.map((group) => ({
+				label: group.label,
+				items: group.items.map((item) => ({
+					label: item.name === 'allometric-package' || item.name.includes('-method')
+						? item.title
+						: item.name,
+					link: `/reference/${item.slug}/`,
+				})),
+			}));
+	} catch (err) {
+		console.warn('[astro.config] vendor/allometric submodule not initialized; skipping R Package sidebar:', err.message);
+		return [];
+	}
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -37,6 +60,19 @@ export default defineConfig({
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Contributing Models', slug: 'guides/contributing' },
 						{ label: 'Using Models', slug: 'guides/using-models' },
+					],
+				},
+				{
+					label: 'R Package',
+					items: [
+						{
+							label: 'Package overview',
+							items: [
+								{ label: 'The allometric Package', link: '/reference/r-allometric/' },
+								{ label: 'Getting Started', link: '/reference/example/' },
+							],
+						},
+						...loadRReferenceSidebar(),
 					],
 				},
 				{

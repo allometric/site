@@ -1,3 +1,6 @@
 [submodule "vendor/orc"]
 	path = vendor/orc
 	url = ../orc
+[submodule "vendor/allometric"]
+	path = vendor/allometric
+	url = ../allometric

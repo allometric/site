@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/get_component_defs.md

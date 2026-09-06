@@ -1,0 +1,1 @@
+../../../../vendor/allometric/docs/reference/equals-fixedeffectsmodel-fixedeffectsmodel-method.md
