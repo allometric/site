@@ -20611,7 +20611,6 @@
       "negundo",
       "saccharinum",
       "saccharum",
-      "spp.",
       "alleghaniensis",
       "papyrifera",
       "caroliniana",
@@ -20787,6 +20786,404 @@
       "rubrum",
       "tulipifera"
     ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "volume_stem_wood_m1",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "volume",
+    "response": [
+      [
+        "vsia",
+        "ft3"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 202,
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Sapindaceae",
+      "Betulaceae",
+      "Juglandaceae",
+      "Fagaceae",
+      "Cannabaceae",
+      "Fabaceae",
+      "Cornaceae",
+      "Oleaceae",
+      "Theaceae",
+      "Aquifoliaceae",
+      "Altingiaceae",
+      "Magnoliaceae",
+      "Moraceae",
+      "Nyssaceae",
+      "Ericaceae",
+      "Platanaceae",
+      "Salicaceae",
+      "Rosaceae",
+      "Lauraceae",
+      "Ulmaceae",
+      "Tracheophyta"
+    ],
+    "genera": [
+      "Abies",
+      "Chamaecyparis",
+      "Larix",
+      "Calocedrus",
+      "Picea",
+      "Pinus",
+      "Sequoia",
+      "Taxodium",
+      "Tsuga",
+      "Acer",
+      "Aesculus",
+      "Betula",
+      "Carpinus",
+      "Carya",
+      "Castanea",
+      "Celtis",
+      "Cercis",
+      "Cornus",
+      "Fraxinus",
+      "Gleditsia",
+      "Gordonia",
+      "Ilex",
+      "Juglans",
+      "Liquidambar",
+      "Liriodendron",
+      "Magnolia",
+      "Morus",
+      "Nyssa",
+      "Ostrya",
+      "Oxydendrum",
+      "Platanus",
+      "Populus",
+      "Prunus",
+      "Quercus",
+      "Robinia",
+      "Salix",
+      "Sassafras",
+      "Ulmus",
+      "Tree"
+    ],
+    "species": [
+      "concolor",
+      "fraseri",
+      "grandis",
+      "lasiocarpa",
+      "magnifica",
+      "nootkatensis",
+      "occidentalis",
+      "decurrens",
+      "pungens",
+      "sitchensis",
+      "albicaulis",
+      "flexilis",
+      "glabra",
+      "jeffreyi",
+      "lambertiana",
+      "monticola",
+      "rigida",
+      "sylvestris",
+      "taeda",
+      "virginiana",
+      "sempervirens",
+      "distichum",
+      "ascendens",
+      "mertensiana",
+      "barbatum",
+      "negundo",
+      "pensylvanicum",
+      "rubrum",
+      "saccharinum",
+      "lenta",
+      "nigra",
+      "caroliniana",
+      "cordiformis",
+      "illinoinensis",
+      "laciniosa",
+      "ovata",
+      "alba",
+      "dentata",
+      "laevigata",
+      "canadensis",
+      "florida",
+      "americana",
+      "pennsylvanica",
+      "triacanthos",
+      "lasianthus",
+      "opaca",
+      "cinerea",
+      "styraciflua",
+      "tulipifera",
+      "acuminata",
+      "grandiflora",
+      "aquatica",
+      "sylvatica",
+      "biflora",
+      "arboreum",
+      "deltoides",
+      "grandidentata",
+      "balsamifera",
+      "serotina",
+      "bicolor",
+      "ellipsoidalis",
+      "pagoda",
+      "imbricaria",
+      "lyrata",
+      "macrocarpa",
+      "michauxii",
+      "muehlenbergii",
+      "texana",
+      "palustris",
+      "phellos",
+      "prinus",
+      "rubra",
+      "shumardii",
+      "stellata",
+      "pseudoacacia",
+      "albidum",
+      "alata",
+      "unknown"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "volume_stem_wood_m2",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "volume",
+    "response": [
+      [
+        "vsia",
+        "ft3"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 138,
+    "families": [
+      "Pinaceae",
+      "Cupressaceae",
+      "Sapindaceae",
+      "Betulaceae",
+      "Ebenaceae",
+      "Salicaceae",
+      "Fagaceae",
+      "Malvaceae",
+      "Ulmaceae"
+    ],
+    "genera": [
+      "Abies",
+      "Chamaecyparis",
+      "Juniperus",
+      "Larix",
+      "Picea",
+      "Pinus",
+      "Pseudotsuga",
+      "Thuja",
+      "Acer",
+      "Alnus",
+      "Betula",
+      "Diospyros",
+      "Populus",
+      "Quercus",
+      "Tilia",
+      "Ulmus"
+    ],
+    "species": [
+      "balsamea",
+      "lasiocarpa",
+      "thyoides",
+      "virginiana",
+      "laricina",
+      "abies",
+      "mariana",
+      "rubens",
+      "banksiana",
+      "clausa",
+      "contorta",
+      "echinata",
+      "elliottii",
+      "ponderosa",
+      "pungens",
+      "taeda",
+      "menziesii",
+      "occidentalis",
+      "plicata",
+      "macrophyllum",
+      "saccharum",
+      "rubra",
+      "papyrifera",
+      "balsamifera",
+      "tremuloides",
+      "falcata",
+      "laurifolia",
+      "nigra",
+      "velutina",
+      "americana"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "volume_stem_wood_m3",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "volume",
+    "response": [
+      [
+        "vsia",
+        "ft3"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 2,
+    "families": [
+      "Fagaceae"
+    ],
+    "genera": [
+      "Quercus"
+    ],
+    "species": [],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "volume_stem_wood_m4",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "volume",
+    "response": [
+      [
+        "vsia",
+        "ft3"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 64,
+    "families": [
+      "Pinaceae",
+      "Betulaceae",
+      "Fagaceae",
+      "Malvaceae"
+    ],
+    "genera": [
+      "Abies",
+      "Picea",
+      "Pinus",
+      "Tsuga",
+      "Betula",
+      "Fagus",
+      "Quercus",
+      "Tilia"
+    ],
+    "species": [
+      "amabilis",
+      "engelmannii",
+      "glauca",
+      "elliottii",
+      "palustris",
+      "resinosa",
+      "serotina",
+      "strobus",
+      "canadensis",
+      "heterophylla",
+      "alleghaniensis",
+      "grandifolia",
+      "coccinea"
+    ],
+    "countries": [
+      "US"
+    ],
+    "regions": []
+  },
+  {
+    "id": "volume_stem_wood_jenkins",
+    "pub_id": "westfall_2024",
+    "pub_title": "A national-scale tree volume, biomass, and carbon modeling system for the United States",
+    "type": "fixed_effects_set",
+    "is_set": true,
+    "model_type": "",
+    "measure": "volume",
+    "response": [
+      [
+        "vsia",
+        "ft3"
+      ]
+    ],
+    "covariates": [
+      [
+        "dsob",
+        "in"
+      ],
+      [
+        "hst",
+        "ft"
+      ]
+    ],
+    "taxa_count": 0,
+    "families": [],
+    "genera": [],
+    "species": [],
     "countries": [
       "US"
     ],

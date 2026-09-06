@@ -3283,7 +3283,8 @@
     "regions": [],
     "model_types": [],
     "measures": [
-      "biomass"
+      "biomass",
+      "volume"
     ],
     "stat_types": [
       "fixed_effects_set"
@@ -3310,7 +3311,10 @@
       "Rosaceae",
       "Malvaceae",
       "Ulmaceae",
-      "Tracheophyta"
+      "Tracheophyta",
+      "Theaceae",
+      "Moraceae",
+      "Lauraceae"
     ],
     "genera": [
       "Abies",
@@ -3348,7 +3352,17 @@
       "Ulmus",
       "Tree",
       "Thuja",
-      "Liriodendron"
+      "Liriodendron",
+      "Chamaecyparis",
+      "Calocedrus",
+      "Aesculus",
+      "Castanea",
+      "Gleditsia",
+      "Gordonia",
+      "Morus",
+      "Ostrya",
+      "Sassafras",
+      "Alnus"
     ],
     "species": [
       "amabilis",
@@ -3382,7 +3396,6 @@
       "negundo",
       "saccharinum",
       "saccharum",
-      "spp.",
       "alleghaniensis",
       "papyrifera",
       "caroliniana",
@@ -3431,7 +3444,39 @@
       "taeda",
       "alba",
       "rubrum",
-      "tulipifera"
+      "tulipifera",
+      "nootkatensis",
+      "decurrens",
+      "albicaulis",
+      "flexilis",
+      "lambertiana",
+      "monticola",
+      "sylvestris",
+      "barbatum",
+      "pensylvanicum",
+      "lenta",
+      "illinoinensis",
+      "laciniosa",
+      "ovata",
+      "dentata",
+      "triacanthos",
+      "lasianthus",
+      "cinerea",
+      "acuminata",
+      "grandiflora",
+      "bicolor",
+      "ellipsoidalis",
+      "imbricaria",
+      "michauxii",
+      "muehlenbergii",
+      "shumardii",
+      "albidum",
+      "alata",
+      "thyoides",
+      "abies",
+      "clausa",
+      "plicata",
+      "macrophyllum"
     ]
   },
   {
