@@ -1,5 +1,6 @@
 // Regenerate src/lib/publications.json, src/lib/vns.json, and
-// src/lib/publications.index.json from the allometric/models repo (main).
+// src/lib/publications.index.json and src/lib/models.index.json from the
+// allometric/models repo (main).
 // Uses git protocol (not the GitHub REST API) so it is never rate-limited.
 // Run: npm run refresh:models
 import { execSync } from 'node:child_process';
@@ -117,6 +118,8 @@ try {
 		}
 		index.push(entry);
 	}
+	writeFileSync('src/lib/publications.index.json', JSON.stringify(index, null, 2) + '\n');
+	console.log(`Wrote ${index.length} indexed publications.`);
 	// --- aggregated model index: one row per model and model set, across all publications ---
 	const modelIndex = [];
 	const pairOf = (vars) =>
