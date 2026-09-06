@@ -3,12 +3,20 @@
    caps its width, and fills the viewport as a flex column so dense
    lists/tables scroll internally without the page itself scrolling. */
 
+/* Starlight doc pages get 48px of top breathing room from their content
+   wrappers; StarlightPage pages (these custom ones) skip those wrappers and
+   sit flush under the header. Restore the same gap above the page title. */
+[data-slot='doc-title'] {
+	padding-top: 48px;
+}
+
 .sl-markdown-content {
 	display: flex;
 	flex-direction: column;
 	margin-inline: 140px;
 	max-width: 850px;
-	height: calc(100dvh - 170px);
+	/* 218px = header 56 + doc-title (72 + 48 gap) + 42px bottom slack. */
+	height: calc(100dvh - 218px);
 }
 
 /* The page title and description header sits outside the content column;
