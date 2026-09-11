@@ -14,7 +14,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 <StarlightPage
 	frontmatter={{
 		title: 'Latest changes',
-		description: 'Up to 50 of the most recent changes to allometric/models.',
+		description: 'Up to 50 of the most recent publication changes to allometric/models.',
 		tableOfContents: false,
 		prev: false,
 		next: false,
@@ -22,7 +22,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 >
 	<div class="changes-page">
 		<p class="intro">
-			{changes.length === 50 ? 'The 50 most recent changes' : `${changes.length} recent changes`}, including fixes, additions, and other updates to allometric/models, read from its commit history at build time.
+			{changes.length === 50 ? 'The 50 most recent changes' : `${changes.length} recent changes`} to publications in allometric/models, including fixes, additions, and other updates, read from its commit history at build time.
 			Select a change title to inspect its complete diff.
 		</p>
 		{changes.length > 0 ? (
@@ -71,7 +71,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 				</table>
 			</div>
 		) : (
-			<p class="empty">No commit history was available while this page was built.</p>
+			<p class="empty">No publication changes were available while this page was built.</p>
 		)}
 	</div>
 </StarlightPage>

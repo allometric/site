@@ -37,6 +37,11 @@ const publicationIds = new Set(
 	(pubIndex as PublicationRecord[]).map(({ id }) => id),
 );
 
+const PUBLICATION_RECORD_PATH = /(?:^|\/)publications\/(?:[^/]+\/)*([^/]+)\.(?:ya?ml|json)$/i;
+const publicationMentionPattern: Record<string, RegExp> = Object.fromEntries(
+	[...publicationIds].map((id) => [id, new RegExp(`\\b${id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')]),
+);
+
 function inferKind(subject: string): string {
 	const firstWord = subject.split(/\s+/, 1)[0].toLowerCase().replace(/[^a-z]/g, '');
 	if (firstWord === 'fix' || firstWord === 'fixed') return 'fix';
@@ -46,48 +51,34 @@ function inferKind(subject: string): string {
 	return 'change';
 }
 
-function publicationIdsFromDiff(hash: string, files: string[], repoDir: string): string[] {
-	const dataFiles = files.filter((file) => /(?:^|\/)publications(?:\.index)?\.json$/i.test(file));
-	if (dataFiles.length === 0) return [];
-
-	try {
-		const diff = execFileSync(
-			'git',
-			['show', '--format=', '--unified=0', hash, '--', ...dataFiles],
-			{ cwd: repoDir, encoding: 'utf8' },
-		);
-		const ids = [...diff.matchAll(/^[+-]\s*"id"\s*:\s*"([^"]+)"/gm)]
-			.map((match) => match[1])
-			.filter((id) => publicationIds.has(id));
-		// A wholesale generated-index change does not identify affected records.
-		return ids.length <= 20 ? [...new Set(ids)].sort() : [];
-	} catch {
-		return [];
-	}
-}
-
-function publicationIdsFor(change: RawChange, repoDir?: string): string[] {
+function publicationIdsFor(change: RawChange): string[] {
 	const affected = new Set<string>();
-	if (repoDir) {
-		for (const id of publicationIdsFromDiff(change.hash, change.files, repoDir)) affected.add(id);
-	}
-	const publicationPath = /(?:^|\/)publications\/(?:[^/]+\/)*([^/]+)\.(?:ya?ml|json)$/i;
 
 	for (const file of change.files) {
-		const match = file.match(publicationPath);
+		const match = file.match(PUBLICATION_RECORD_PATH);
 		if (match && publicationIds.has(match[1])) affected.add(match[1]);
 	}
 
-	for (const id of publicationIds) {
-		if (new RegExp(`\\b${id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(change.subject)) {
-			affected.add(id);
-		}
+	for (const [id, mention] of Object.entries(publicationMentionPattern)) {
+		if (mention.test(change.subject)) affected.add(id);
 	}
 
 	return [...affected].sort();
 }
 
-function toModelChange(change: RawChange, repoDir?: string): ModelChange {
+/**
+ * A change affects publications when it edits a publication record or names
+ * one in its subject. Compiled artifacts (dist/) and repository scaffolding
+ * are regenerated alongside publication edits, so they do not qualify.
+ */
+function affectsPublications(change: RawChange): boolean {
+	return (
+		change.files.some((file) => PUBLICATION_RECORD_PATH.test(file)) ||
+		Object.values(publicationMentionPattern).some((mention) => mention.test(change.subject))
+	);
+}
+
+function toModelChange(change: RawChange): ModelChange {
 	const conventionalMatch = change.subject.match(/^([a-z]+)(?:\(([^)]+)\))?(!)?:\s+(.+)$/i);
 	const type = conventionalMatch ? conventionalMatch[1].toLowerCase() : inferKind(change.subject);
 	const kind = type === 'feat' ? 'add' : type;
@@ -101,23 +92,21 @@ function toModelChange(change: RawChange, repoDir?: string): ModelChange {
 		kind,
 		conventional: Boolean(conventionalMatch),
 		files: change.files,
-		publications: publicationIdsFor(change, repoDir),
+		publications: publicationIdsFor(change),
 		commitUrl: change.commitUrl ?? `https://github.com/${MODELS_REPOSITORY}/commit/${change.hash}`,
 	};
 }
 
+/**
+ * Walk the whole models checkout so the feed can still find `limit`
+ * publication-affecting changes after non-publication commits are dropped.
+ */
 function readGitHistory(limit: number): ModelChange[] {
 	if (!existsSync(MODELS_HISTORY_DIR)) throw new Error('models history checkout is unavailable');
 	const output = execFileSync(
 		'git',
-		[
-			'log',
-			`-${limit}`,
-			'--date=iso-strict',
-			'--pretty=format:%H|||%aI|||%s',
-			'--name-only',
-		],
-		{ cwd: MODELS_HISTORY_DIR, encoding: 'utf8' },
+		['log', '--date=iso-strict', '--pretty=format:%H|||%aI|||%s', '--name-only'],
+		{ cwd: MODELS_HISTORY_DIR, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
 	);
 	const changes: RawChange[] = [];
 	let current: RawChange | undefined;
@@ -133,14 +122,21 @@ function readGitHistory(limit: number): ModelChange[] {
 	}
 	if (current) changes.push(current);
 
-	return changes.map((change) => toModelChange(change, MODELS_HISTORY_DIR));
+	return changes
+		.filter(affectsPublications)
+		.slice(0, limit)
+		.map(toModelChange);
 }
 
 async function readGitHubHistory(limit: number): Promise<ModelChange[]> {
-	const response = await fetch(`https://api.github.com/repos/${MODELS_REPOSITORY}/commits?per_page=${limit}`);
+	// The commit list API omits changed files, so ask for the publication tree
+	// directly and fall back to subjects for the affected record ids.
+	const response = await fetch(
+		`https://api.github.com/repos/${MODELS_REPOSITORY}/commits?path=publications&per_page=${limit}`,
+	);
 	if (!response.ok) throw new Error(`GitHub returned ${response.status} for models history`);
 	const commits = (await response.json()) as ApiCommit[];
-	return commits.map((commit) => {
+	return commits.slice(0, limit).map((commit) => {
 		const raw: RawChange = {
 			hash: commit.sha,
 			date: commit.commit.author?.date ?? commit.commit.committer?.date ?? new Date(0).toISOString(),
@@ -153,9 +149,10 @@ async function readGitHubHistory(limit: number): Promise<ModelChange[]> {
 }
 
 /**
- * Read allometric/models history at build time. Pages checks out the models
- * repository into `.models-history`; the API fallback keeps local previews
- * useful without requiring a second checkout.
+ * Read up to `limit` recent publication-affecting changes to allometric/models
+ * at build time. Pages checks out the models repository into
+ * `.models-history`; the API fallback keeps local previews useful without
+ * requiring a second checkout.
  */
 export async function getLatestChanges(limit = DEFAULT_LIMIT): Promise<ModelChange[]> {
 	try {
